@@ -1,0 +1,5 @@
+hibernate:
+  dialect: org.hibernate.dialect.PostgreSQL10Dialect
+  auto_quote_keyword: true
+  hbm2ddl:
+    auto: validate

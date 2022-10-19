@@ -1,0 +1,3 @@
+recaptcha:
+  site: ${RECAPTCHA_SITE}
+  secret: ${RECAPTCHA_SECRET}
