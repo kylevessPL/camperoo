@@ -1,4 +1,4 @@
-package pl.piasta.camperoo.controller;
+package pl.piasta.camperoo.global;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

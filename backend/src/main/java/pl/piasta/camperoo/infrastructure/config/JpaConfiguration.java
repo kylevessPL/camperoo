@@ -1,6 +1,5 @@
-package pl.piasta.camperoo.config;
+package pl.piasta.camperoo.infrastructure.config;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -16,26 +15,25 @@ import pl.piasta.camperoo.util.YamlPropertiesLoader;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "pl.piasta.camperoo.repository")
+@EnableJpaRepositories(basePackages = "pl.piasta.camperoo")
 @EnableTransactionManagement
-@Slf4j
-public class JpaConfig {
+class JpaConfiguration {
 
     public static final String JPA_CONFIG_PROPERTIES = "jpa-config.yml";
 
     @Bean
     @DependsOn("flyway")
-    LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+    LocalContainerEntityManagerFactoryBean entityManagerFactory(final DataSource dataSource) {
         var entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource);
-        entityManagerFactoryBean.setPackagesToScan("pl.piasta.camperoo.model");
+        entityManagerFactoryBean.setPackagesToScan("pl.piasta.camperoo");
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         entityManagerFactoryBean.setJpaProperties(YamlPropertiesLoader.EAGER.load(JPA_CONFIG_PROPERTIES));
         return entityManagerFactoryBean;
     }
 
     @Bean
-    PlatformTransactionManager transactionManager(DataSource dataSource) {
+    PlatformTransactionManager transactionManager(final DataSource dataSource) {
         var transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory(dataSource).getObject());
         return transactionManager;

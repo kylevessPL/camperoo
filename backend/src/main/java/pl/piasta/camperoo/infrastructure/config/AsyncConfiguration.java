@@ -1,4 +1,4 @@
-package pl.piasta.camperoo.config;
+package pl.piasta.camperoo.infrastructure.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
@@ -9,7 +9,7 @@ import java.util.concurrent.Executor;
 
 @Configuration
 @EnableAsync
-public class AsyncConfig implements AsyncConfigurer {
+class AsyncConfiguration implements AsyncConfigurer {
 
     @Override
     public Executor getAsyncExecutor() {

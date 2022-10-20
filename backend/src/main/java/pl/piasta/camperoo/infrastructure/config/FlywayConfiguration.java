@@ -1,4 +1,4 @@
-package pl.piasta.camperoo.config;
+package pl.piasta.camperoo.infrastructure.config;
 
 import org.flywaydb.core.Flyway;
 import org.springframework.context.annotation.Bean;
@@ -8,12 +8,12 @@ import pl.piasta.camperoo.util.YamlPropertiesLoader;
 import javax.sql.DataSource;
 
 @Configuration
-public class FlywayConfig {
+class FlywayConfiguration {
 
     public static final String FLYWAY_CONFIG_PROPERTIES = "flyway-config.yml";
 
     @Bean(initMethod = "migrate")
-    Flyway flyway(DataSource dataSource) {
+    Flyway flyway(final DataSource dataSource) {
         return Flyway.configure()
                 .dataSource(dataSource)
                 .configuration(YamlPropertiesLoader.EAGER.load(FLYWAY_CONFIG_PROPERTIES))

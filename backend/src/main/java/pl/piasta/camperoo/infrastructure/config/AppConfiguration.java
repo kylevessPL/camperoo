@@ -1,21 +1,20 @@
-package pl.piasta.camperoo.config;
+package pl.piasta.camperoo.infrastructure.config;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import pl.piasta.camperoo.util.YamlPropertiesLoader;
 
 import static java.util.Objects.requireNonNull;
 
 @Configuration
-public class AppConfig {
+class AppConfiguration {
 
     public static final String APP_CONFIG_PROPERTIES = "app-config.yml";
 
-    @Profile("local")
+    @LocalProfile
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     static class DevConfig {
 

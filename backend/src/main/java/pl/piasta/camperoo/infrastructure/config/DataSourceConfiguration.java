@@ -1,4 +1,4 @@
-package pl.piasta.camperoo.config;
+package pl.piasta.camperoo.infrastructure.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -9,7 +9,7 @@ import pl.piasta.camperoo.util.YamlPropertiesLoader;
 import javax.sql.DataSource;
 
 @Configuration
-public class DataSourceConfig {
+class DataSourceConfiguration {
 
     public static final String DS_CONFIG_PROPERTIES = "ds-config.yml";
 
