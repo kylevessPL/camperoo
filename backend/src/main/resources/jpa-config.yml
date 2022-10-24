@@ -1,5 +1,6 @@
 hibernate:
   dialect: org.hibernate.dialect.PostgreSQL10Dialect
+  physical_naming_strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
   auto_quote_keyword: true
   hbm2ddl:
     auto: validate
