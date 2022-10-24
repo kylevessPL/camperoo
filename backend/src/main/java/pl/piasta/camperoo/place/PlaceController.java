@@ -1,7 +1,7 @@
-package pl.piasta.camperoo.geolocation;
+package pl.piasta.camperoo.place;
 
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-class GeolocationController {
+class PlaceController {
 }

@@ -1,7 +1,6 @@
-package pl.piasta.camperoo.infrastructure.config;
+package pl.piasta.camperoo.common.util;
 
 import org.springframework.context.annotation.Profile;
-import pl.piasta.camperoo.util.AppProfiles;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -11,7 +11,7 @@ SELECT SETVAL('seq_users_id', 2);
 -- persons
 --
 -- customer
-INSERT INTO persons (id, first_name, last_name, address_1, zip_code, city, phone_number, user_id)
+INSERT INTO persons (id, first_name, last_name, address_one, zip_code, city, phone_number, user_id)
 VALUES (2, 'Customer', 'Testingowy', 'Testowo 1', '00-002', 'Warszawa', 987654321, 2);
 
 SELECT SETVAL('seq_persons_id', 2);

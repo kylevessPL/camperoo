@@ -3,8 +3,9 @@
 --
 CREATE TABLE IF NOT EXISTS locales
 (
-    id   BIGINT PRIMARY KEY,
-    code VARCHAR(5) UNIQUE NOT NULL
+    id      BIGINT PRIMARY KEY,
+    version BIGINT            NOT NULL DEFAULT 0,
+    code    VARCHAR(5) UNIQUE NOT NULL
 );
 
 --
@@ -30,8 +31,8 @@ CREATE TABLE IF NOT EXISTS persons
     version      BIGINT       NOT NULL DEFAULT 0,
     first_name   VARCHAR(255) NOT NULL,
     last_name    VARCHAR(255) NOT NULL,
-    address_1    VARCHAR(255) NOT NULL,
-    address_2    VARCHAR(255),
+    address_one  VARCHAR(255) NOT NULL,
+    address_two  VARCHAR(255),
     zip_code     VARCHAR(6)   NOT NULL,
     city         VARCHAR(60)  NOT NULL,
     phone_number VARCHAR(9)   NOT NULL,
@@ -58,8 +59,9 @@ CREATE SEQUENCE IF NOT EXISTS seq_verification_tokens_id;
 --
 CREATE TABLE IF NOT EXISTS roles
 (
-    id   BIGINT PRIMARY KEY,
-    name VARCHAR(60) UNIQUE NOT NULL
+    id      BIGINT PRIMARY KEY,
+    version BIGINT             NOT NULL DEFAULT 0,
+    name    VARCHAR(60) UNIQUE NOT NULL
 );
 
 --
@@ -68,6 +70,7 @@ CREATE TABLE IF NOT EXISTS roles
 CREATE TABLE IF NOT EXISTS role_descriptions
 (
     id          BIGINT PRIMARY KEY,
+    version     BIGINT       NOT NULL DEFAULT 0,
     description VARCHAR(255) NOT NULL,
     locale_id   BIGINT       NOT NULL REFERENCES locales (id),
     role_id     BIGINT       NOT NULL REFERENCES roles (id),
@@ -90,6 +93,7 @@ CREATE TABLE IF NOT EXISTS users_roles
 CREATE TABLE IF NOT EXISTS files
 (
     id           BIGINT PRIMARY KEY,
+    version      BIGINT       NOT NULL DEFAULT 0,
     name         VARCHAR(255) NOT NULL,
     content_type VARCHAR(255) NOT NULL,
     content      BYTEA        NOT NULL
@@ -233,8 +237,9 @@ CREATE SEQUENCE IF NOT EXISTS seq_discount_descriptions_id;
 --
 CREATE TABLE IF NOT EXISTS delivery_types
 (
-    id   BIGINT PRIMARY KEY,
-    code VARCHAR(60) UNIQUE NOT NULL
+    id      BIGINT PRIMARY KEY,
+    version BIGINT             NOT NULL DEFAULT 0,
+    code    VARCHAR(60) UNIQUE NOT NULL
 );
 
 --
@@ -243,6 +248,7 @@ CREATE TABLE IF NOT EXISTS delivery_types
 CREATE TABLE IF NOT EXISTS delivery_type_names
 (
     id               BIGINT PRIMARY KEY,
+    version          BIGINT       NOT NULL DEFAULT 0,
     name             VARCHAR(128) NOT NULL,
     locale_id        BIGINT       NOT NULL REFERENCES locales (id),
     delivery_type_id BIGINT       NOT NULL REFERENCES delivery_types (id),
@@ -255,6 +261,7 @@ CREATE TABLE IF NOT EXISTS delivery_type_names
 CREATE TABLE IF NOT EXISTS delivery_type_descriptions
 (
     id               BIGINT PRIMARY KEY,
+    version          BIGINT       NOT NULL DEFAULT 0,
     description      VARCHAR(255) NOT NULL,
     locale_id        BIGINT       NOT NULL REFERENCES locales (id),
     delivery_type_id BIGINT       NOT NULL REFERENCES delivery_types (id),
@@ -266,8 +273,9 @@ CREATE TABLE IF NOT EXISTS delivery_type_descriptions
 --
 CREATE TABLE IF NOT EXISTS order_statuses
 (
-    id   BIGINT PRIMARY KEY,
-    code VARCHAR(60) UNIQUE NOT NULL
+    id      BIGINT PRIMARY KEY,
+    version BIGINT             NOT NULL DEFAULT 0,
+    code    VARCHAR(60) UNIQUE NOT NULL
 );
 
 --
@@ -276,6 +284,7 @@ CREATE TABLE IF NOT EXISTS order_statuses
 CREATE TABLE IF NOT EXISTS order_status_names
 (
     id              BIGINT PRIMARY KEY,
+    version         BIGINT       NOT NULL DEFAULT 0,
     name            VARCHAR(128) NOT NULL,
     locale_id       BIGINT       NOT NULL REFERENCES locales (id),
     order_status_id BIGINT       NOT NULL REFERENCES order_statuses (id),
@@ -288,6 +297,7 @@ CREATE TABLE IF NOT EXISTS order_status_names
 CREATE TABLE IF NOT EXISTS order_status_descriptions
 (
     id              BIGINT PRIMARY KEY,
+    version         BIGINT       NOT NULL DEFAULT 0,
     description     VARCHAR(255) NOT NULL,
     locale_id       BIGINT       NOT NULL REFERENCES locales (id),
     order_status_id BIGINT       NOT NULL REFERENCES order_statuses (id),
@@ -299,20 +309,20 @@ CREATE TABLE IF NOT EXISTS order_status_descriptions
 --
 CREATE TABLE IF NOT EXISTS orders
 (
-    id               BIGINT PRIMARY KEY,
-    version          BIGINT                   NOT NULL DEFAULT 0,
-    placement_date   TIMESTAMP WITH TIME ZONE NOT NULL,
-    completion_date  TIMESTAMP WITH TIME ZONE,
-    total_price      NUMERIC(12, 2)           NOT NULL,
-    discount_id      BIGINT REFERENCES discounts (id),
-    address          VARCHAR(255)             NOT NULL,
-    latitude         NUMERIC(9, 7)            NOT NULL,
-    longtitude       NUMERIC(9, 7)            NOT NULL,
-    notes            VARCHAR(255),
-    invoice_id       BIGINT UNIQUE REFERENCES files (id),
-    delivery_type_id BIGINT                   NOT NULL REFERENCES delivery_types (id),
-    status_id        BIGINT                   NOT NULL REFERENCES order_statuses (id),
-    user_id          BIGINT                   NOT NULL REFERENCES users (id)
+    id                 BIGINT PRIMARY KEY,
+    version            BIGINT                   NOT NULL DEFAULT 0,
+    placement_date     TIMESTAMP WITH TIME ZONE NOT NULL,
+    status_change_date TIMESTAMP WITH TIME ZONE,
+    total_price        NUMERIC(12, 2)           NOT NULL,
+    discount_id        BIGINT REFERENCES discounts (id),
+    address            VARCHAR(255)             NOT NULL,
+    latitude           NUMERIC(9, 7)            NOT NULL,
+    longtitude         NUMERIC(9, 7)            NOT NULL,
+    notes              VARCHAR(255),
+    invoice_id         BIGINT UNIQUE REFERENCES files (id),
+    delivery_type_id   BIGINT                   NOT NULL REFERENCES delivery_types (id),
+    status_id          BIGINT                   NOT NULL REFERENCES order_statuses (id),
+    user_id            BIGINT                   NOT NULL REFERENCES users (id)
 );
 
 CREATE SEQUENCE IF NOT EXISTS seq_orders_id;
@@ -332,9 +342,10 @@ CREATE TABLE IF NOT EXISTS orders_products
 --
 CREATE TABLE IF NOT EXISTS payment_types
 (
-    id     BIGINT PRIMARY KEY,
-    code   VARCHAR(60) UNIQUE NOT NULL,
-    active BOOLEAN            NOT NULL DEFAULT TRUE
+    id      BIGINT PRIMARY KEY,
+    version BIGINT             NOT NULL DEFAULT 0,
+    code    VARCHAR(60) UNIQUE NOT NULL,
+    active  BOOLEAN            NOT NULL DEFAULT TRUE
 );
 
 --
@@ -343,6 +354,7 @@ CREATE TABLE IF NOT EXISTS payment_types
 CREATE TABLE IF NOT EXISTS payment_type_names
 (
     id              BIGINT PRIMARY KEY,
+    version         BIGINT       NOT NULL DEFAULT 0,
     name            VARCHAR(128) NOT NULL,
     locale_id       BIGINT       NOT NULL REFERENCES locales (id),
     payment_type_id BIGINT       NOT NULL REFERENCES payment_types (id),
@@ -354,8 +366,9 @@ CREATE TABLE IF NOT EXISTS payment_type_names
 --
 CREATE TABLE IF NOT EXISTS payment_statuses
 (
-    id   BIGINT PRIMARY KEY,
-    code VARCHAR(60) UNIQUE NOT NULL
+    id      BIGINT PRIMARY KEY,
+    version BIGINT             NOT NULL DEFAULT 0,
+    code    VARCHAR(60) UNIQUE NOT NULL
 );
 
 --
@@ -364,6 +377,7 @@ CREATE TABLE IF NOT EXISTS payment_statuses
 CREATE TABLE IF NOT EXISTS payment_status_names
 (
     id                BIGINT PRIMARY KEY,
+    version           BIGINT       NOT NULL DEFAULT 0,
     name              VARCHAR(128) NOT NULL,
     locale_id         BIGINT       NOT NULL REFERENCES locales (id),
     payment_status_id BIGINT       NOT NULL REFERENCES payment_statuses (id),
@@ -376,6 +390,7 @@ CREATE TABLE IF NOT EXISTS payment_status_names
 CREATE TABLE IF NOT EXISTS payment_status_descriptions
 (
     id                BIGINT PRIMARY KEY,
+    version           BIGINT       NOT NULL DEFAULT 0,
     description       VARCHAR(255) NOT NULL,
     locale_id         BIGINT       NOT NULL REFERENCES locales (id),
     payment_status_id BIGINT       NOT NULL REFERENCES payment_statuses (id),
@@ -387,14 +402,15 @@ CREATE TABLE IF NOT EXISTS payment_status_descriptions
 --
 CREATE TABLE IF NOT EXISTS payments
 (
-    id         BIGINT PRIMARY KEY,
-    version    BIGINT                   NOT NULL DEFAULT 0,
-    deadline   TIMESTAMP WITH TIME ZONE NOT NULL,
-    type_id    BIGINT                   NOT NULL REFERENCES payment_types (id),
-    status_id  BIGINT                   NOT NULL REFERENCES payment_statuses (id),
-    iban       VARCHAR(34),
-    swift_code VARCHAR(11),
-    order_id   BIGINT                   NOT NULL REFERENCES orders (id)
+    id                 BIGINT PRIMARY KEY,
+    version            BIGINT                   NOT NULL DEFAULT 0,
+    deadline           TIMESTAMP WITH TIME ZONE NOT NULL,
+    status_change_date TIMESTAMP WITH TIME ZONE,
+    type_id            BIGINT                   NOT NULL REFERENCES payment_types (id),
+    status_id          BIGINT                   NOT NULL REFERENCES payment_statuses (id),
+    iban               VARCHAR(34),
+    swift_code         VARCHAR(11),
+    order_id           BIGINT                   NOT NULL REFERENCES orders (id)
 );
 
 CREATE SEQUENCE IF NOT EXISTS seq_payments_id;

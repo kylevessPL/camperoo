@@ -10,12 +10,13 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import pl.piasta.camperoo.util.YamlPropertiesLoader;
+import pl.piasta.camperoo.common.util.YamlPropertiesLoader;
 
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "pl.piasta.camperoo")
+@EnableJpaRepositories(basePackages = "pl.piasta.camperoo.infrastructure.repository")
 @EnableTransactionManagement
 class JpaConfiguration {
 
@@ -26,16 +27,16 @@ class JpaConfiguration {
     LocalContainerEntityManagerFactoryBean entityManagerFactory(final DataSource dataSource) {
         var entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource);
-        entityManagerFactoryBean.setPackagesToScan("pl.piasta.camperoo");
+        entityManagerFactoryBean.setPackagesToScan("pl.piasta.camperoo.**.domain");
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         entityManagerFactoryBean.setJpaProperties(YamlPropertiesLoader.EAGER.load(JPA_CONFIG_PROPERTIES));
         return entityManagerFactoryBean;
     }
 
     @Bean
-    PlatformTransactionManager transactionManager(final DataSource dataSource) {
+    PlatformTransactionManager transactionManager(final EntityManagerFactory entityManagerFactory) {
         var transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(entityManagerFactory(dataSource).getObject());
+        transactionManager.setEntityManagerFactory(entityManagerFactory);
         return transactionManager;
     }
 

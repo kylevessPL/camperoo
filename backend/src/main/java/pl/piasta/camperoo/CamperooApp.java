@@ -6,7 +6,7 @@ import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
-import pl.piasta.camperoo.util.AppProfiles;
+import pl.piasta.camperoo.common.util.AppProfiles;
 
 import javax.servlet.ServletContext;
 
@@ -20,7 +20,7 @@ public class CamperooApp implements WebApplicationInitializer {
     public void onStartup(@NonNull ServletContext servletContext) {
         var applicationContext = new AnnotationConfigWebApplicationContext();
         setupProfiles(applicationContext.getEnvironment());
-        applicationContext.setConfigLocation("pl.piasta.camperoo.infrastructure.config");
+        applicationContext.setConfigLocation("pl.piasta.camperoo.infrastructure.**.config");
         servletContext.addListener(new ContextLoaderListener(applicationContext));
         var servlet = servletContext.addServlet("dispatcher", new DispatcherServlet(applicationContext));
         servlet.setLoadOnStartup(1);

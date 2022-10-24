@@ -4,7 +4,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import pl.piasta.camperoo.util.YamlPropertiesLoader;
+import pl.piasta.camperoo.common.util.YamlPropertiesLoader;
 
 import javax.sql.DataSource;
 
