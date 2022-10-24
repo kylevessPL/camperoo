@@ -1,3 +1,9 @@
+app:
+  locale:
+    default: en-US
+  verificationToken:
+    expirationMinutes: 1440
+
 recaptcha:
   site: ${RECAPTCHA_SITE}
   secret: ${RECAPTCHA_SECRET}

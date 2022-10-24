@@ -1,4 +1,4 @@
-package pl.piasta.camperoo.util;
+package pl.piasta.camperoo.common.util;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

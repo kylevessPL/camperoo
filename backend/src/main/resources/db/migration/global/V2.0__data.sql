@@ -2,8 +2,8 @@
 -- locales
 --
 INSERT INTO locales (id, code)
-VALUES (1, 1),
-       (2, 2);
+VALUES (1, 'pl-PL'),
+       (2, 'en-US');
 
 --
 -- users
@@ -18,7 +18,7 @@ SELECT SETVAL('seq_users_id', 1);
 -- persons
 --
 -- admin
-INSERT INTO persons (id, first_name, last_name, address_1, zip_code, city, phone_number, user_id)
+INSERT INTO persons (id, first_name, last_name, address_one, zip_code, city, phone_number, user_id)
 VALUES (1, 'Admin', 'Adminowski', 'Adminowo 1', '00-001', 'Warszawa', 123456789, 1);
 
 SELECT SETVAL('seq_persons_id', 1);
