@@ -106,13 +106,13 @@ CREATE SEQUENCE IF NOT EXISTS seq_files_id;
 --
 CREATE TABLE IF NOT EXISTS company_branches
 (
-    id         BIGINT PRIMARY KEY,
-    version    BIGINT        NOT NULL DEFAULT 0,
-    name       VARCHAR(60)   NOT NULL,
-    address    VARCHAR(255)  NOT NULL,
-    latitude   NUMERIC(9, 7) NOT NULL,
-    longtitude NUMERIC(9, 7) NOT NULL,
-    notes      VARCHAR(255)
+    id        BIGINT PRIMARY KEY,
+    version   BIGINT        NOT NULL DEFAULT 0,
+    name      VARCHAR(60)   NOT NULL,
+    address   VARCHAR(255)  NOT NULL,
+    latitude  NUMERIC(9, 7) NOT NULL,
+    longitude NUMERIC(9, 7) NOT NULL,
+    notes     VARCHAR(255)
 );
 
 CREATE SEQUENCE IF NOT EXISTS seq_company_branches_id;
@@ -317,7 +317,7 @@ CREATE TABLE IF NOT EXISTS orders
     discount_id        BIGINT REFERENCES discounts (id),
     address            VARCHAR(255)             NOT NULL,
     latitude           NUMERIC(9, 7)            NOT NULL,
-    longtitude         NUMERIC(9, 7)            NOT NULL,
+    longitude          NUMERIC(9, 7)            NOT NULL,
     notes              VARCHAR(255),
     invoice_id         BIGINT UNIQUE REFERENCES files (id),
     delivery_type_id   BIGINT                   NOT NULL REFERENCES delivery_types (id),

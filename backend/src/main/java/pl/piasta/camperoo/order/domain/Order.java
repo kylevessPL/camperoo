@@ -59,7 +59,7 @@ public class Order extends AbstractEntity {
     private BigDecimal latitude;
 
     @Column(nullable = false, precision = 7)
-    private BigDecimal longtitude;
+    private BigDecimal longitude;
 
     @Column
     private String notes;
