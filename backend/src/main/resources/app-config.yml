@@ -1,8 +1,11 @@
 app:
   locale:
-    default: en-US
+    default: en
   verificationToken:
     expirationMinutes: 1440
+
+geoapify:
+  apiKey: ${GEOAPIFY_API_KEY}
 
 recaptcha:
   site: ${RECAPTCHA_SITE}

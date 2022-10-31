@@ -6,10 +6,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
-import pl.piasta.camperoo.common.util.LocalProfile;
-import pl.piasta.camperoo.common.util.YamlPropertiesLoader;
+import pl.piasta.camperoo.common.util.AppProfiles.LocalProfile;
+import pl.piasta.camperoo.common.util.AppPropertiesLoader;
 
 import java.util.Locale;
 
@@ -21,7 +22,12 @@ class AppConfiguration {
     public static final String APP_CONFIG_PROPERTIES = "app-config.yml";
 
     @Bean
-    public LocaleResolver localeResolver(@Value("${app.locale.default}") String defaultLocale) {
+    MethodValidationPostProcessor methodValidationPostProcessor() {
+        return new MethodValidationPostProcessor();
+    }
+
+    @Bean
+    LocaleResolver localeResolver(@Value("${app.locale.default}") String defaultLocale) {
         CookieLocaleResolver localeResolver = new CookieLocaleResolver();
         localeResolver.setDefaultLocale(Locale.forLanguageTag(defaultLocale));
         localeResolver.setCookieName("locale");
@@ -38,7 +44,7 @@ class AppConfiguration {
         public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
             String[] properties = {APP_CONFIG_PROPERTIES, APP_CONFIG_LOCAL_PROPERTIES};
             var configurer = new PropertySourcesPlaceholderConfigurer();
-            configurer.setProperties(requireNonNull(YamlPropertiesLoader.LAZY.load(properties)));
+            configurer.setProperties(requireNonNull(AppPropertiesLoader.LAZY.load(properties)));
             return configurer;
         }
     }

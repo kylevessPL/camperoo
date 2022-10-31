@@ -17,10 +17,10 @@ import java.util.Properties;
 import static java.util.Objects.requireNonNull;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class YamlPropertiesLoader {
+public final class AppPropertiesLoader {
 
-    public static final YamlPropertiesLoader LAZY = new YamlPropertiesLoader(false);
-    public static final YamlPropertiesLoader EAGER = new YamlPropertiesLoader(true);
+    public static final AppPropertiesLoader LAZY = new AppPropertiesLoader(false);
+    public static final AppPropertiesLoader EAGER = new AppPropertiesLoader(true);
 
     private final boolean resolvePlaceholders;
 

@@ -2,8 +2,8 @@
 -- locales
 --
 INSERT INTO locales (id, code)
-VALUES (1, 'pl-PL'),
-       (2, 'en-US');
+VALUES (1, 'pl'),
+       (2, 'en');
 
 --
 -- users

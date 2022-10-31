@@ -1,4 +1,4 @@
-package pl.piasta.camperoo.place.domain;
+package pl.piasta.camperoo.branch.domain;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

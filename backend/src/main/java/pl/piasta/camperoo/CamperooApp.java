@@ -20,7 +20,7 @@ public class CamperooApp implements WebApplicationInitializer {
     public void onStartup(@NonNull ServletContext servletContext) {
         var applicationContext = new AnnotationConfigWebApplicationContext();
         setupProfiles(applicationContext.getEnvironment());
-        applicationContext.setConfigLocation("pl.piasta.camperoo.infrastructure.**.config");
+        applicationContext.setConfigLocation("pl.piasta.camperoo");
         servletContext.addListener(new ContextLoaderListener(applicationContext));
         var servlet = servletContext.addServlet("dispatcher", new DispatcherServlet(applicationContext));
         servlet.setLoadOnStartup(1);
