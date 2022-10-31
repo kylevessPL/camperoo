@@ -11,11 +11,8 @@ class GeocodingParams {
     public static final String LIMIT = "limit";
     public static final String FILTER = "filter";
     public static final String DETAILS = "details";
-    public static final String TYPE = "type";
     public static final String MODE = "mode";
     public static final String AVOID = "avoid";
     public static final String WAYPOINTS = "waypoints";
-    public static final String LATITUDE = "lat";
-    public static final String LONGITUDE = "lon";
     public static final String QUERY = "text";
 }
