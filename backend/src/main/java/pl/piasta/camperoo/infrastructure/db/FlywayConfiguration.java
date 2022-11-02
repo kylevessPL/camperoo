@@ -1,4 +1,4 @@
-package pl.piasta.camperoo.infrastructure.config;
+package pl.piasta.camperoo.infrastructure.db;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

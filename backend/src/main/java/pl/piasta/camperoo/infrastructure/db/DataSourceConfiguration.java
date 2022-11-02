@@ -1,4 +1,4 @@
-package pl.piasta.camperoo.infrastructure.config;
+package pl.piasta.camperoo.infrastructure.db;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

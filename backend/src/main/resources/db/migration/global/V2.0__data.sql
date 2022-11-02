@@ -24,6 +24,13 @@ VALUES (1, 'Admin', 'Adminowski', 'Adminowo 1', '00-001', 'Warszawa', 123456789,
 SELECT SETVAL('seq_persons_id', 1);
 
 --
+-- verification_token_types
+--
+INSERT INTO verification_token_types (id, name)
+VALUES (1, 'ACCOUNT_CREATION'),
+       (2, 'ACCOUNT_RECOVERY');
+
+--
 -- roles
 --
 INSERT INTO roles (id, name)

@@ -1,4 +1,4 @@
-package pl.piasta.camperoo.infrastructure.config;
+package pl.piasta.camperoo.infrastructure.db;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

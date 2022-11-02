@@ -1,4 +1,4 @@
-package pl.piasta.camperoo.auth.domain;
+package pl.piasta.camperoo.user.domain;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
-import pl.piasta.camperoo.user.domain.User;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,6 +35,10 @@ public class VerificationToken extends AbstractEntity {
 
     @Column(nullable = false)
     private Instant expirationDate;
+
+    @ManyToOne
+    @JoinColumn(name = "token_type", nullable = false)
+    private VerificationTokenType type;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

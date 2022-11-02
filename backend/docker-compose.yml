@@ -46,6 +46,7 @@ services:
       - DB_URL
       - DB_USER
       - DB_PASSWORD
+      - JWT_SECRET
       - GEOAPIFY_API_KEY
       - RECAPTCHA_SITE
       - RECAPTCHA_SECRET

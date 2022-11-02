@@ -42,6 +42,16 @@ CREATE TABLE IF NOT EXISTS persons
 CREATE SEQUENCE IF NOT EXISTS seq_persons_id;
 
 --
+-- verification_token_types
+--
+CREATE TABLE IF NOT EXISTS verification_token_types
+(
+    id      BIGINT PRIMARY KEY,
+    version BIGINT             NOT NULL DEFAULT 0,
+    name    VARCHAR(60) UNIQUE NOT NULL
+);
+
+--
 -- verification_tokens
 --
 CREATE TABLE IF NOT EXISTS verification_tokens
@@ -49,6 +59,7 @@ CREATE TABLE IF NOT EXISTS verification_tokens
     id              BIGINT PRIMARY KEY,
     version         BIGINT                   NOT NULL DEFAULT 0,
     expiration_date TIMESTAMP WITH TIME ZONE NOT NULL,
+    type_id         BIGINT                   NOT NULL REFERENCES verification_token_types (id),
     user_id         BIGINT                   NOT NULL REFERENCES users (id)
 );
 

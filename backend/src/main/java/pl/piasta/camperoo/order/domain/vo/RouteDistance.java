@@ -3,11 +3,13 @@ package pl.piasta.camperoo.order.domain.vo;
 import lombok.AccessLevel;
 import lombok.experimental.StandardException;
 import org.springframework.util.CollectionUtils;
+import pl.piasta.camperoo.common.domain.vo.ValueObject;
 import pl.piasta.camperoo.common.exception.ValidationException;
 
 import java.util.List;
 
-public record RouteDistance(int distance, List<String> countryCodes) {
+@RequiredArgsConstructor(staticName = "of")
+public record RouteDistance(int distance, List<String> countryCodes) implements ValueObject {
 
     public RouteDistance {
         if (distance < 0) {

@@ -1,8 +1,13 @@
 app:
   locale:
     default: en
-  verificationToken:
-    expirationMinutes: 1440
+  security:
+    jwt:
+      secret: ${JWT_SECRET}
+      validMinutes: 15
+  auth:
+    verificationToken:
+      validMinutes: 1440
 
 geoapify:
   apiKey: ${GEOAPIFY_API_KEY}

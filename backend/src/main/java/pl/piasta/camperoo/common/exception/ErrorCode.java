@@ -5,6 +5,9 @@ public enum ErrorCode {
     ILLEGAL_STATE,
     VALIDATION_ERROR,
 
-    // business
-    ROUTE_CALCULATION_ERROR
+    // address
+    ROUTE_CALCULATION_ERROR,
+
+    // user
+    USER_NOT_FOUND
 }

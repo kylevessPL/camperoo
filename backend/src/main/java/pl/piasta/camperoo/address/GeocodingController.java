@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.piasta.camperoo.address.dto.AddressDto;
 import pl.piasta.camperoo.address.dto.DistanceBetweenCoordinatesQueryDto;
 import pl.piasta.camperoo.address.dto.RouteDistanceDto;
+import pl.piasta.camperoo.address.exception.RouteCalculationException;
 import pl.piasta.camperoo.address.query.AddressGeocodingQueryClient;
 
 import javax.validation.Valid;
