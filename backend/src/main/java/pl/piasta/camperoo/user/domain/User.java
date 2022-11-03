@@ -7,8 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
 import pl.piasta.camperoo.order.domain.Order;
+import pl.piasta.camperoo.user.domain.vo.EmailAddress;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -39,8 +41,9 @@ public class User extends AbstractEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_users_id")
     private Long id;
 
+    @Embedded
     @Column(nullable = false)
-    private String email;
+    private EmailAddress email;
 
     @Column(nullable = false, length = 73)
     private String passwordHash;
