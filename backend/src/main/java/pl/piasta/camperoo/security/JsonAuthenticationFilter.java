@@ -14,7 +14,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.Instant;
 import java.util.Objects;
 
 class JsonAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -22,21 +21,19 @@ class JsonAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final ObjectMapper objectMapper;
 
     public JsonAuthenticationFilter(
-            AuthenticationManager authenticationManager,
+            AuthenticationManager authManager,
             ObjectMapper objectMapper,
-            TokenAuthenticationProvider tokenAuthenticationProvider
+            TokenAuthenticationProvider authProvider
     ) {
-        super(authenticationManager);
+        super(authManager);
         this.objectMapper = objectMapper;
         setFilterProcessesUrl("/auth");
         setAuthenticationSuccessHandler((request, response, authentication) -> {
             var principal = TokenPrincipal.ofUser((AuthenticatedUserDetails) authentication.getPrincipal());
-            var resultAndCookie = tokenAuthenticationProvider.createAuthResult(
-                    principal, Instant.now(), request.getServerName(), request.isSecure()
-            );
-            response.addHeader(HttpHeaders.SET_COOKIE, resultAndCookie.getValue().toString());
+            var authResult = authProvider.createAuthResult(principal, request.getServerName(), request.isSecure());
+            response.addHeader(HttpHeaders.SET_COOKIE, authResult.getValue().toString());
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            objectMapper.writeValue(response.getWriter(), resultAndCookie.getKey());
+            objectMapper.writeValue(response.getWriter(), authResult.getKey());
         });
         setAuthenticationFailureHandler((request, response, ex) ->
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage())
@@ -52,7 +49,7 @@ class JsonAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         UsernamePasswordAuthenticationToken authRequest;
         try {
             var credentials = objectMapper.readValue(request.getReader(), LoginCredentials.class);
-            authRequest = new UsernamePasswordAuthenticationToken(credentials.email().trim(), credentials.password());
+            authRequest = new UsernamePasswordAuthenticationToken(credentials.email(), credentials.password());
         } catch (NullPointerException | IOException ignored) {
             authRequest = new UsernamePasswordAuthenticationToken("", "");
         }

@@ -4,15 +4,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.extern.jackson.Jacksonized;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Data
 @Builder
 @Jacksonized
 public class LoginResultDto {
-    @Min(0)
+    @NotNull
+    Long issuanceTime;
+    @NotNull
     Long expirationTime;
     @NotEmpty
     Set<String> roles;

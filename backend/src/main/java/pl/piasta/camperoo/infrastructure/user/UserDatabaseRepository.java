@@ -41,6 +41,5 @@ class UserDatabaseRepository implements UserRepository {
     public Optional<User> findByEmail(EmailAddress emailAddress) {
         return repository.findByEmail(emailAddress);
     }
-
 }
 

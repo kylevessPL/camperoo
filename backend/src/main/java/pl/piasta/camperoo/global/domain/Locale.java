@@ -1,4 +1,4 @@
-package pl.piasta.camperoo.localization.domain;
+package pl.piasta.camperoo.global.domain;
 
 import lombok.AccessLevel;
 import lombok.Getter;

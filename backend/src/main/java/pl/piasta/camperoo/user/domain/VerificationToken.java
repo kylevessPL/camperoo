@@ -37,7 +37,7 @@ public class VerificationToken extends AbstractEntity {
     private Instant expirationDate;
 
     @ManyToOne
-    @JoinColumn(name = "token_type", nullable = false)
+    @JoinColumn(name = "type_id", nullable = false)
     private VerificationTokenType type;
 
     @ManyToOne(fetch = FetchType.LAZY)

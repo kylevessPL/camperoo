@@ -3,6 +3,7 @@ package pl.piasta.camperoo.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,14 +11,13 @@ import pl.piasta.camperoo.security.dto.LoginResultDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.time.Instant;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/auth")
 class AuthenticationController {
-    private final AuthenticationService authenticationService;
-    private final TokenAuthenticationProvider authenticationProvider;
+    private final UserDetailsService userDetailsService;
+    private final TokenAuthenticationProvider authProvider;
 
     @PostMapping("/refresh-token")
     public LoginResultDto refreshToken(
@@ -25,15 +25,11 @@ class AuthenticationController {
             HttpServletRequest request,
             HttpServletResponse response
     ) {
-        var user = authenticationService.loadUserByUsername(principal.email());
+        var user = userDetailsService.loadUserByUsername(principal.email());
         principal = TokenPrincipal.ofUser((AuthenticatedUserDetails) user);
-        var resultAndCookie = authenticationProvider.createAuthResult(
-                principal, Instant.now(),
-                request.getServerName(), request.isSecure()
-        );
-        var cookie = resultAndCookie.getValue();
-        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-        return resultAndCookie.getKey();
+        var authResult = authProvider.createAuthResult(principal, request.getServerName(), request.isSecure());
+        response.addHeader(HttpHeaders.SET_COOKIE, authResult.getValue().toString());
+        return authResult.getKey();
     }
 
 //    @ResponseStatus(HttpStatus.NO_CONTENT)

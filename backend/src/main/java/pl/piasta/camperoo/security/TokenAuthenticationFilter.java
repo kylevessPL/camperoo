@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 class TokenAuthenticationFilter extends OncePerRequestFilter {
-    private final TokenAuthenticationProvider authenticationProvider;
+    private final TokenAuthenticationProvider authProvider;
 
     @Override
     protected void doFilterInternal(
@@ -27,7 +27,7 @@ class TokenAuthenticationFilter extends OncePerRequestFilter {
             FilterChain chain
     ) throws ServletException, IOException {
         extractToken(request)
-                .filter(authenticationProvider::isTokenValid)
+                .filter(authProvider::isTokenValid)
                 .ifPresent(token -> authenticate(token, request));
         chain.doFilter(request, response);
     }
@@ -40,10 +40,10 @@ class TokenAuthenticationFilter extends OncePerRequestFilter {
                 .map(Cookie::getValue);
     }
 
-    private void authenticate(String token, HttpServletRequest req) {
-        var principal = authenticationProvider.extractAuthenticationPrincipal(token);
+    private void authenticate(String token, HttpServletRequest request) {
+        var principal = authProvider.extractAuthenticationPrincipal(token);
         var auth = new UsernamePasswordAuthenticationToken(principal, null, principal.getAuthorities());
-        auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
+        auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(auth);
     }
 }

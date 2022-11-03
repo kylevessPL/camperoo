@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.tuple.Pair;
 import pl.piasta.camperoo.security.TokenPrincipal;
 
 import java.security.Key;
@@ -27,8 +28,8 @@ class JwtProvider {
         this.validMinutes = jwtValidMinutes;
     }
 
-    public String createToken(TokenPrincipal tokenPrincipal, Instant ofTime) {
-        var issuanceDate = ofTime.truncatedTo(ChronoUnit.SECONDS);
+    public String createToken(TokenPrincipal tokenPrincipal) {
+        var issuanceDate = Instant.now().truncatedTo(ChronoUnit.SECONDS);
         var expirationDate = issuanceDate.plus(validMinutes, ChronoUnit.MINUTES);
         return Jwts.builder()
                 .setSubject(tokenPrincipal.email())
@@ -56,22 +57,21 @@ class JwtProvider {
 
     @SuppressWarnings("unchecked")
     public TokenPrincipal extractPrincipal(String token) {
-        var body = Jwts.parserBuilder()
+        var claims = Jwts.parserBuilder()
                 .setSigningKey(secret)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
-        return new TokenPrincipal(body.get(ID, Long.class), body.getSubject(),
-                Set.copyOf((List<String>) body.get(ROLES)));
+        return new TokenPrincipal(claims.get(ID, Long.class), claims.getSubject(),
+                Set.copyOf((List<String>) claims.get(ROLES)));
     }
 
-    public Instant extractExpirationTime(String token) {
-        return Jwts.parserBuilder()
+    public Pair<Instant, Instant> extractDates(String token) {
+        var claims = Jwts.parserBuilder()
                 .setSigningKey(secret)
                 .build()
                 .parseClaimsJws(token)
-                .getBody()
-                .getExpiration()
-                .toInstant();
+                .getBody();
+        return Pair.of(claims.getIssuedAt().toInstant(), claims.getExpiration().toInstant());
     }
 }

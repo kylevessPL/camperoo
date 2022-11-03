@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
-import pl.piasta.camperoo.localization.domain.Locale;
+import pl.piasta.camperoo.global.domain.Locale;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

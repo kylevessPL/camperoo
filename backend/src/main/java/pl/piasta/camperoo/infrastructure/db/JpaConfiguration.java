@@ -16,7 +16,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "pl.piasta.camperoo.infrastructure.repository")
+@EnableJpaRepositories(basePackages = "pl.piasta.camperoo.infrastructure")
 @EnableTransactionManagement
 class JpaConfiguration {
 

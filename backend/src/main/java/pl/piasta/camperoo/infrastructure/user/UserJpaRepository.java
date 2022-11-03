@@ -6,12 +6,11 @@ import org.springframework.stereotype.Repository;
 import pl.piasta.camperoo.user.domain.User;
 import pl.piasta.camperoo.user.domain.vo.EmailAddress;
 import pl.piasta.camperoo.user.exception.UserNotFoundException;
-import th.co.geniustree.springdata.jpa.repository.JpaSpecificationExecutorWithProjection;
 
 import java.util.Optional;
 
 @Repository
-interface UserJpaRepository extends JpaRepository<User, Long>, JpaSpecificationExecutorWithProjection<User, Long> {
+interface UserJpaRepository extends JpaRepository<User, Long> {
     boolean existsByEmail(EmailAddress emailAddress);
 
     Optional<User> findByEmail(EmailAddress emailAddress);

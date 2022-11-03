@@ -1,7 +1,6 @@
 package pl.piasta.camperoo.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -15,24 +14,24 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 import pl.piasta.camperoo.user.domain.UserRepository;
 
 import javax.servlet.http.HttpServletResponse;
 
 import static pl.piasta.camperoo.security.TokenAuthenticationProvider.ACCESS_TOKEN;
 
-@RequiredArgsConstructor
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-class SecurityConfiguration {
-    private final ObjectMapper objectMapper;
-    private final TokenAuthenticationProvider authenticationProvider;
+class SecurityConfiguration extends AbstractSecurityWebApplicationInitializer {
 
     @Bean
-    SecurityFilterChain filterChain(
-            HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
+    SecurityFilterChain filterChain(HttpSecurity http, ObjectMapper objectMapper,
+                                    AuthenticationManager authManager,
+                                    TokenAuthenticationProvider authProvider
+    ) throws Exception {
         return http.cors().and()
-                .authorizeHttpRequests(requests -> requests
+                .authorizeRequests(requests -> requests
                         .antMatchers("/error").permitAll()
                         .antMatchers(
                                 "/auth/reset-password",
@@ -40,8 +39,8 @@ class SecurityConfiguration {
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
-                .addFilter(new JsonAuthenticationFilter(authenticationManager, objectMapper, authenticationProvider))
-                .addFilterBefore(new TokenAuthenticationFilter(authenticationProvider), JsonAuthenticationFilter.class)
+                .addFilter(new JsonAuthenticationFilter(authManager, objectMapper, authProvider))
+                .addFilterBefore(new TokenAuthenticationFilter(authProvider), JsonAuthenticationFilter.class)
                 .logout(logout -> logout
                         .logoutUrl("/auth/logout")
                         .addLogoutHandler((request, response, authentication) -> {

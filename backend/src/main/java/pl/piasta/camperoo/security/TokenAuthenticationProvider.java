@@ -1,10 +1,8 @@
 package pl.piasta.camperoo.security;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.http.ResponseCookie;
 import pl.piasta.camperoo.security.dto.LoginResultDto;
-
-import java.time.Instant;
-import java.util.Map;
 
 public interface TokenAuthenticationProvider {
     String ACCESS_TOKEN = "access_token";
@@ -13,9 +11,8 @@ public interface TokenAuthenticationProvider {
 
     boolean isTokenValid(String token);
 
-    Map.Entry<LoginResultDto, ResponseCookie> createAuthResult(
+    Pair<LoginResultDto, ResponseCookie> createAuthResult(
             TokenPrincipal tokenPrincipal,
-            Instant issuanceTime,
             String domain,
             boolean secure
     );
