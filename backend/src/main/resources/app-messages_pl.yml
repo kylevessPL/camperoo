@@ -1,0 +1,23 @@
+validation:
+  coordinates:
+    null: 'Współrzędne muszą mieć wartość inną niż NULL'
+    origin:
+      null: 'Współrzędne pochodzenia muszą mieć wartość inną niż NULL'
+    destination:
+      null: 'Współrzędne przeznaczenia muszą mieć wartość inną niż NULL'
+  latitude:
+    null: 'Szerokość geograficzna musi mieć wartość inną niż NULL'
+  longitude:
+    null: 'Długość geograficzna musi mieć wartość inną niż NULL'
+  address:
+    blank: 'Adres nie może być pusty'
+  distance:
+    min-0: 'Odległość musi mieć wartość większą bądź równą zero'
+  countryCodes:
+    empty: 'Lista kodów kraju nie może być pusta'
+  issuanceTime:
+    null: 'Czas wydania musi mieć wartość inną niż NULL'
+  expirationTime:
+    null: 'Czas wygaśnięcia musi mieć wartość inną niż NULL'
+  roles:
+    empty: 'Lista ról nie może być pusta'
