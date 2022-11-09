@@ -19,13 +19,13 @@ import java.util.List;
 @RequestMapping("/addresses")
 @Validated
 @RequiredArgsConstructor
-class GeocodingController {
+class AddressController {
 
-    private final AddressGeocodingQueryClient queryClient;
+    private final AddressGeocodingQueryClient geocodingQueryClient;
 
     @GetMapping("/routes:calculate")
     RouteDistanceDto getDistanceBetweenCoordinates(@Valid DistanceBetweenCoordinatesQueryDto query) {
-        return queryClient.findDistanceBetweenCoordinates(
+        return geocodingQueryClient.findDistanceBetweenCoordinates(
                 query.getOrigin().getLatitude(), query.getOrigin().getLongitude(),
                 query.getDestination().getLatitude(), query.getDestination().getLongitude(),
                 RouteDistanceDto.class
@@ -34,6 +34,6 @@ class GeocodingController {
 
     @GetMapping("/search")
     List<AddressDto> getAddressesByQuery(@NotBlank String query) {
-        return queryClient.findAllAddressesByQuery(query, AddressDto.class);
+        return geocodingQueryClient.findAllAddressesByQuery(query, AddressDto.class);
     }
 }

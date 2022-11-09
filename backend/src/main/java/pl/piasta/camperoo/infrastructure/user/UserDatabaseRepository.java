@@ -18,8 +18,8 @@ class UserDatabaseRepository implements UserRepository {
     }
 
     @Override
-    public User get(Long id) {
-        return repository.getById(id);
+    public Optional<User> find(Long id) {
+        return repository.findById(id);
     }
 
     @Override

@@ -33,6 +33,11 @@ class JwtTokenAuthenticationProvider implements TokenAuthenticationProvider {
         var dates = jwtProvider.extractDates(token);
         var issuanceTime = dates.getLeft();
         var expirationTime = dates.getRight();
+        var result = new LoginResultDto(
+                issuanceTime.getEpochSecond(),
+                expirationTime.getEpochSecond(),
+                tokenPrincipal.roles()
+        );
         var cookie = ResponseCookie.from(ACCESS_TOKEN, token)
                 .path("/")
                 .domain(domain)
@@ -40,11 +45,6 @@ class JwtTokenAuthenticationProvider implements TokenAuthenticationProvider {
                 .httpOnly(true)
                 .secure(secure)
                 .sameSite("Strict")
-                .build();
-        var result = LoginResultDto.builder()
-                .issuanceTime(issuanceTime.getEpochSecond())
-                .expirationTime(expirationTime.getEpochSecond())
-                .roles(tokenPrincipal.roles())
                 .build();
         return Pair.of(result, cookie);
     }

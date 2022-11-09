@@ -2,7 +2,6 @@ package pl.piasta.camperoo.common.validation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import javax.validation.constraints.NotNull;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -13,9 +12,8 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = LongitudeValidator.class)
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@NotNull
 public @interface Longitude {
-    String message() default "Longitude is not valid";
+    String message() default "{validation.longitude.invalid}";
 
     Class<?>[] groups() default {};
 

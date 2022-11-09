@@ -7,7 +7,6 @@ import pl.piasta.camperoo.address.query.AddressGeocodingQueryClient;
 
 @Configuration
 class GeocodingClientConfiguration {
-
     @Bean
     AddressGeocodingQueryClient geocodingQueryClient(@Value("${GEOAPIFY_API_KEY}") String apiKey) {
         var restTemplate = RestTemplateFactory.create(apiKey);
