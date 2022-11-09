@@ -1,11 +1,12 @@
 package pl.piasta.camperoo.common.domain;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface Repository<T, I> {
     T save(T entity);
 
-    T get(I id);
+    Optional<T> find(I id);
 
     List<T> getAll();
 

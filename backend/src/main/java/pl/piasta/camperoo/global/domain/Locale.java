@@ -23,4 +23,7 @@ public class Locale extends AbstractEntity {
 
     @Column(nullable = false, length = 5)
     private String code;
+
+    @Column(nullable = false)
+    private boolean fallback;
 }

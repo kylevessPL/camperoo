@@ -1,21 +1,23 @@
 package pl.piasta.camperoo.security.dto;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.extern.jackson.Jacksonized;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Data
-@Builder
-@Jacksonized
+@AllArgsConstructor
+@NoArgsConstructor
 public class LoginResultDto {
-    @NotNull
-    Long issuanceTime;
-    @NotNull
-    Long expirationTime;
-    @NotEmpty
-    Set<String> roles;
+    @NotNull(message = "{validation.issuanceTime.null}")
+    private Long issuanceTime;
+
+    @NotNull(message = "{validation.expirationTime.null}")
+    private Long expirationTime;
+
+    @NotEmpty(message = "{validation.roles.empty}")
+    private Set<String> roles;
 }

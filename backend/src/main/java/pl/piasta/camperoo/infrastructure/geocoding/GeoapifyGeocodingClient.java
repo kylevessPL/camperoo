@@ -1,6 +1,7 @@
 package pl.piasta.camperoo.infrastructure.geocoding;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.client.RestTemplate;
 import pl.piasta.camperoo.address.query.AddressGeocodingQueryClient;
 import pl.piasta.camperoo.common.util.CollectionUtils;
@@ -11,6 +12,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
+@Slf4j
 class GeoapifyGeocodingClient implements AddressGeocodingQueryClient, OrderGeocodingClient {
 
     protected final RestTemplate client;

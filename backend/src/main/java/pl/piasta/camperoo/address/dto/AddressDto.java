@@ -2,22 +2,22 @@ package pl.piasta.camperoo.address.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.extern.jackson.Jacksonized;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
-@Builder
-@Jacksonized
+@AllArgsConstructor
+@NoArgsConstructor
 public class AddressDto {
     @JsonAlias("formatted")
-    @NotBlank
+    @NotBlank(message = "{validation.address.blank}")
     private String address;
 
     @JsonUnwrapped
-    @NotNull
+    @NotNull(message = "{validation.coordinates.null}")
     private CoordinatesDto coordinates;
 }

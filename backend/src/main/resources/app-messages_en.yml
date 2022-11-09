@@ -1,0 +1,23 @@
+validation:
+  coordinates:
+    null: 'Coordinates cannot be null'
+    origin:
+      null: 'Origin coordinates cannot be null'
+    destination:
+      null: 'Destination coordinates cannot be null'
+  latitude:
+    null: 'Latitude cannot be null'
+  longitude:
+    null: 'Longtitude cannot be null'
+  address:
+    blank: 'Address cannot be blank'
+  distance:
+    min-0: 'Distance must be greater than or equal to zero'
+  countryCodes:
+    empty: 'Country codes cannot be empty'
+  issuanceTime:
+    null: 'Issuance time cannot be null'
+  expirationTime:
+    null: 'Issuance time cannot be null'
+  roles:
+    empty: 'Roles cannot be empty'

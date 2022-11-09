@@ -1,21 +1,21 @@
 package pl.piasta.camperoo.address.dto;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.extern.jackson.Jacksonized;
+import lombok.NoArgsConstructor;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Data
-@Builder
-@Jacksonized
+@AllArgsConstructor
+@NoArgsConstructor
 public class DistanceBetweenCoordinatesQueryDto {
     @Valid
-    @NotNull
+    @NotNull(message = "{validation.coordinates.origin.null}")
     private CoordinatesDto origin;
 
     @Valid
-    @NotNull
+    @NotNull(message = "{validation.coordinates.destination.null}")
     private CoordinatesDto destination;
 }

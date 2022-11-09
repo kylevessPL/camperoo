@@ -1,9 +1,9 @@
 --
 -- locales
 --
-INSERT INTO locales (id, code)
-VALUES (1, 'pl'),
-       (2, 'en');
+INSERT INTO locales (id, code, fallback)
+VALUES (1, 'pl', FALSE),
+       (2, 'en', TRUE);
 
 --
 -- users

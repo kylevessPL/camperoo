@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 import pl.piasta.camperoo.user.domain.UserRepository;
 
@@ -26,7 +27,8 @@ import static pl.piasta.camperoo.security.TokenAuthenticationProvider.ACCESS_TOK
 class SecurityConfiguration extends AbstractSecurityWebApplicationInitializer {
 
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http, ObjectMapper objectMapper,
+    SecurityFilterChain filterChain(HttpSecurity http,
+                                    ObjectMapper objectMapper,
                                     AuthenticationManager authManager,
                                     TokenAuthenticationProvider authProvider
     ) throws Exception {
@@ -41,6 +43,7 @@ class SecurityConfiguration extends AbstractSecurityWebApplicationInitializer {
                 )
                 .addFilter(new JsonAuthenticationFilter(authManager, objectMapper, authProvider))
                 .addFilterBefore(new TokenAuthenticationFilter(authProvider), JsonAuthenticationFilter.class)
+                .addFilterBefore(new UTF8EncodingFilter(), ChannelProcessingFilter.class)
                 .logout(logout -> logout
                         .logoutUrl("/auth/logout")
                         .addLogoutHandler((request, response, authentication) -> {

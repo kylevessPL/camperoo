@@ -1,6 +1,4 @@
 app:
-  locale:
-    default: en
   security:
     jwt:
       secret: ${JWT_SECRET}
