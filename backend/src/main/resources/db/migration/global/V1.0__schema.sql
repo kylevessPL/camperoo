@@ -3,10 +3,13 @@
 --
 CREATE TABLE IF NOT EXISTS locales
 (
-    id      BIGINT PRIMARY KEY,
-    version BIGINT            NOT NULL DEFAULT 0,
-    code    VARCHAR(5) UNIQUE NOT NULL
+    id       BIGINT PRIMARY KEY,
+    version  BIGINT            NOT NULL DEFAULT 0,
+    code     VARCHAR(5) UNIQUE NOT NULL,
+    fallback BOOLEAN           NOT NULL DEFAULT FALSE
 );
+
+CREATE UNIQUE INDEX ON locales (fallback) WHERE fallback;
 
 --
 -- users
