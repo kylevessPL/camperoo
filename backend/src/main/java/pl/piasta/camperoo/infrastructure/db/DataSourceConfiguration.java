@@ -4,7 +4,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import pl.piasta.camperoo.common.util.AppPropertiesLoader;
+import pl.piasta.camperoo.common.util.PropertiesLoader;
 
 import javax.sql.DataSource;
 
@@ -20,6 +20,6 @@ class DataSourceConfiguration {
 
     @Bean
     HikariConfig hikariConfig() {
-        return new HikariConfig(AppPropertiesLoader.EAGER.load(DS_CONFIG_PROPERTIES));
+        return new HikariConfig(PropertiesLoader.EAGER.load(DS_CONFIG_PROPERTIES));
     }
 }

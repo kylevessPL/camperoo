@@ -1,7 +1,6 @@
-package pl.piasta.camperoo.common.util;
+package pl.piasta.camperoo.common.config;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.i18n.LocaleContext;
 import org.springframework.context.i18n.SimpleTimeZoneAwareLocaleContext;
 import org.springframework.context.i18n.TimeZoneAwareLocaleContext;
@@ -17,8 +16,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@Slf4j
-public class CookieSupportedLocaleResolver extends CookieLocaleResolver {
+class CookieSupportedLocaleResolver extends CookieLocaleResolver {
     private final Locale defaultLocale;
     private final Set<Locale> supportedLocale;
 

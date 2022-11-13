@@ -1,23 +1,21 @@
 package pl.piasta.camperoo.address;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.piasta.camperoo.address.dto.AddressDto;
+import pl.piasta.camperoo.address.dto.AddressesByQueryQueryDto;
 import pl.piasta.camperoo.address.dto.DistanceBetweenCoordinatesQueryDto;
 import pl.piasta.camperoo.address.dto.RouteDistanceDto;
 import pl.piasta.camperoo.address.exception.RouteCalculationException;
 import pl.piasta.camperoo.address.query.AddressGeocodingQueryClient;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @RestController
 @RequestMapping("/addresses")
-@Validated
 @RequiredArgsConstructor
 class AddressController {
 
@@ -33,7 +31,7 @@ class AddressController {
     }
 
     @GetMapping("/search")
-    List<AddressDto> getAddressesByQuery(@NotBlank String query) {
-        return geocodingQueryClient.findAllAddressesByQuery(query, AddressDto.class);
+    List<AddressDto> getAddressesByQuery(@Valid AddressesByQueryQueryDto query) {
+        return geocodingQueryClient.findAllAddressesByQuery(query.getQuery(), AddressDto.class);
     }
 }

@@ -3,6 +3,7 @@ package pl.piasta.camperoo.infrastructure.auth;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.http.ResponseCookie;
+import pl.piasta.camperoo.common.util.ResponseCookieUtils;
 import pl.piasta.camperoo.security.TokenAuthenticationProvider;
 import pl.piasta.camperoo.security.TokenPrincipal;
 import pl.piasta.camperoo.security.dto.LoginResultDto;
@@ -38,14 +39,10 @@ class JwtTokenAuthenticationProvider implements TokenAuthenticationProvider {
                 expirationTime.getEpochSecond(),
                 tokenPrincipal.roles()
         );
-        var cookie = ResponseCookie.from(ACCESS_TOKEN, token)
-                .path("/")
-                .domain(domain)
-                .maxAge(Duration.between(issuanceTime, expirationTime))
-                .httpOnly(true)
-                .secure(secure)
-                .sameSite("Strict")
-                .build();
+        var cookie = ResponseCookieUtils.accessToken(
+                token, Duration.between(issuanceTime, expirationTime),
+                domain, secure
+        );
         return Pair.of(result, cookie);
     }
 }

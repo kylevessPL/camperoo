@@ -1,6 +1,8 @@
 package pl.piasta.camperoo.common.config;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.context.MessageSource;
@@ -11,7 +13,7 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import pl.piasta.camperoo.common.util.AppProfiles.LocalProfile;
-import pl.piasta.camperoo.common.util.AppPropertiesLoader;
+import pl.piasta.camperoo.common.util.PropertiesLoader;
 import ru.maksimvoloshin.utility.YamlResourceBundleMessageSource;
 
 import java.nio.charset.StandardCharsets;
@@ -46,6 +48,8 @@ class AppConfiguration {
     @Bean
     ObjectMapper objectMapper() {
         return Jackson2ObjectMapperBuilder.json()
+                .serializationInclusion(Include.NON_NULL)
+                .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
                 .failOnUnknownProperties(false)
                 .build();
     }
@@ -59,7 +63,7 @@ class AppConfiguration {
         public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
             String[] properties = {APP_CONFIG_PROPERTIES, APP_CONFIG_LOCAL_PROPERTIES};
             var configurer = new PropertySourcesPlaceholderConfigurer();
-            configurer.setProperties(requireNonNull(AppPropertiesLoader.LAZY.load(properties)));
+            configurer.setProperties(requireNonNull(PropertiesLoader.LAZY.load(properties)));
             return configurer;
         }
     }

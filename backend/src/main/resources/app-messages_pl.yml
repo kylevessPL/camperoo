@@ -1,3 +1,16 @@
+ExceptionTranslationFilter:
+  insufficientAuthentication: 'Wymagane jest pełne uwierzytelnienie w celu uzyskania dostępu do zasobu'
+error:
+  common:
+    wrong-old-password: 'Stare hasło jest niepoprawne'
+    password-unchanged: 'Nowe hasło musi się różnić od starego'
+  address:
+    route-calculation-error: 'Nie znaleziono trasy pomiędzy współrzędnymi pochodzenia a przeznaczenia'
+    latitude-out-of-bounds: 'Szerokość geograficzna wykracza poza zakres'
+    longitude-out-of-bounds: 'Długość geograficzna wykracza poza zakres'
+  user:
+    not-found: 'Nie znaleziono użytkownika o parametrze {0} = {1}'
+    email-invalid: 'Adres mailowy jest nieprawidłowy'
 validation:
   coordinates:
     null: 'Współrzędne muszą mieć wartość inną niż NULL'
@@ -7,8 +20,12 @@ validation:
       null: 'Współrzędne przeznaczenia muszą mieć wartość inną niż NULL'
   latitude:
     null: 'Szerokość geograficzna musi mieć wartość inną niż NULL'
+    invalid: 'Szerokość geograficzna jest nieprawidłowa'
   longitude:
     null: 'Długość geograficzna musi mieć wartość inną niż NULL'
+    invalid: 'Długość geograficzna jest nieprawidłowa'
+  query:
+    blank: 'Zapytanie nie może być puste'
   address:
     blank: 'Adres nie może być pusty'
   distance:

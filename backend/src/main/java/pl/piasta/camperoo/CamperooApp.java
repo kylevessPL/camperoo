@@ -18,13 +18,24 @@ public class CamperooApp implements WebApplicationInitializer {
 
     @Override
     public void onStartup(@NonNull ServletContext servletContext) {
+        var applicationContext = createApplicationContext();
+        servletContext.addListener(new ContextLoaderListener(applicationContext));
+        var servlet = servletContext.addServlet("dispatcher", createDispatcher(applicationContext));
+        servlet.setLoadOnStartup(1);
+        servlet.addMapping("/");
+    }
+
+    private AnnotationConfigWebApplicationContext createApplicationContext() {
         var applicationContext = new AnnotationConfigWebApplicationContext();
         setupProfiles(applicationContext.getEnvironment());
         applicationContext.setConfigLocation("pl.piasta.camperoo");
-        servletContext.addListener(new ContextLoaderListener(applicationContext));
-        var servlet = servletContext.addServlet("dispatcher", new DispatcherServlet(applicationContext));
-        servlet.setLoadOnStartup(1);
-        servlet.addMapping("/");
+        return applicationContext;
+    }
+
+    private static DispatcherServlet createDispatcher(AnnotationConfigWebApplicationContext applicationContext) {
+        var dispatcher = new DispatcherServlet(applicationContext);
+        dispatcher.setThrowExceptionIfNoHandlerFound(true);
+        return dispatcher;
     }
 
     private void setupProfiles(ConfigurableEnvironment environment) {

@@ -17,10 +17,10 @@ import java.util.Properties;
 import static java.util.Objects.requireNonNull;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class AppPropertiesLoader {
+public final class PropertiesLoader {
 
-    public static final AppPropertiesLoader LAZY = new AppPropertiesLoader(false);
-    public static final AppPropertiesLoader EAGER = new AppPropertiesLoader(true);
+    public static final PropertiesLoader LAZY = new PropertiesLoader(false);
+    public static final PropertiesLoader EAGER = new PropertiesLoader(true);
 
     private final boolean resolvePlaceholders;
 

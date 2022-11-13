@@ -20,6 +20,8 @@
         <spring-framework.version>5.3.23</spring-framework.version>
         <spring-security.version>5.7.5</spring-security.version>
         <spring-data.version>2021.2.5</spring-data.version>
+        <findbugs-jsr305.version>3.0.2</findbugs-jsr305.version>
+        <suppress-warnings.version>4.0.0-20160619211629</suppress-warnings.version>
         <specification-with-projections.version>2.0.2</specification-with-projections.version>
         <apache-commons.version>54</apache-commons.version>
         <jackson-version>2.13.4.20221013</jackson-version>
@@ -27,7 +29,7 @@
         <log4j.version>2.19.0</log4j.version>
         <slf4j.version>2.0.3</slf4j.version>
         <yaml-properties.version>1.1.3</yaml-properties.version>
-        <flyway.version>9.6.0</flyway.version>
+        <flyway.version>9.7.0</flyway.version>
         <postgresql.version>42.5.0</postgresql.version>
         <hikari.version>5.0.1</hikari.version>
         <hibernate.version>5.6.12.Final</hibernate.version>
@@ -81,8 +83,22 @@
             <version>${specification-with-projections.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>${findbugs-jsr305.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.xn--ho-hia.quality</groupId>
+            <artifactId>suppress-warnings</artifactId>
+            <version>${suppress-warnings.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
@@ -220,6 +236,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler.version}</version>
                 <configuration>
+                    <compilerArgs>--enable-preview</compilerArgs>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.mapstruct</groupId>
