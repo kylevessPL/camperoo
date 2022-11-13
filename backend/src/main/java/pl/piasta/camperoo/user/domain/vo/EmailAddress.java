@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.StandardException;
+import pl.piasta.camperoo.common.exception.ErrorProperty;
 import pl.piasta.camperoo.common.exception.ValidationException;
 
 import java.util.regex.Pattern;
@@ -38,10 +38,13 @@ public class EmailAddress {
         return email;
     }
 
-    @StandardException
     public static class EmailValidationException extends ValidationException {
+        private EmailValidationException(String message) {
+            super(message, ErrorProperty.EMAIL_INVALID);
+        }
+
         public static EmailValidationException regex() {
-            return new EmailValidationException("Email address is not valid");
+            return new EmailValidationException("Email address does not match regex pattern");
         }
     }
 }

@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.StandardException;
+import pl.piasta.camperoo.common.exception.ErrorProperty;
 import pl.piasta.camperoo.common.exception.ValidationException;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -41,15 +41,17 @@ public class Coordinates implements ValueObject {
         return longitude;
     }
 
-    @StandardException(access = AccessLevel.PRIVATE)
     private static class CoordinatesValidationException extends ValidationException {
+        private CoordinatesValidationException(String message, String coordinateType) {
+            super(message, ErrorProperty.COORDINATE_OUT_OF_BOUNDS, coordinateType);
+        }
 
         public static CoordinatesValidationException latitudeOutOfBounds() {
-            return new CoordinatesValidationException("Latitude is out of bounds");
+            return new CoordinatesValidationException("Latitude is out of bounds", "latitude");
         }
 
         public static CoordinatesValidationException longitudeOutOfBounds() {
-            return new CoordinatesValidationException("Longitude is out of bounds");
+            return new CoordinatesValidationException("Longitude is out of bounds", "longitude");
         }
     }
 }
