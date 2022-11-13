@@ -7,8 +7,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ErrorProperty {
     // common
-    WRONG_OLD_PASSWORD("wrong-old-password"),
-    PASSWORD_UNCHANGED("password-unchanged"),
+    WRONG_OLD_PASSWORD("common.wrong-old-password"),
+    PASSWORD_UNCHANGED("common.password-unchanged"),
 
     // address
     ROUTE_CALCULATION_ERROR("address.route-calculation-error"),
