@@ -6,7 +6,7 @@ import org.flywaydb.core.Flyway;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import pl.piasta.camperoo.common.util.AppProfiles.LocalProfile;
-import pl.piasta.camperoo.common.util.AppPropertiesLoader;
+import pl.piasta.camperoo.common.util.PropertiesLoader;
 
 import javax.sql.DataSource;
 
@@ -26,7 +26,7 @@ class FlywayConfiguration {
             String[] properties = {FLYWAY_CONFIG_PROPERTIES, FLYWAY_CONFIG_LOCAL_PROPERTIES};
             return Flyway.configure()
                     .dataSource(dataSource)
-                    .configuration(AppPropertiesLoader.EAGER.load(properties))
+                    .configuration(PropertiesLoader.EAGER.load(properties))
                     .load();
         }
     }

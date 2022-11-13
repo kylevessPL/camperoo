@@ -10,7 +10,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import pl.piasta.camperoo.common.util.AppPropertiesLoader;
+import pl.piasta.camperoo.common.util.PropertiesLoader;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -29,7 +29,7 @@ class JpaConfiguration {
         entityManagerFactoryBean.setDataSource(dataSource);
         entityManagerFactoryBean.setPackagesToScan("pl.piasta.camperoo.**.domain");
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        entityManagerFactoryBean.setJpaProperties(AppPropertiesLoader.EAGER.load(JPA_CONFIG_PROPERTIES));
+        entityManagerFactoryBean.setJpaProperties(PropertiesLoader.EAGER.load(JPA_CONFIG_PROPERTIES));
         return entityManagerFactoryBean;
     }
 

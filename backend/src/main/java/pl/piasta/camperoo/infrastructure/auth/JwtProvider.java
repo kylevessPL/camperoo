@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import static de.xn__ho_hia.quality.suppression.CompilerWarnings.UNCHECKED;
+
 @Slf4j
 class JwtProvider {
     private static final String ID = "id";
@@ -47,15 +49,15 @@ class JwtProvider {
                     .setSigningKey(secret)
                     .build()
                     .parseClaimsJws(token);
-            log.info(String.format("Valid authentication token: %s", token));
+            logger.debug(String.format("Valid authentication token: %s", token));
             return true;
         } catch (JwtException ex) {
-            log.warn(String.format("Invalid authentication token: %s => %s", token, ex.getMessage()));
+            logger.warn(String.format("Invalid authentication token: %s => %s", token, ex.getMessage()));
             return false;
         }
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings(UNCHECKED)
     public TokenPrincipal extractPrincipal(String token) {
         var claims = Jwts.parserBuilder()
                 .setSigningKey(secret)
