@@ -1,20 +1,24 @@
 package pl.piasta.camperoo.infrastructure.geocoding;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.ResolvableType;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 import pl.piasta.camperoo.address.query.AddressGeocodingQueryClient;
 import pl.piasta.camperoo.common.util.CollectionUtils;
+import pl.piasta.camperoo.infrastructure.util.RestTemplateUtils;
 import pl.piasta.camperoo.order.domain.OrderGeocodingClient;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@RequiredArgsConstructor
-@Slf4j
-class GeoapifyGeocodingClient implements AddressGeocodingQueryClient, OrderGeocodingClient {
+import static java.util.Objects.requireNonNull;
 
+@RequiredArgsConstructor
+class GeoapifyGeocodingClient implements AddressGeocodingQueryClient, OrderGeocodingClient {
     protected final RestTemplate client;
 
     @Override
@@ -31,8 +35,8 @@ class GeoapifyGeocodingClient implements AddressGeocodingQueryClient, OrderGeoco
                 GeocodingParams.AVOID, "tolls|ferries",
                 GeocodingParams.LIMIT, 1
         );
-        var uri = GeocodingUtils.buildUri(GeocodingEndpoints.ROUTING, params);
-        var response = GeocodingUtils.getForItemType(client, uri, responseType);
+        var uri = RestTemplateUtils.buildUri(GeocodingEndpoints.ROUTING, params);
+        var response = getForItemType(client, uri, responseType);
         return CollectionUtils.emptyIfNull(response.results())
                 .stream()
                 .findFirst();
@@ -44,12 +48,20 @@ class GeoapifyGeocodingClient implements AddressGeocodingQueryClient, OrderGeoco
                 GeocodingParams.QUERY, query,
                 GeocodingParams.FILTER, "countrycode:pl"
         );
-        var uri = GeocodingUtils.buildUri(GeocodingEndpoints.AUTOCOMPLETE, params);
-        var response = GeocodingUtils.getForItemType(client, uri, responseType);
+        var uri = RestTemplateUtils.buildUri(GeocodingEndpoints.AUTOCOMPLETE, params);
+        var response = getForItemType(client, uri, responseType);
         return CollectionUtils.emptyIfNull(response.results());
     }
 
     private String toWaypoint(double latitude, double longitude) {
         return latitude + "," + longitude;
+    }
+
+    private <T> GeocodingResponse<T> getForItemType(RestTemplate restTemplate, URI uri, Class<T> itemType) {
+        ResolvableType resolvableType = ResolvableType.forClassWithGenerics(GeocodingResponse.class, itemType);
+        ParameterizedTypeReference<GeocodingResponse<T>> responseType =
+                ParameterizedTypeReference.forType(resolvableType.getType());
+        var response = restTemplate.exchange(uri, HttpMethod.GET, null, responseType);
+        return requireNonNull(response.getBody());
     }
 }
