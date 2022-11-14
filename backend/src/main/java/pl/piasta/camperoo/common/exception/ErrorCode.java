@@ -10,6 +10,9 @@ public enum ErrorCode {
     PASSWORD_UNCHANGED,
     FILE_ERROR,
 
+    // reCAPTCHA
+    RECAPTCHA_VALIDATION_ERROR,
+
     // address
     ROUTE_CALCULATION_ERROR,
 

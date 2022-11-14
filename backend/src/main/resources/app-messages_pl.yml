@@ -1,6 +1,10 @@
 ExceptionTranslationFilter:
   insufficientAuthentication: 'Wymagane jest pełne uwierzytelnienie w celu uzyskania dostępu do zasobu'
 error:
+  captcha:
+    response-token-invalid: 'Token ReCAPTCHA jest nieprawidłowy'
+    response-token-revoked: 'Token ReCAPTCHA został już użyty lub wygasł'
+    generic: 'Nie udało się zweryfikować tokenu reCAPTCHA'
   common:
     wrong-old-password: 'Stare hasło jest niepoprawne'
     password-unchanged: 'Nowe hasło musi się różnić od starego'

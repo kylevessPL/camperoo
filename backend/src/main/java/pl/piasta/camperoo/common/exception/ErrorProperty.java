@@ -10,6 +10,11 @@ public enum ErrorProperty {
     WRONG_OLD_PASSWORD("common.wrong-old-password"),
     PASSWORD_UNCHANGED("common.password-unchanged"),
 
+    // reCAPTCHA
+    CAPTCHA_RESPONSE_TOKEN_INVALID("captcha.response-token-invalid"),
+    CAPTCHA_RESPONSE_TOKEN_REVOKED("captcha.response-token-revoked"),
+    CAPTCHA_GENERIC_ERROR("captcha.generic"),
+
     // address
     ROUTE_CALCULATION_ERROR("address.route-calculation-error"),
     COORDINATE_OUT_OF_BOUNDS("address.coordinate-out-of-bounds"),
