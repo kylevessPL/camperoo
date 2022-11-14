@@ -10,7 +10,6 @@ import pl.piasta.camperoo.address.dto.DistanceBetweenCoordinatesQueryDto;
 import pl.piasta.camperoo.address.dto.RouteDistanceDto;
 import pl.piasta.camperoo.address.exception.RouteCalculationException;
 import pl.piasta.camperoo.address.query.AddressGeocodingQueryClient;
-import pl.piasta.camperoo.user.domain.CaptchaVerificationClient;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -21,7 +20,6 @@ import java.util.List;
 class AddressController {
 
     private final AddressGeocodingQueryClient geocodingQueryClient;
-    private final CaptchaVerificationClient captchaVerificationClient;
 
     @GetMapping("/routes:calculate")
     RouteDistanceDto getDistanceBetweenCoordinates(@Valid DistanceBetweenCoordinatesQueryDto query) {
