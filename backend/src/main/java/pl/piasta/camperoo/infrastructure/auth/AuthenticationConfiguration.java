@@ -7,7 +7,6 @@ import pl.piasta.camperoo.security.TokenAuthenticationProvider;
 
 @Configuration
 class AuthenticationConfiguration {
-
     @Bean
     TokenAuthenticationProvider tokenAuthenticationProvider(
             @Value("${app.security.jwt.secret}") String jwtSecret,
