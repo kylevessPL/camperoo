@@ -25,11 +25,11 @@ public class RoleDescription extends AbstractEntity {
     @Column(nullable = false)
     private String description;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "locale_id", nullable = false)
     private Locale locale;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 }

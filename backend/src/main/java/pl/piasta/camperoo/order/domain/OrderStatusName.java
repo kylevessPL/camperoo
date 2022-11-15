@@ -25,11 +25,11 @@ public class OrderStatusName extends AbstractEntity {
     @Column(nullable = false, length = 128)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "locale_id", nullable = false)
     private Locale locale;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "order_status_id", nullable = false)
     private OrderStatus orderStatus;
 }

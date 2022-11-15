@@ -43,11 +43,19 @@ public class Product extends AbstractEntity {
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private Set<ProductDescription> descriptions;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "category_id", nullable = false)
     private ProductCategory category;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id")
     private File image;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private boolean limited = true;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private Integer amount = 0;
 }

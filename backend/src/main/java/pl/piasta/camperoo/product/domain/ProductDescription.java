@@ -36,11 +36,11 @@ public class ProductDescription extends AbstractEntity {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "locale_id", nullable = false)
     private Locale locale;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 }

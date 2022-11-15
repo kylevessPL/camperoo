@@ -40,15 +40,15 @@ public class Payment extends AbstractEntity {
     @Column
     private Instant statusChangeDate;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "type_id", nullable = false, insertable = false, updatable = false)
     private PaymentType type;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "status_id", nullable = false)
     private PaymentStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 

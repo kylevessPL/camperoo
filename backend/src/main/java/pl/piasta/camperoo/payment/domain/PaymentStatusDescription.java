@@ -25,11 +25,11 @@ public class PaymentStatusDescription extends AbstractEntity {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "locale_id", nullable = false)
     private Locale locale;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "payment_status_id", nullable = false)
     private PaymentStatus paymentStatus;
 }

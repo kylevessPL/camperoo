@@ -36,11 +36,11 @@ public class DiscountDescription extends AbstractEntity {
     @Column(nullable = false)
     private String description;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "locale_id", nullable = false)
     private Locale locale;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "discount_id", nullable = false)
     private Discount discount;
 }
