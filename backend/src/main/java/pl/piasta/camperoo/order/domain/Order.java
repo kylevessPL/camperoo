@@ -9,9 +9,9 @@ import pl.piasta.camperoo.common.domain.AbstractEntity;
 import pl.piasta.camperoo.delivery.domain.DeliveryType;
 import pl.piasta.camperoo.discount.domain.Discount;
 import pl.piasta.camperoo.file.domain.File;
-import pl.piasta.camperoo.product.domain.Product;
 import pl.piasta.camperoo.user.domain.User;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,9 +19,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -64,7 +63,7 @@ public class Order extends AbstractEntity {
     @Column
     private String notes;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "status_id", nullable = false)
     private OrderStatus status;
 
@@ -76,19 +75,15 @@ public class Order extends AbstractEntity {
     @JoinColumn(name = "invoice_id", unique = true)
     private File invoice;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "delivery_type_id", nullable = false)
     private DeliveryType deliveryType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Builder.Default
-    @ManyToMany
-    @JoinTable(
-            name = "orders_products",
-            joinColumns = @JoinColumn(name = "order_id", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "product_id", nullable = false))
-    private Set<Product> products = new HashSet<>();
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private Set<OrdersProducts> orderProducts = new HashSet<>();
 }
