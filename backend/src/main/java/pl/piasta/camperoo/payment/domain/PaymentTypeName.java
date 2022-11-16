@@ -3,7 +3,7 @@ package pl.piasta.camperoo.payment.domain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import pl.piasta.camperoo.common.domain.AbstractEntity;
+import pl.piasta.camperoo.common.domain.NameOrientedEntity;
 import pl.piasta.camperoo.global.domain.Locale;
 
 import javax.persistence.Column;
@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "payment_type_names")
-public class PaymentTypeName extends AbstractEntity {
+public class PaymentTypeName extends NameOrientedEntity<Locale> {
     @Id
     private Long id;
 

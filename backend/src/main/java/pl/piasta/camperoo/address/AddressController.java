@@ -18,7 +18,6 @@ import java.util.List;
 @RequestMapping("/addresses")
 @RequiredArgsConstructor
 class AddressController {
-
     private final AddressGeocodingQueryClient geocodingQueryClient;
 
     @GetMapping("/routes:calculate")

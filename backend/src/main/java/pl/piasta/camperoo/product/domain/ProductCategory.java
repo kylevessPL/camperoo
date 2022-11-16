@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
+import pl.piasta.camperoo.common.domain.LocalizableDescription;
+import pl.piasta.camperoo.common.domain.LocalizableName;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +26,8 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "product_categories")
-public class ProductCategory extends AbstractEntity {
+public class ProductCategory extends AbstractEntity
+        implements LocalizableName<ProductCategoryName>, LocalizableDescription<ProductCategoryDescription> {
     @Id
     @SequenceGenerator(name = "gen_product_categories_id",
                        sequenceName = "seq_product_categories_id",

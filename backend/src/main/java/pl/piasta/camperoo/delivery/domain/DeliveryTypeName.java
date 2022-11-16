@@ -3,7 +3,7 @@ package pl.piasta.camperoo.delivery.domain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import pl.piasta.camperoo.common.domain.AbstractEntity;
+import pl.piasta.camperoo.common.domain.NameOrientedEntity;
 import pl.piasta.camperoo.global.domain.Locale;
 
 import javax.persistence.Column;
@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "delivery_type_names")
-public class DeliveryTypeName extends AbstractEntity {
+public class DeliveryTypeName extends NameOrientedEntity<Locale> {
     @Id
     private Long id;
 

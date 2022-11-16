@@ -184,7 +184,7 @@ CREATE TABLE IF NOT EXISTS products
     price       NUMERIC(12, 2)       NOT NULL,
     image_id    BIGINT REFERENCES files (id),
     limited     BOOLEAN DEFAULT TRUE NOT NULL,
-    amount      INT     DEFAULT 0    NOT NULL CHECK (amount >= 0)
+    quantity INT DEFAULT 0 NOT NULL CHECK (quantity >= 0)
 );
 
 CREATE SEQUENCE IF NOT EXISTS seq_products_id;
@@ -227,6 +227,7 @@ CREATE TABLE IF NOT EXISTS discounts
     id              BIGINT PRIMARY KEY,
     version         BIGINT                   NOT NULL DEFAULT 0,
     code            VARCHAR(60) UNIQUE       NOT NULL,
+    value           INT                      NOT NULL CHECK (value BETWEEN 1 AND 100),
     expiration_date TIMESTAMP WITH TIME ZONE NOT NULL,
     active          BOOLEAN                  NOT NULL DEFAULT TRUE
 );
@@ -351,7 +352,7 @@ CREATE TABLE IF NOT EXISTS orders_products
     order_id   BIGINT NOT NULL REFERENCES orders (id),
     product_id BIGINT NOT NULL REFERENCES products (id),
     version    BIGINT NOT NULL DEFAULT 0,
-    amount     INT    NOT NULL CHECK (amount >= 0),
+    quantity   INT    NOT NULL CHECK (quantity >= 0),
     PRIMARY KEY (order_id, product_id)
 );
 

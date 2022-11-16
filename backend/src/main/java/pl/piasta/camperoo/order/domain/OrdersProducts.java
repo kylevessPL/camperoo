@@ -42,7 +42,7 @@ public class OrdersProducts {
     private Product product;
 
     @Column(nullable = false)
-    private Integer amount;
+    private Integer quantity;
 
     @Override
     public boolean equals(Object o) {

@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
+import pl.piasta.camperoo.common.domain.LocalizableDescription;
 import pl.piasta.camperoo.user.domain.vo.RoleName;
 
 import javax.persistence.Column;
@@ -20,7 +21,7 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "roles")
-public class Role extends AbstractEntity {
+public class Role extends AbstractEntity implements LocalizableDescription<RoleDescription> {
     @Id
     private Long id;
 

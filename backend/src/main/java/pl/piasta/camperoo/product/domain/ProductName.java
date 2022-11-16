@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import pl.piasta.camperoo.common.domain.AbstractEntity;
+import pl.piasta.camperoo.common.domain.NameOrientedEntity;
 import pl.piasta.camperoo.global.domain.Locale;
 
 import javax.persistence.Column;
@@ -25,7 +25,7 @@ import javax.persistence.Table;
 @Builder
 @Entity
 @Table(name = "product_names")
-public class ProductName extends AbstractEntity {
+public class ProductName extends NameOrientedEntity<Locale> {
     @Id
     @SequenceGenerator(name = "gen_product_names_id", sequenceName = "seq_product_names_id", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_product_names_id")

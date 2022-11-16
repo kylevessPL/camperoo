@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
+import pl.piasta.camperoo.common.domain.LocalizableDescription;
+import pl.piasta.camperoo.common.domain.LocalizableName;
 import pl.piasta.camperoo.file.domain.File;
 
 import javax.persistence.Column;
@@ -28,7 +30,8 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "products")
-public class Product extends AbstractEntity {
+public class Product extends AbstractEntity
+        implements LocalizableName<ProductName>, LocalizableDescription<ProductDescription> {
     @Id
     @SequenceGenerator(name = "gen_products_id", sequenceName = "seq_products_id", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_products_id")
@@ -57,5 +60,5 @@ public class Product extends AbstractEntity {
 
     @Builder.Default
     @Column(nullable = false)
-    private Integer amount = 0;
+    private Integer quantity = 0;
 }

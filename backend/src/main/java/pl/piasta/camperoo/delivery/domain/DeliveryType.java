@@ -4,6 +4,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
+import pl.piasta.camperoo.common.domain.LocalizableDescription;
+import pl.piasta.camperoo.common.domain.LocalizableName;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +19,8 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "delivery_types")
-public class DeliveryType extends AbstractEntity {
+public class DeliveryType extends AbstractEntity
+        implements LocalizableName<DeliveryTypeName>, LocalizableDescription<DeliveryTypeDescription> {
     public static final Long DOOR_TO_DOOR = 1L;
     public static final Long SELF_PICKUP = 2L;
 
