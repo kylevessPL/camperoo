@@ -27,7 +27,7 @@ import pl.piasta.camperoo.common.util.ErrorHandlingUtils;
 import javax.validation.ConstraintViolationException;
 
 @ControllerAdvice
-@Setter(onMethod = @__(@Override))
+@Setter(onMethod_ = @Override, onParam_ = @NonNull)
 class AppErrorHandler extends ResponseEntityExceptionHandler implements MessageSourceAware {
     private MessageSource messageSource;
 
