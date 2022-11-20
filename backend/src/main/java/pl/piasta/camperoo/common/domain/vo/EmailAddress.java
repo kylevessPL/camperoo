@@ -1,4 +1,4 @@
-package pl.piasta.camperoo.user.domain.vo;
+package pl.piasta.camperoo.common.domain.vo;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;

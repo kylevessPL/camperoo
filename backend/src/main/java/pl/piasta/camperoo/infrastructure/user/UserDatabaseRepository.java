@@ -1,9 +1,9 @@
 package pl.piasta.camperoo.infrastructure.user;
 
 import lombok.RequiredArgsConstructor;
+import pl.piasta.camperoo.common.domain.vo.EmailAddress;
 import pl.piasta.camperoo.user.domain.User;
 import pl.piasta.camperoo.user.domain.UserRepository;
-import pl.piasta.camperoo.user.domain.vo.EmailAddress;
 
 import java.util.List;
 import java.util.Optional;

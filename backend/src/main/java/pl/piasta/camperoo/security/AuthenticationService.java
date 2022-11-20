@@ -5,10 +5,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
+import pl.piasta.camperoo.common.domain.vo.EmailAddress;
 import pl.piasta.camperoo.user.domain.Role;
 import pl.piasta.camperoo.user.domain.User;
 import pl.piasta.camperoo.user.domain.UserRepository;
-import pl.piasta.camperoo.user.domain.vo.EmailAddress;
 
 import java.util.stream.Collectors;
 
