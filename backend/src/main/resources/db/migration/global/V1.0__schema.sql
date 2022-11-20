@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS users
 (
     id            BIGINT PRIMARY KEY,
     version       BIGINT       NOT NULL DEFAULT 0,
-    email         VARCHAR(255) NOT NULL UNIQUE,
-    password_hash VARCHAR(73)  NOT NULL,
+    email         VARCHAR(255) NOT NULL UNIQUE CHECK (LENGTH(email) > 0),
+    password_hash VARCHAR(73)  NOT NULL CHECK (LENGTH(password_hash) > 0),
     active        BOOLEAN      NOT NULL DEFAULT FALSE
 );
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS persons
     address_two  VARCHAR(255),
     zip_code     VARCHAR(6)   NOT NULL,
     city         VARCHAR(60)  NOT NULL,
-    phone_number VARCHAR(9)   NOT NULL,
+    phone_number VARCHAR(9)   NOT NULL CHECK (LENGTH(phone_number) = 9),
     user_id      BIGINT       NOT NULL UNIQUE REFERENCES users (id)
 );
 
@@ -108,6 +108,7 @@ CREATE TABLE IF NOT EXISTS files
 (
     id           BIGINT PRIMARY KEY,
     version      BIGINT       NOT NULL DEFAULT 0,
+    uuid         UUID         NOT NULL DEFAULT uuid_generate_v4(),
     name         VARCHAR(255) NOT NULL,
     content_type VARCHAR(255) NOT NULL,
     content      BYTEA        NOT NULL
@@ -116,17 +117,18 @@ CREATE TABLE IF NOT EXISTS files
 CREATE SEQUENCE IF NOT EXISTS seq_files_id;
 
 --
--- orders
+-- company_branches
 --
 CREATE TABLE IF NOT EXISTS company_branches
 (
-    id        BIGINT PRIMARY KEY,
-    version   BIGINT          NOT NULL DEFAULT 0,
-    name      VARCHAR(60)     NOT NULL,
-    address   VARCHAR(255)    NOT NULL,
-    latitude  NUMERIC(17, 15) NOT NULL,
-    longitude NUMERIC(17, 15) NOT NULL,
-    notes     VARCHAR(255)
+    id           BIGINT PRIMARY KEY,
+    version      BIGINT          NOT NULL DEFAULT 0,
+    name         VARCHAR(60)     NOT NULL,
+    address      VARCHAR(255)    NOT NULL,
+    latitude     NUMERIC(17, 15) NOT NULL CHECK (latitude BETWEEN -90 AND 90),
+    longitude    NUMERIC(17, 15) NOT NULL CHECK (longitude BETWEEN -180 AND 180),
+    email        VARCHAR(255)    NOT NULL CHECK (LENGTH(email) > 0),
+    phone_number VARCHAR(9) CHECK (LENGTH(phone_number) = 9)
 );
 
 CREATE SEQUENCE IF NOT EXISTS seq_company_branches_id;
@@ -181,10 +183,10 @@ CREATE TABLE IF NOT EXISTS products
     id          BIGINT PRIMARY KEY,
     version     BIGINT               NOT NULL DEFAULT 0,
     category_id BIGINT               NOT NULL REFERENCES product_categories (id),
-    price       NUMERIC(12, 2)       NOT NULL,
+    price       NUMERIC(12, 2)       NOT NULL CHECK (price >= 0),
     image_id    BIGINT REFERENCES files (id),
     limited     BOOLEAN DEFAULT TRUE NOT NULL,
-    quantity INT DEFAULT 0 NOT NULL CHECK (quantity >= 0)
+    quantity    INT     DEFAULT 0    NOT NULL CHECK (quantity >= 0)
 );
 
 CREATE SEQUENCE IF NOT EXISTS seq_products_id;
@@ -225,11 +227,11 @@ CREATE SEQUENCE IF NOT EXISTS seq_product_descriptions_id;
 CREATE TABLE IF NOT EXISTS discounts
 (
     id              BIGINT PRIMARY KEY,
-    version         BIGINT                   NOT NULL DEFAULT 0,
-    code            VARCHAR(60) UNIQUE       NOT NULL,
-    value           INT                      NOT NULL CHECK (value BETWEEN 1 AND 100),
-    expiration_date TIMESTAMP WITH TIME ZONE NOT NULL,
-    active          BOOLEAN                  NOT NULL DEFAULT TRUE
+    version         BIGINT             NOT NULL DEFAULT 0,
+    code            VARCHAR(60) UNIQUE NOT NULL,
+    value           INT                NOT NULL CHECK (value BETWEEN 1 AND 100),
+    expiration_date TIMESTAMP WITH TIME ZONE,
+    active          BOOLEAN            NOT NULL DEFAULT TRUE
 );
 
 CREATE SEQUENCE IF NOT EXISTS seq_discounts_id;
@@ -328,15 +330,18 @@ CREATE TABLE IF NOT EXISTS orders
 (
     id                 BIGINT PRIMARY KEY,
     version            BIGINT                   NOT NULL DEFAULT 0,
+    uuid               UUID                     NOT NULL DEFAULT uuid_generate_v4(),
     placement_date     TIMESTAMP WITH TIME ZONE NOT NULL,
     status_change_date TIMESTAMP WITH TIME ZONE,
-    total_price        NUMERIC(12, 2)           NOT NULL,
+    subtotal_price     NUMERIC(12, 2)           NOT NULL CHECK (total_price >= 0),
+    total_price        NUMERIC(12, 2)           NOT NULL CHECK (total_price >= 0),
     discount_id        BIGINT REFERENCES discounts (id),
     address            VARCHAR(255)             NOT NULL,
-    latitude           NUMERIC(17, 15)          NOT NULL,
-    longitude          NUMERIC(17, 15)          NOT NULL,
+    latitude           NUMERIC(17, 15)          NOT NULL CHECK (latitude BETWEEN -90 AND 90),
+    longitude          NUMERIC(17, 15)          NOT NULL CHECK (latitude BETWEEN -180 AND 180),
     notes              VARCHAR(255),
     invoice_id         BIGINT UNIQUE REFERENCES files (id),
+    company_branch_id  BIGINT                   NOT NULL REFERENCES company_branches (id),
     delivery_type_id   BIGINT                   NOT NULL REFERENCES delivery_types (id),
     status_id          BIGINT                   NOT NULL REFERENCES order_statuses (id),
     user_id            BIGINT                   NOT NULL REFERENCES users (id)
@@ -349,10 +354,11 @@ CREATE SEQUENCE IF NOT EXISTS seq_orders_id;
 --
 CREATE TABLE IF NOT EXISTS orders_products
 (
-    order_id   BIGINT NOT NULL REFERENCES orders (id),
-    product_id BIGINT NOT NULL REFERENCES products (id),
-    version    BIGINT NOT NULL DEFAULT 0,
-    quantity   INT    NOT NULL CHECK (quantity >= 0),
+    order_id    BIGINT         NOT NULL REFERENCES orders (id),
+    product_id  BIGINT         NOT NULL REFERENCES products (id),
+    version     BIGINT         NOT NULL DEFAULT 0,
+    quantity    INT            NOT NULL CHECK (quantity >= 0),
+    total_price NUMERIC(12, 2) NOT NULL CHECK (total_price >= 0),
     PRIMARY KEY (order_id, product_id)
 );
 
