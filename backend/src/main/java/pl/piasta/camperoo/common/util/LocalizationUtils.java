@@ -1,12 +1,12 @@
 package pl.piasta.camperoo.common.util;
 
 import lombok.experimental.UtilityClass;
-import org.springframework.context.i18n.LocaleContextHolder;
 import pl.piasta.camperoo.common.domain.DescriptionOrientedEntity;
 import pl.piasta.camperoo.common.domain.NameOrientedEntity;
 import pl.piasta.camperoo.global.domain.Locale;
 
 import java.util.Comparator;
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -22,16 +22,34 @@ public class LocalizationUtils {
         return Comparator.comparing(extractor, Comparator.reverseOrder());
     }
 
-    public <T extends NameOrientedEntity<Locale>> boolean currentLocaleFilter(T name) {
-        return currentLocaleFilter(name.getLocale());
+    public boolean ofLocaleOrDefault(Map.Entry<java.util.Locale, Boolean> entry, java.util.Locale locale) {
+        return isLocaleOrDefault(entry, locale);
     }
 
-    public <T extends DescriptionOrientedEntity<Locale>> boolean currentLocaleFilter(T description) {
-        return currentLocaleFilter(description.getLocale());
+    public <T extends NameOrientedEntity<Locale>> boolean ofLocaleOrDefault(T name, java.util.Locale locale) {
+        return isLocaleOrDefault(name.getLocale(), locale);
     }
 
-    private boolean currentLocaleFilter(Locale locale) {
-        var compared = java.util.Locale.forLanguageTag(locale.getCode());
-        return locale.isFallback() || Objects.equals(compared, LocaleContextHolder.getLocale());
+    public <T extends DescriptionOrientedEntity<Locale>> boolean ofLocaleOrDefault(
+            T description,
+            java.util.Locale locale
+    ) {
+        return isLocaleOrDefault(description.getLocale(), locale);
+    }
+
+    private boolean isLocaleOrDefault(Locale object, java.util.Locale locale) {
+        var compared = java.util.Locale.forLanguageTag(object.getCode());
+        var fallback = object.isFallback();
+        return isLocaleOrDefault(compared, locale, fallback);
+    }
+
+    private boolean isLocaleOrDefault(Map.Entry<java.util.Locale, Boolean> object, java.util.Locale locale) {
+        var compared = object.getKey();
+        var fallback = object.getValue();
+        return isLocaleOrDefault(compared, locale, fallback);
+    }
+
+    private boolean isLocaleOrDefault(java.util.Locale compared, java.util.Locale locale, boolean fallback) {
+        return fallback || Objects.equals(compared, locale);
     }
 }

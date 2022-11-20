@@ -31,4 +31,3 @@ class LocaleDatabaseRepository implements LocaleRepository {
         repository.deleteById(id);
     }
 }
-

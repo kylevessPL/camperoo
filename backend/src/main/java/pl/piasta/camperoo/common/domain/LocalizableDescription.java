@@ -8,11 +8,11 @@ import java.util.Set;
 public interface LocalizableDescription<T extends DescriptionOrientedEntity<Locale>> {
     Set<T> getDescriptions();
 
-    default T getLocalizedDescription() {
+    default T getLocalizedDescription(java.util.Locale locale) {
         return getDescriptions()
                 .stream()
                 .sorted(LocalizationUtils.DESCRIPTION_DEFAULT_LAST_COMPARATOR)
-                .filter(LocalizationUtils::currentLocaleFilter)
+                .filter(e -> LocalizationUtils.ofLocaleOrDefault(e, locale))
                 .findFirst()
                 .orElse(null);
     }
