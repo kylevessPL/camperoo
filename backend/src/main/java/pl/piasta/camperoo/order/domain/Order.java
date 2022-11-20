@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import pl.piasta.camperoo.branch.domain.CompanyBranch;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
 import pl.piasta.camperoo.delivery.domain.DeliveryType;
 import pl.piasta.camperoo.discount.domain.Discount;
@@ -28,6 +29,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -42,11 +44,17 @@ public class Order extends AbstractEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_orders_id")
     private Long id;
 
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID uuid;
+
     @Column(nullable = false)
     private Instant placementDate;
 
     @Column
     private Instant statusChangeDate;
+
+    @Column(nullable = false, precision = 2)
+    private BigDecimal subtotalPrice;
 
     @Column(nullable = false, precision = 2)
     private BigDecimal totalPrice;
@@ -76,6 +84,10 @@ public class Order extends AbstractEntity {
     private File invoice;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "company_branch_id", nullable = false)
+    private CompanyBranch companyBranch;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "delivery_type_id", nullable = false)
     private DeliveryType deliveryType;
 
@@ -85,5 +97,5 @@ public class Order extends AbstractEntity {
 
     @Builder.Default
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private Set<OrdersProducts> orderProducts = new HashSet<>();
+    private Set<OrderProduct> orderProducts = new HashSet<>();
 }

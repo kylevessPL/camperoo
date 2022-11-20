@@ -39,7 +39,6 @@ public class Discount extends AbstractEntity implements LocalizableDescription<D
     @Column(nullable = false)
     private Integer value;
 
-    @Column(nullable = false)
     private Instant expirationDate;
 
     @Builder.Default

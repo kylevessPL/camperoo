@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Embeddable
 @EqualsAndHashCode
-public class OrdersProductsPK implements Serializable {
+public class OrderProductPK implements Serializable {
     @Column(nullable = false)
     private Long orderId;
 

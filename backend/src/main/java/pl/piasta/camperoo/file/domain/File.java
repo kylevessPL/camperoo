@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import java.util.UUID;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -28,6 +29,9 @@ public class File extends AbstractEntity {
     @SequenceGenerator(name = "gen_files_id", sequenceName = "seq_files_id", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_files_id")
     private Long id;
+
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID uuid;
 
     @Column(nullable = false)
     private String name;

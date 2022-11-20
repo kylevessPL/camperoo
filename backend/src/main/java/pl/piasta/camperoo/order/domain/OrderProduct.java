@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Getter
@@ -24,9 +25,9 @@ import java.util.Objects;
 @Builder
 @Entity
 @Table(name = "orders_products")
-public class OrdersProducts {
+public class OrderProduct {
     @EmbeddedId
-    private OrdersProductsPK id;
+    private OrderProductPK id;
 
     @Version
     private Long version;
@@ -44,9 +45,12 @@ public class OrdersProducts {
     @Column(nullable = false)
     private Integer quantity;
 
+    @Column(nullable = false, precision = 2)
+    private BigDecimal totalPrice;
+
     @Override
     public boolean equals(Object o) {
-        return this == o || o instanceof OrdersProducts ordersProducts && Objects.equals(id, ordersProducts.getId());
+        return this == o || o instanceof OrderProduct orderProduct && Objects.equals(id, orderProduct.getId());
     }
 
     @Override
