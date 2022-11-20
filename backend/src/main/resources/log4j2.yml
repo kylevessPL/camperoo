@@ -12,6 +12,10 @@ Configuration:
       AppenderRef:
         - ref: ConsoleAppender
     Logger:
+      - name: com.zaxxer.hikari.pool
+        level: warn
+        AppenderRef:
+          - ref: ConsoleAppender
       - name: org.hibernate.SQL
         level: debug
         AppenderRef:
