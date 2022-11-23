@@ -6,7 +6,7 @@ import java.util.Optional;
 public interface Repository<T, I> {
     T save(T entity);
 
-    Optional<T> find(I id);
+    Optional<T> get(I id);
 
     List<T> getAll();
 

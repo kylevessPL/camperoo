@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -110,7 +111,8 @@ public class ErrorHandlingUtils {
         private int status;
         private String error;
         private String message;
-        private Set<SingleError> errors;
+        @Builder.Default
+        private Set<SingleError> errors = new HashSet<>();
         private String path;
     }
 

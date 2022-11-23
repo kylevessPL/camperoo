@@ -10,6 +10,7 @@ import pl.piasta.camperoo.common.domain.AbstractEntity;
 import pl.piasta.camperoo.delivery.domain.DeliveryType;
 import pl.piasta.camperoo.discount.domain.Discount;
 import pl.piasta.camperoo.file.domain.File;
+import pl.piasta.camperoo.payment.domain.Payment;
 import pl.piasta.camperoo.user.domain.User;
 
 import javax.persistence.CascadeType;
@@ -23,11 +24,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -96,6 +101,15 @@ public class Order extends AbstractEntity {
     private User user;
 
     @Builder.Default
+    @OrderBy("deadline DESC")
+    @OneToMany(mappedBy = "order")
+    private List<Payment> payments = new ArrayList<>();
+
+    @Builder.Default
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private Set<OrderProduct> orderProducts = new HashSet<>();
+
+    public Optional<Payment> getPayment() {
+        return payments.stream().findFirst();
+    }
 }

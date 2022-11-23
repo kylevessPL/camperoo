@@ -1,28 +1,28 @@
-package pl.piasta.camperoo.infrastructure.locale;
+package pl.piasta.camperoo.infrastructure.order;
 
 import lombok.RequiredArgsConstructor;
-import pl.piasta.camperoo.global.domain.Locale;
-import pl.piasta.camperoo.global.domain.LocaleRepository;
+import pl.piasta.camperoo.order.domain.Order;
+import pl.piasta.camperoo.order.domain.OrderRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-class LocaleDatabaseRepository implements LocaleRepository {
-    private final LocaleJpaRepository repository;
+class OrderDatabaseRepository implements OrderRepository {
+    private final OrderJpaRepository repository;
 
     @Override
-    public Locale save(Locale entity) {
+    public Order save(Order entity) {
         return repository.save(entity);
     }
 
     @Override
-    public Optional<Locale> get(Long id) {
+    public Optional<Order> get(Long id) {
         return repository.findById(id);
     }
 
     @Override
-    public List<Locale> getAll() {
+    public List<Order> getAll() {
         return repository.findAll();
     }
 
@@ -31,3 +31,4 @@ class LocaleDatabaseRepository implements LocaleRepository {
         repository.deleteById(id);
     }
 }
+
