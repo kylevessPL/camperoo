@@ -3,7 +3,7 @@ package pl.piasta.camperoo.order.domain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import pl.piasta.camperoo.common.domain.AbstractEntity;
+import pl.piasta.camperoo.common.domain.NameOrientedEntity;
 import pl.piasta.camperoo.global.domain.Locale;
 
 import javax.persistence.Column;
@@ -18,18 +18,18 @@ import javax.persistence.Table;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "order_status_names")
-public class OrderStatusName extends AbstractEntity {
+public class OrderStatusName extends NameOrientedEntity<Locale> {
     @Id
     private Long id;
 
     @Column(nullable = false, length = 128)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "locale_id", nullable = false)
     private Locale locale;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "order_status_id", nullable = false)
     private OrderStatus orderStatus;
 }

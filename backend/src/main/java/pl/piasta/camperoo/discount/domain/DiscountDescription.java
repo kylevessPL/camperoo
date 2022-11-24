@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import pl.piasta.camperoo.common.domain.AbstractEntity;
+import pl.piasta.camperoo.common.domain.DescriptionOrientedEntity;
 import pl.piasta.camperoo.global.domain.Locale;
 
 import javax.persistence.Column;
@@ -25,7 +25,7 @@ import javax.persistence.Table;
 @Builder
 @Entity
 @Table(name = "discount_descriptions")
-public class DiscountDescription extends AbstractEntity {
+public class DiscountDescription extends DescriptionOrientedEntity<Locale> {
     @Id
     @SequenceGenerator(name = "gen_discount_descriptions_id",
                        sequenceName = "seq_discount_descriptions_id",
@@ -36,11 +36,11 @@ public class DiscountDescription extends AbstractEntity {
     @Column(nullable = false)
     private String description;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "locale_id", nullable = false)
     private Locale locale;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "discount_id", nullable = false)
     private Discount discount;
 }

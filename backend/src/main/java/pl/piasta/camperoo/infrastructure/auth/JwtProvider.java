@@ -49,10 +49,10 @@ class JwtProvider {
                     .setSigningKey(secret)
                     .build()
                     .parseClaimsJws(token);
-            logger.debug(String.format("Valid authentication token: %s", token));
+            logger.debug("Valid authentication token: " + token);
             return true;
         } catch (JwtException ex) {
-            logger.warn(String.format("Invalid authentication token: %s => %s", token, ex.getMessage()));
+            logger.warn("Invalid authentication token: %s => %s".formatted(token, ex.getMessage()));
             return false;
         }
     }

@@ -7,12 +7,7 @@ public class NotFoundException extends AppException {
                                 ErrorProperty property
     ) {
         super(
-                String.format(
-                        "%s with %s = %s does not exist",
-                        objType.getSimpleName(),
-                        paramName,
-                        paramValue
-                ),
+                "%s with %s = %s does not exist".formatted(objType.getSimpleName(), paramName, paramValue),
                 code,
                 property,
                 paramName,

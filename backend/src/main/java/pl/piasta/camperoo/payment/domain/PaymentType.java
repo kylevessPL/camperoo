@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
+import pl.piasta.camperoo.common.domain.LocalizableName;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +18,7 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "payment_types")
-public class PaymentType extends AbstractEntity {
+public class PaymentType extends AbstractEntity implements LocalizableName<PaymentTypeName> {
     public static final Long BANK_TRANSFER = 1L;
 
     @Id

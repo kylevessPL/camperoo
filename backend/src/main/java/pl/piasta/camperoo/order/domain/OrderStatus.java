@@ -4,6 +4,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
+import pl.piasta.camperoo.common.domain.LocalizableDescription;
+import pl.piasta.camperoo.common.domain.LocalizableName;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +19,8 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "order_statuses")
-public class OrderStatus extends AbstractEntity {
+public class OrderStatus extends AbstractEntity
+        implements LocalizableName<OrderStatusName>, LocalizableDescription<OrderStatusDescription> {
     public static final Long PLACED = 1L;
     public static final Long PROCESSED = 2L;
     public static final Long IN_TRANSIT = 3L;

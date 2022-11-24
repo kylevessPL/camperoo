@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
+import pl.piasta.camperoo.common.domain.LocalizableDescription;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +27,7 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "discounts")
-public class Discount extends AbstractEntity {
+public class Discount extends AbstractEntity implements LocalizableDescription<DiscountDescription> {
     @Id
     @SequenceGenerator(name = "gen_discounts_id", sequenceName = "seq_discounts_id", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_discounts_id")
@@ -36,6 +37,8 @@ public class Discount extends AbstractEntity {
     private String code;
 
     @Column(nullable = false)
+    private Integer value;
+
     private Instant expirationDate;
 
     @Builder.Default

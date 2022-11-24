@@ -1,7 +1,7 @@
 package pl.piasta.camperoo.user.domain;
 
 import pl.piasta.camperoo.common.domain.Repository;
-import pl.piasta.camperoo.user.domain.vo.EmailAddress;
+import pl.piasta.camperoo.common.domain.vo.EmailAddress;
 
 import java.util.Optional;
 

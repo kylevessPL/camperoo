@@ -8,7 +8,6 @@ import java.util.Objects;
 
 @UtilityClass
 public class CollectionUtils {
-
     public <T> List<T> emptyIfNull(final List<T> list) {
         return Objects.requireNonNullElse(list, Collections.emptyList());
     }

@@ -6,8 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
+import pl.piasta.camperoo.common.domain.vo.EmailAddress;
 import pl.piasta.camperoo.order.domain.Order;
-import pl.piasta.camperoo.user.domain.vo.EmailAddress;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;

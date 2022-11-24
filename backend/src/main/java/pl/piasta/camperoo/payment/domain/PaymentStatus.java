@@ -4,8 +4,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
-import pl.piasta.camperoo.order.domain.OrderStatusDescription;
-import pl.piasta.camperoo.order.domain.OrderStatusName;
+import pl.piasta.camperoo.common.domain.LocalizableDescription;
+import pl.piasta.camperoo.common.domain.LocalizableName;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +21,8 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "payment_statuses")
-public class PaymentStatus extends AbstractEntity {
+public class PaymentStatus extends AbstractEntity
+        implements LocalizableName<PaymentStatusName>, LocalizableDescription<PaymentStatusDescription> {
     public static final Long INITIATED = 1L;
     public static final Long SUCCEEDED = 2L;
     public static final Long FAILED = 3L;
@@ -34,11 +35,11 @@ public class PaymentStatus extends AbstractEntity {
     @Column(nullable = false, length = 60)
     private String code;
 
-    @OneToMany(mappedBy = "orderStatus", fetch = FetchType.EAGER)
-    private Set<OrderStatusName> names;
+    @OneToMany(mappedBy = "paymentStatus", fetch = FetchType.EAGER)
+    private Set<PaymentStatusName> names;
 
-    @OneToMany(mappedBy = "orderStatus", fetch = FetchType.EAGER)
-    private Set<OrderStatusDescription> descriptions;
+    @OneToMany(mappedBy = "paymentStatus", fetch = FetchType.EAGER)
+    private Set<PaymentStatusDescription> descriptions;
 
     @OrderBy("deadline DESC")
     @OneToMany(mappedBy = "status")

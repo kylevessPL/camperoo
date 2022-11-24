@@ -27,18 +27,23 @@ import pl.piasta.camperoo.common.util.ErrorHandlingUtils;
 import javax.validation.ConstraintViolationException;
 
 @ControllerAdvice
-@Setter(onMethod = @__(@Override))
+@Setter(onMethod_ = @Override, onParam_ = @NonNull)
 class AppErrorHandler extends ResponseEntityExceptionHandler implements MessageSourceAware {
     private MessageSource messageSource;
+
+    @ExceptionHandler(NotFoundException.class)
+    protected ResponseEntity<Object> handleNotFoundError(Exception ex, WebRequest request) {
+        return sendError(ex, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
 
     @ExceptionHandler(DuplicateException.class)
     protected ResponseEntity<Object> handleDuplicateError(Exception ex, WebRequest request) {
         return sendError(ex, new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 
-    @ExceptionHandler(NotFoundException.class)
-    protected ResponseEntity<Object> handleNotFoundError(Exception ex, WebRequest request) {
-        return sendError(ex, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    @ExceptionHandler(BusinessException.class)
+    protected ResponseEntity<Object> handleBusinessError(Exception ex, WebRequest request) {
+        return sendError(ex, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler({ValidationException.class, ConstraintViolationException.class})
@@ -54,11 +59,6 @@ class AppErrorHandler extends ResponseEntityExceptionHandler implements MessageS
     @ExceptionHandler(AccessDeniedException.class)
     protected ResponseEntity<Object> handleAuthorizationError(Exception ex, WebRequest request) {
         return sendError(ex, new HttpHeaders(), HttpStatus.FORBIDDEN, request);
-    }
-
-    @ExceptionHandler(BusinessException.class)
-    protected ResponseEntity<Object> handleBusinessError(Exception ex, WebRequest request) {
-        return sendError(ex, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler(DataAccessException.class)

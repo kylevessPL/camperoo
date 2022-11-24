@@ -6,8 +6,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
+import pl.piasta.camperoo.common.domain.vo.EmailAddress;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,6 +42,10 @@ public class CompanyBranch extends AbstractEntity {
     @Column(nullable = false, precision = 7)
     private BigDecimal longitude;
 
-    @Column
-    private String notes;
+    @Embedded
+    @Column(nullable = false)
+    private EmailAddress email;
+
+    @Column(length = 9)
+    private String phoneNumber;
 }

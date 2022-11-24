@@ -9,14 +9,12 @@ import pl.piasta.camperoo.order.domain.Order;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.time.Instant;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("1")
 @Entity
-@Table(name = "payments")
 public class BankTransferPayment extends Payment {
     @Column(length = 34)
     private String iban;
