@@ -12,8 +12,8 @@ class OrderInvoiceManager {
     public NamedByteArrayResource generateInvoice(Long orderId) {
         var filename = "invoice_%d.pdf".formatted(orderId);
         var order = orderRepository.get(orderId).orElseThrow();
-        try (var invoiceGenerator = new OrderInvoiceGenerator(order)) {
-            return new NamedByteArrayResource(invoiceGenerator.getRawData(), filename);
+        try (var invoice = new OrderInvoice(order)) {
+            return new NamedByteArrayResource(invoice.getRawData(), filename);
         }
     }
 }
