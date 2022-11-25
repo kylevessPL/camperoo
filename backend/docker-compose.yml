@@ -18,7 +18,7 @@ services:
       timeout: 5s
       retries: 5
   mailserver:
-    image: rnwood/smtp4dev:3.2.0-ci20221023104
+    image: rnwood/smtp4dev:3.1.4
     container_name: mailserver
     ports:
       - '5000:80'
