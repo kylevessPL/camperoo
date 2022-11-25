@@ -3,7 +3,7 @@ version: '3.9'
 services:
   db:
     container_name: db
-    image: postgres:14-alpine
+    image: postgres:15-alpine
     ports:
       - '5432:5432'
     volumes:
@@ -34,7 +34,7 @@ services:
         condition: service_healthy
       mailserver:
         condition: service_started
-    image: tomcat:9-jre17
+    image: tomcat:10-jre17
     volumes:
       - ./target/camperoo-backend.war:/usr/local/tomcat/webapps/ROOT.war
     ports:
