@@ -1,14 +1,16 @@
 package pl.piasta.camperoo.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -24,14 +26,13 @@ import pl.piasta.camperoo.common.util.ErrorHandlingUtils;
 import pl.piasta.camperoo.common.util.ResponseCookieUtils;
 import pl.piasta.camperoo.user.domain.UserRepository;
 
-import javax.servlet.http.HttpServletResponse;
 import java.nio.charset.StandardCharsets;
 
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 @Slf4j
+@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
 class SecurityConfiguration extends AbstractSecurityWebApplicationInitializer {
-
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http,
                                     ObjectMapper objectMapper,
@@ -40,9 +41,9 @@ class SecurityConfiguration extends AbstractSecurityWebApplicationInitializer {
                                     TokenAuthenticationProvider authProvider
     ) throws Exception {
         return http.cors().and()
-                .authorizeRequests(requests -> requests
-                        .antMatchers("/error").permitAll()
-                        .antMatchers(
+                .authorizeHttpRequests(requests -> requests
+                        .requestMatchers("/error").permitAll()
+                        .requestMatchers(
                                 "/auth/reset-password",
                                 "/auth/reset-password/init"
                         ).permitAll()
@@ -92,6 +93,6 @@ class SecurityConfiguration extends AbstractSecurityWebApplicationInitializer {
 
     @Bean
     PasswordEncoder passwordEncoder() {
-        return new Argon2PasswordEncoder();
+        return Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
     }
 }
