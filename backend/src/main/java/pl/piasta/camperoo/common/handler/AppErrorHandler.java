@@ -1,17 +1,18 @@
 package pl.piasta.camperoo.common.handler;
 
+import jakarta.validation.ConstraintViolationException;
 import lombok.Setter;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,8 +24,6 @@ import pl.piasta.camperoo.common.exception.DuplicateException;
 import pl.piasta.camperoo.common.exception.NotFoundException;
 import pl.piasta.camperoo.common.exception.ValidationException;
 import pl.piasta.camperoo.common.util.ErrorHandlingUtils;
-
-import javax.validation.ConstraintViolationException;
 
 @ControllerAdvice
 @Setter(onMethod_ = @Override, onParam_ = @NonNull)
@@ -80,7 +79,7 @@ class AppErrorHandler extends ResponseEntityExceptionHandler implements MessageS
     protected ResponseEntity<Object> handleHttpMessageNotReadable(
             @NonNull HttpMessageNotReadableException ex,
             @NonNull HttpHeaders headers,
-            @NonNull HttpStatus status,
+            @NonNull HttpStatusCode status,
             @NonNull WebRequest request
     ) {
         return handleValidationError(ex, request);
@@ -91,18 +90,7 @@ class AppErrorHandler extends ResponseEntityExceptionHandler implements MessageS
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             @NonNull MethodArgumentNotValidException ex,
             @NonNull HttpHeaders headers,
-            @NonNull HttpStatus status,
-            @NonNull WebRequest request
-    ) {
-        return handleValidationError(ex, request);
-    }
-
-    @Override
-    @NonNull
-    protected ResponseEntity<Object> handleBindException(
-            @NonNull BindException ex,
-            @NonNull HttpHeaders headers,
-            @NonNull HttpStatus status,
+            @NonNull HttpStatusCode status,
             @NonNull WebRequest request
     ) {
         return handleValidationError(ex, request);
@@ -114,14 +102,14 @@ class AppErrorHandler extends ResponseEntityExceptionHandler implements MessageS
             @NonNull Exception ex,
             @Nullable Object body,
             @NonNull HttpHeaders headers,
-            @NonNull HttpStatus status,
+            @NonNull HttpStatusCode status,
             @NonNull WebRequest request) {
         return sendError(ex, headers, status, request);
     }
 
-    private ResponseEntity<Object> sendError(Exception ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    private ResponseEntity<Object> sendError(Exception ex, HttpHeaders headers, HttpStatusCode status, WebRequest req) {
         logger.warn(ex.getMessage(), ex);
-        var path = ErrorHandlingUtils.resolveRequestPath(request);
+        var path = ErrorHandlingUtils.resolveRequestPath(req);
         var body = ErrorHandlingUtils.createErrorAttributes(ex, status, path, messageSource);
         return new ResponseEntity<>(body, headers, status);
     }
