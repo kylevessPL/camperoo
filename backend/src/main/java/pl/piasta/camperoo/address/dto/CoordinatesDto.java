@@ -1,13 +1,12 @@
 package pl.piasta.camperoo.address.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.piasta.camperoo.common.validation.Latitude;
 import pl.piasta.camperoo.common.validation.Longitude;
-
-import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor

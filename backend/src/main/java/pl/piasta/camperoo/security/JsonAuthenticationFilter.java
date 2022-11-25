@@ -1,6 +1,8 @@
 package pl.piasta.camperoo.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -14,8 +16,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import pl.piasta.camperoo.common.util.ErrorHandlingUtils;
 import pl.piasta.camperoo.common.util.ResponseCookieUtils;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 

@@ -1,7 +1,8 @@
 package pl.piasta.camperoo.common.domain;
 
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Version;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Version;
+
 import java.util.Objects;
 
 @MappedSuperclass

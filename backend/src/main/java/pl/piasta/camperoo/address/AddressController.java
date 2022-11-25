@@ -1,5 +1,6 @@
 package pl.piasta.camperoo.address;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +12,6 @@ import pl.piasta.camperoo.address.dto.RouteDistanceDto;
 import pl.piasta.camperoo.address.exception.RouteCalculationException;
 import pl.piasta.camperoo.address.query.AddressGeocodingQueryClient;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
