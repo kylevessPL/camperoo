@@ -1,14 +1,16 @@
 package pl.piasta.camperoo.address.query;
 
+import pl.piasta.camperoo.address.dto.RouteDistanceDto;
+import pl.piasta.camperoo.common.dto.AddressDto;
+
 import java.util.List;
 import java.util.Optional;
 
 public interface AddressGeocodingQueryClient {
-    <T> Optional<T> findDistanceBetweenCoordinates(
+    Optional<RouteDistanceDto> findDistanceBetweenCoordinates(
             double latitudeOrig, double longitudeOrig,
-            double latitudeDest, double longitudeDest,
-            Class<T> responseType
+            double latitudeDest, double longitudeDest
     );
 
-    <T> List<T> findAllAddressesByQuery(String query, Class<T> responseType);
+    List<AddressDto> findAllAddressesByQuery(String query);
 }

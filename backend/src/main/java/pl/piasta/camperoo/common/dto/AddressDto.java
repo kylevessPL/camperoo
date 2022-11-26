@@ -1,4 +1,4 @@
-package pl.piasta.camperoo.address.dto;
+package pl.piasta.camperoo.common.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
