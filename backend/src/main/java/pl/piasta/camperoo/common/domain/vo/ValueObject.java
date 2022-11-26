@@ -1,6 +1,7 @@
 package pl.piasta.camperoo.common.domain.vo;
 
-import javax.persistence.Embeddable;
+import jakarta.persistence.Embeddable;
+
 import java.io.Serializable;
 
 @Embeddable

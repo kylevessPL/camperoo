@@ -1,9 +1,8 @@
 package pl.piasta.camperoo.common.util;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
-
-import javax.servlet.http.HttpServletRequest;
 
 @UtilityClass
 public class HttpRequestUtils {

@@ -1,10 +1,10 @@
 package pl.piasta.camperoo.common.util;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseCookie;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 
 import static pl.piasta.camperoo.security.TokenAuthenticationProvider.ACCESS_TOKEN;

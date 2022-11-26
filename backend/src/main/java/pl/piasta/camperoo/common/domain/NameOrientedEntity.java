@@ -1,6 +1,6 @@
 package pl.piasta.camperoo.common.domain;
 
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public abstract class NameOrientedEntity<T extends AbstractEntity> extends AbstractEntity {

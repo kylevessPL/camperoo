@@ -1,14 +1,14 @@
 package pl.piasta.camperoo.payment.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pl.piasta.camperoo.order.domain.Order;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
 import java.time.Instant;
 
 @Getter

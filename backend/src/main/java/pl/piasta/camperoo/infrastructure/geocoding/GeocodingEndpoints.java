@@ -5,6 +5,6 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class GeocodingEndpoints {
-    public static final String AUTOCOMPLETE = "https://api.geoapify.com/v1/geocode/autocomplete";
-    public static final String ROUTING = "https://api.geoapify.com/v1/routing";
+    public static final String AUTOCOMPLETE = "/geocode/autocomplete?filter=countrycode:pl";
+    public static final String ROUTING = "/routing?details=route_details&mode=light_truck&avoid=tolls|ferries&limit=1";
 }

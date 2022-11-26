@@ -1,21 +1,22 @@
 package pl.piasta.camperoo.file.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.JdbcTypeCode;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import java.sql.Types;
 import java.util.UUID;
 
 @Getter
@@ -30,7 +31,7 @@ public class File extends AbstractEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_files_id")
     private Long id;
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID uuid;
 
     @Column(nullable = false)
@@ -40,7 +41,7 @@ public class File extends AbstractEntity {
     private String contentType;
 
     @Lob
-    @Type(type = "org.hibernate.type.BinaryType")
+    @JdbcTypeCode(Types.BINARY)
     @Column(nullable = false)
     private byte[] content;
 }

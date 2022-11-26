@@ -1,5 +1,6 @@
 package pl.piasta.camperoo.common.config;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.i18n.LocaleContext;
 import org.springframework.context.i18n.SimpleTimeZoneAwareLocaleContext;
@@ -9,7 +10,6 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import pl.piasta.camperoo.common.util.LocalizationUtils;
 import pl.piasta.camperoo.global.domain.LocaleRepository;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -20,7 +20,7 @@ class CookieSupportedLocaleResolver extends CookieLocaleResolver {
     private final Map<Locale, Boolean> supportedLocale;
 
     public CookieSupportedLocaleResolver(@NonNull LocaleRepository localeRepository) {
-        this.setCookieName("locale");
+        super("locale");
         this.supportedLocale = getSupportedLocale(localeRepository);
     }
 

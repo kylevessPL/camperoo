@@ -1,5 +1,8 @@
 package pl.piasta.camperoo.common.util;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
@@ -9,6 +12,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindException;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -18,13 +22,12 @@ import org.springframework.web.util.ServletRequestPathUtils;
 import pl.piasta.camperoo.common.exception.AppException;
 import pl.piasta.camperoo.common.exception.ErrorCode;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.nonNull;
 
 @UtilityClass
 public class ErrorHandlingUtils {
@@ -45,20 +48,28 @@ public class ErrorHandlingUtils {
 
     public ErrorAttributes createErrorAttributes(
             Throwable ex,
-            HttpStatus status,
+            HttpStatusCode status,
             String path,
             MessageSource messageSource
     ) {
-        var error = ExceptionUtils.getRootCause(ex);
-        var errors = createErrorDetails(error, messageSource);
-        var message = CollectionUtils.isEmpty(errors) ? error.getMessage() : null;
+        var rootCause = ExceptionUtils.getRootCause(ex);
+        var error = createError(status);
+        var errors = createErrorDetails(rootCause, messageSource);
+        var message = CollectionUtils.isEmpty(errors) ? rootCause.getMessage() : null;
         return ErrorAttributes.builder()
                 .status(status.value())
-                .error(status.getReasonPhrase())
+                .error(error)
                 .errors(errors)
                 .message(message)
                 .path(path)
                 .build();
+    }
+
+    private String createError(HttpStatusCode status) {
+        var error = HttpStatus.resolve(status.value());
+        return nonNull(error)
+               ? error.getReasonPhrase()
+               : "Error " + status.value();
     }
 
     private Set<SingleError> createErrorDetails(Throwable ex, MessageSource messageSource) {
