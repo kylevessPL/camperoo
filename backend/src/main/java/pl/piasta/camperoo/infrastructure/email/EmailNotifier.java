@@ -8,4 +8,6 @@ import org.thymeleaf.TemplateEngine;
 class EmailNotifier {
     private final JavaMailSender emailSender;
     private final TemplateEngine emailTemplateEngine;
+    private final String frontendUrl;
+    private final String senderEmail;
 }

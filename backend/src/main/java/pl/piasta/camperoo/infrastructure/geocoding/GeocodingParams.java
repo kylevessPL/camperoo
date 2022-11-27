@@ -8,4 +8,6 @@ class GeocodingParams {
     public static final String API_KEY = "apiKey";
     public static final String LOCALE = "lang";
     public static final String FORMAT = "format";
+    public static final String WAYPOINTS = "waypoints";
+    public static final String TEXT = "text";
 }

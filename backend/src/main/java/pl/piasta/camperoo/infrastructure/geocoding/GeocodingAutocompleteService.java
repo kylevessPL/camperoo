@@ -5,8 +5,10 @@ import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.HttpExchange;
 import pl.piasta.camperoo.common.dto.AddressDto;
 
+import static pl.piasta.camperoo.infrastructure.geocoding.GeocodingParams.TEXT;
+
 @HttpExchange(GeocodingEndpoints.AUTOCOMPLETE)
 interface GeocodingAutocompleteService {
     @GetExchange
-    GeocodingResponse<AddressDto> findAllAddressesByQuery(@RequestParam("text") String query);
+    GeocodingResponse<AddressDto> findAllAddressesByQuery(@RequestParam(TEXT) String query);
 }
