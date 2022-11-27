@@ -1,0 +1,9 @@
+mail:
+  host: ${MAIL_HOST}
+  port: ${MAIL_PORT}
+  username: ${MAIL_USER}
+  password: ${MAIL_PASSWORD}
+  smtp:
+    auth: true
+    starttls:
+      enable: true

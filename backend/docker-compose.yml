@@ -25,8 +25,8 @@ services:
       - '2525:25'
       - '143:143'
     environment:
-      - RelayOptions__Login=$MAILSERVER_USER
-      - RelayOptions__Password=$MAILSERVER_PASSWORD
+      - RelayOptions__Login=$MAIL_USER
+      - RelayOptions__Password=$MAIL_PASSWORD
   web:
     container_name: web
     depends_on:

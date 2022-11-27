@@ -3,6 +3,8 @@ error:
     response-token-invalid: 'ReCAPTCHA response token is invalid'
     response-token-revoked: 'ReCAPTCHA response token is either expired or has already been used'
     generic: 'Couldn''t verify reCAPTCHA response token'
+  email:
+    delivery-error: 'Failed to deliver email to {0}'
   common:
     wrong-old-password: 'Old password is incorrect'
     password-unchanged: 'New password must be different from current password'

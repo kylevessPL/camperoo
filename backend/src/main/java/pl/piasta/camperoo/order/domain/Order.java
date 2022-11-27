@@ -34,7 +34,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -43,14 +42,10 @@ import java.util.UUID;
 @Entity
 @Table(name = "orders")
 public class Order extends AbstractEntity {
-
     @Id
     @SequenceGenerator(name = "gen_orders_id", sequenceName = "seq_orders_id", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_orders_id")
     private Long id;
-
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID uuid;
 
     @Column(nullable = false)
     private Instant placementDate;

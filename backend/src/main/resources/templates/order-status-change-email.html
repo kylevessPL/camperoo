@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <title th:remove="all">Camperoo order #[[${orderNumber}]] – status changed</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link th:href="@{static/styles/email.css}" rel="stylesheet"/>
+</head>
+<body>
+<table style="width: 100%; background-color: #0095cc; border-collapse: collapse; border-spacing: 0;">
+    <tr>
+        <th height="50" style="text-align: center; padding: 0">
+            <p>Order status changed</p>
+        </th>
+    </tr>
+    <tr style="background-color: white">
+        <td height="100" style="text-align: center; padding: 0">
+            <h1 th:inline="text">
+                Hello, [[${accountName}]]!
+            </h1>
+        </td>
+    </tr>
+    <tr style="background-color: white">
+        <td height="100" style="text-align: center; padding: 0">
+            <h1 th:inline="text">
+                Your order #[[${orderNumber}]] status has changed to [[${orderStatus}]]
+            </h1>
+        </td>
+    </tr>
+    <tr style="background-color: white">
+        <td height="100" style="text-align: center; padding: 0">
+            <h2 th:inline="text">
+                <a th:href="@{${frontendUrl} + '/dashboard/orders/' + ${orderNumber}}">
+                    Click here to view your order
+                </a>
+            </h2>
+        </td>
+    </tr>
+    <tr>
+        <td height="50" style="text-align: center; padding: 0">
+            <p>Camperoo Team</p>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

@@ -330,7 +330,6 @@ CREATE TABLE IF NOT EXISTS orders
 (
     id                 BIGINT PRIMARY KEY,
     version            BIGINT                   NOT NULL DEFAULT 0,
-    uuid               UUID                     NOT NULL DEFAULT uuid_generate_v4(),
     placement_date     TIMESTAMP WITH TIME ZONE NOT NULL,
     status_change_date TIMESTAMP WITH TIME ZONE,
     subtotal_price     NUMERIC(12, 2)           NOT NULL CHECK (total_price >= 0),
