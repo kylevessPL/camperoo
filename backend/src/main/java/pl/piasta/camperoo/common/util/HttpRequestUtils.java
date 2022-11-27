@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 
 @UtilityClass
 public class HttpRequestUtils {
-    private static final String X_FORWARED_FOR_HEADER = "X-Forwarded-For";
+    private final String X_FORWARED_FOR_HEADER = "X-Forwarded-For";
 
     public String getClientIp(HttpServletRequest request) {
         String ipAddress = StringUtils.getIfBlank(request.getHeader(X_FORWARED_FOR_HEADER), request::getRemoteAddr);

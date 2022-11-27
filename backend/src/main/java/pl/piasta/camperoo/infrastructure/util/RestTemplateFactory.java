@@ -11,18 +11,18 @@ import java.util.Arrays;
 
 @UtilityClass
 public class RestTemplateFactory {
-    public static RestTemplate create(ClientHttpRequestInterceptor... requestInterceptors) {
+    public RestTemplate create(ClientHttpRequestInterceptor... requestInterceptors) {
         return createRestTemplate(requestInterceptors);
     }
 
-    private static RestTemplate createRestTemplate(ClientHttpRequestInterceptor... requestInterceptors) {
+    private RestTemplate createRestTemplate(ClientHttpRequestInterceptor... requestInterceptors) {
         var restTemplate = new RestTemplate();
         restTemplate.setUriTemplateHandler(createUriTemplateHandler());
         restTemplate.setInterceptors(Arrays.asList(requestInterceptors));
         return restTemplate;
     }
 
-    private static UriTemplateHandler createUriTemplateHandler() {
+    private UriTemplateHandler createUriTemplateHandler() {
         DefaultUriBuilderFactory defaultUriBuilderFactory = new DefaultUriBuilderFactory();
         defaultUriBuilderFactory.setEncodingMode(EncodingMode.NONE);
         return defaultUriBuilderFactory;
