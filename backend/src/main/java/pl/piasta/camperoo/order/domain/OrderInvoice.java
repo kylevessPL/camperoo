@@ -114,24 +114,24 @@ class OrderInvoice implements Closeable {
     }
 
     private void drawInvoiceNumberSection(PDPage page, PDPageContentStream content) throws IOException {
-        var text = "Order No.: %s".formatted(order.getUuid());
+        var text = "Order No.: " + order.getId();
         drawText(content, text, TEXT_FONT_SIZE, PADDING, getPageHeight(page) - PADDING - 30);
     }
 
     private void drawIssuanceDateSection(PDPage page, PDPageContentStream content) throws IOException {
-        var text = "Date of issue: %s".formatted(dateTimeFormatter.format(Instant.now()));
+        var text = "Date of issue: " + dateTimeFormatter.format(Instant.now());
         drawText(content, text, TEXT_FONT_SIZE, PADDING, getPageHeight(page) - PADDING - 50);
     }
 
     private void drawOrderDateSection(PDPage page, PDPageContentStream content) throws IOException {
-        var text = "Date of order: %s".formatted(dateTimeFormatter.format(order.getPlacementDate()));
+        var text = "Date of order: " + dateTimeFormatter.format(order.getPlacementDate());
         drawText(content, text, TEXT_FONT_SIZE, PADDING, getPageHeight(page) - PADDING - 70);
     }
 
     private void drawPaymentTypeSection(PDPage page, PDPageContentStream content) throws IOException {
         var payment = order.getPayment();
         if (payment.isPresent()) {
-            var text = "Payment form: %s".formatted(payment.get().getType().getLocalizedName(Locale.ENGLISH));
+            var text = "Payment form: " + payment.get().getType().getLocalizedName(Locale.ENGLISH);
             drawText(content, text, TEXT_FONT_SIZE, PADDING, getPageHeight(page) - PADDING - 90);
         }
     }
@@ -234,9 +234,9 @@ class OrderInvoice implements Closeable {
         builder.append(branch.getName());
         builder.append(System.lineSeparator()).append(processAddress(branch.getAddress()));
         if (nonNull(branch.getPhoneNumber())) {
-            builder.append(System.lineSeparator()).append("Phone: %s".formatted(branch.getPhoneNumber()));
+            builder.append(System.lineSeparator()).append("Phone: ").append(branch.getPhoneNumber());
         }
-        builder.append(System.lineSeparator()).append("Email: %s".formatted(branch.getEmail().getEmail()));
+        builder.append(System.lineSeparator()).append("Email: ").append(branch.getEmail().getEmail());
         return builder.toString();
     }
 
@@ -250,8 +250,8 @@ class OrderInvoice implements Closeable {
             builder.append(System.lineSeparator()).append(person.getAddressTwo());
         }
         builder.append(System.lineSeparator()).append(person.getZipCode()).append(" ").append(person.getCity());
-        builder.append(System.lineSeparator()).append("Phone: %s".formatted(person.getPhoneNumber()));
-        builder.append(System.lineSeparator()).append("Email: %s".formatted(user.getEmail().getEmail()));
+        builder.append(System.lineSeparator()).append("Phone: ").append(person.getPhoneNumber());
+        builder.append(System.lineSeparator()).append("Email: ").append(user.getEmail().getEmail());
         return builder.toString();
     }
 
