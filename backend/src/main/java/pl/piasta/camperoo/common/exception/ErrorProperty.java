@@ -19,6 +19,9 @@ public enum ErrorProperty {
     ROUTE_CALCULATION_ERROR("address.route-calculation-error"),
     COORDINATE_OUT_OF_BOUNDS("address.coordinate-out-of-bounds"),
 
+    // email
+    EMAIL_DELIVERY_ERROR("email.delivery-error"),
+
     // user
     USER_NOT_FOUND("user.not-found"),
     EMAIL_INVALID("user.email-regex");
