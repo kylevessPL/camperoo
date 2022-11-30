@@ -1,10 +1,15 @@
 app:
+  frontendUrl: ${FRONTEND_URL}
+  email:
+    sender: noreply@camperoo.pl
   security:
     jwt:
       secret: ${JWT_SECRET}
       validMinutes: 15
+    passwordRecoveryToken:
+      validMinutes: 60
   auth:
-    verificationToken:
+    accountCreationToken:
       validMinutes: 1440
 
 geoapify:
