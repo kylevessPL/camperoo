@@ -21,7 +21,7 @@ public class DeliveryTypeName extends NameOrientedEntity<Locale> {
     @Id
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 128)
+    @Column(nullable = false, length = 128)
     private String name;
 
     @ManyToOne(optional = false)

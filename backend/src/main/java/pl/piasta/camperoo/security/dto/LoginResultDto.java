@@ -18,6 +18,6 @@ public class LoginResultDto {
     @NotNull(message = "{validation.expirationTime.null}")
     private Long expirationTime;
 
-    @NotEmpty(message = "{validation.roles.empty}")
+    @NotEmpty(message = "{validation.role.empty}")
     private Set<String> roles;
 }

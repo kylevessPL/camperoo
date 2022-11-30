@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
 import pl.piasta.camperoo.common.domain.vo.EmailAddress;
 import pl.piasta.camperoo.order.domain.Order;
+import pl.piasta.camperoo.security.exception.UserAccountDisabledException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -66,4 +67,20 @@ public class User extends AbstractEntity {
     @OrderBy("placementDate DESC")
     @OneToMany(mappedBy = "user")
     private List<Order> orders = new ArrayList<>();
+
+    public void changePasswordHash(String passwordHash) {
+        checkIfEnabled();
+        this.passwordHash = passwordHash;
+    }
+
+    public void disableAccount() {
+        checkIfEnabled();
+        active = false;
+    }
+
+    private void checkIfEnabled() {
+        if (!active) {
+            throw new UserAccountDisabledException(id);
+        }
+    }
 }

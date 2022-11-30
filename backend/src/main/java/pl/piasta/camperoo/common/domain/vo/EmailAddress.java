@@ -38,13 +38,16 @@ public class EmailAddress {
         return email;
     }
 
-    public static class EmailValidationException extends ValidationException {
-        private EmailValidationException(String message) {
-            super(message, ErrorProperty.EMAIL_INVALID);
+    private static class EmailValidationException extends ValidationException {
+        private EmailValidationException(String message, ErrorProperty property) {
+            super(message, property);
         }
 
         public static EmailValidationException regex() {
-            return new EmailValidationException("Email address does not match regex pattern");
+            return new EmailValidationException(
+                    "Email address does not match regex pattern",
+                    ErrorProperty.EMAIL_REGEX
+            );
         }
     }
 }

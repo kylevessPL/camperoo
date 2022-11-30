@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 @UtilityClass
-class EmailSenderFactory {
+class MailSenderFactory {
     JavaMailSender create(Properties mailProperties) {
         return createJavaMailSender(mailProperties);
     }
@@ -17,7 +17,7 @@ class EmailSenderFactory {
         var mailSender = new JavaMailSenderImpl();
         mailSender.setHost(mailProperties.getProperty("mail.host"));
         mailSender.setPort(Integer.parseInt(mailProperties.getProperty("mail.port")));
-        mailSender.setUsername(mailProperties.getProperty("mail.user"));
+        mailSender.setUsername(mailProperties.getProperty("mail.username"));
         mailSender.setPassword(mailProperties.getProperty("mail.password"));
         mailSender.setDefaultEncoding(StandardCharsets.UTF_8.name());
         mailSender.setJavaMailProperties(mailProperties);

@@ -27,7 +27,7 @@ public class DeliveryType extends AbstractEntity
     @Id
     private Long id;
 
-    @Column(name = "code", nullable = false, length = 60)
+    @Column(nullable = false, length = 60)
     private String code;
 
     @OneToMany(mappedBy = "deliveryType", fetch = FetchType.EAGER)

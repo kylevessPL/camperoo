@@ -1,6 +1,7 @@
 package pl.piasta.camperoo;
 
 import jakarta.servlet.ServletContext;
+import org.springframework.context.annotation.FullyQualifiedAnnotationBeanNameGenerator;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.lang.NonNull;
 import org.springframework.web.WebApplicationInitializer;
@@ -28,6 +29,7 @@ public class CamperooApp implements WebApplicationInitializer {
         var applicationContext = new AnnotationConfigWebApplicationContext();
         setupProfiles(applicationContext.getEnvironment());
         applicationContext.setConfigLocation("pl.piasta.camperoo");
+        applicationContext.setBeanNameGenerator(FullyQualifiedAnnotationBeanNameGenerator.INSTANCE);
         return applicationContext;
     }
 

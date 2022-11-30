@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.reactive.function.client.ClientRequest;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.support.WebClientAdapter;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -19,12 +20,21 @@ class GeoapifyClientAdapterFactory {
     WebClientAdapter create(String apiKey) {
         var client = WebClient.builder()
                 .baseUrl(GEOAPIFY_URL)
-                .filter(createRequestFilter(apiKey))
+                .exchangeStrategies(exchangeStrategySettings())
+                .filter(requestFilter(apiKey))
                 .build();
         return WebClientAdapter.forClient(client);
     }
 
-    private ExchangeFilterFunction createRequestFilter(String apiKey) {
+    private static ExchangeStrategies exchangeStrategySettings() {
+        return ExchangeStrategies.builder()
+                .codecs(configurer -> configurer
+                        .defaultCodecs()
+                        .maxInMemorySize(16 * 1024 * 1024))
+                .build();
+    }
+
+    private ExchangeFilterFunction requestFilter(String apiKey) {
         return (request, next) -> {
             var clientRequest = ClientRequest.from(request)
                     .url(createBaseUrl(request.url(), apiKey))
