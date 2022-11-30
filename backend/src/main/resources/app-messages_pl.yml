@@ -1,10 +1,13 @@
 error:
-  captcha:
-    response-token-invalid: 'Token ReCAPTCHA jest nieprawidłowy'
-    response-token-revoked: 'Token ReCAPTCHA został już użyty lub wygasł'
+  recaptcha:
+    response-token-invalid: 'Token reCAPTCHA jest nieprawidłowy'
+    response-token-revoked: 'Token reCAPTCHA został już użyty lub wygasł'
     generic: 'Nie udało się zweryfikować tokenu reCAPTCHA'
+  verification-token:
+    not-found: 'Token weryfikacyjny o parametrze {0} = {1} nie istnieje'
   email:
-    delivery-error: 'Nie udało sie dostarczyć maila do {0}'
+    delivery-error: 'Nie znaleziono tokenu weryfikacyjnego o parametrze {0} = {1}'
+    email-regex: 'Adres mailowy jest nieprawidłowy'
   common:
     wrong-old-password: 'Stare hasło jest niepoprawne'
     password-unchanged: 'Nowe hasło musi się różnić od starego'
@@ -14,9 +17,11 @@ error:
     longitude-out-of-bounds: 'Długość geograficzna wykracza poza zakres'
   user:
     not-found: 'Nie znaleziono użytkownika o parametrze {0} = {1}'
-    email-invalid: 'Adres mailowy jest nieprawidłowy'
+    account-disabled: 'Konto użytkownika o id = {0} jest wyłączone'
+    password-min: 'Długość hasła musi wynosić przynajmniej {0} znaków'
+    password-max: 'Długość hasła musi wynosić maksymalnie {0} znaków'
 validation:
-  coordinates:
+  coordinate:
     null: 'Współrzędne muszą mieć wartość inną niż NULL'
     origin:
       null: 'Współrzędne pochodzenia muszą mieć wartość inną niż NULL'
@@ -28,17 +33,25 @@ validation:
   longitude:
     null: 'Długość geograficzna musi mieć wartość inną niż NULL'
     invalid: 'Długość geograficzna jest nieprawidłowa'
+  email:
+    blank: 'Adres email nie może być pusty'
+    invalid: 'Adres email jest nieprawidłowy'
   query:
     blank: 'Zapytanie nie może być puste'
   address:
     blank: 'Adres nie może być pusty'
   distance:
     min-0: 'Odległość musi mieć wartość większą bądź równą zero'
-  countryCodes:
+  countryCode:
     empty: 'Lista kodów kraju nie może być pusta'
   issuanceTime:
     null: 'Czas wydania musi mieć wartość inną niż NULL'
   expirationTime:
     null: 'Czas wygaśnięcia musi mieć wartość inną niż NULL'
-  roles:
+  code:
+    null: 'Kod nie może byc pusty'
+  role:
     empty: 'Lista ról nie może być pusta'
+  password:
+    blank: 'Hasło nie może być puste'
+    invalid: 'Hasło zawiera niedozwolone znaki'

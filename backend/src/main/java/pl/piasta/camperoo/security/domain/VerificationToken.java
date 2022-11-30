@@ -1,6 +1,7 @@
-package pl.piasta.camperoo.user.domain;
+package pl.piasta.camperoo.security.domain;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -16,6 +17,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
+import pl.piasta.camperoo.common.domain.vo.VerificationTokenCode;
+import pl.piasta.camperoo.user.domain.User;
 
 import java.time.Instant;
 
@@ -33,6 +36,9 @@ public class VerificationToken extends AbstractEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_verification_tokens_id")
     private Long id;
 
+    @Embedded
+    private VerificationTokenCode code;
+
     @Column(nullable = false)
     private Instant expirationDate;
 
@@ -43,4 +49,9 @@ public class VerificationToken extends AbstractEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    public boolean isExpired() {
+        return expirationDate.isBefore(Instant.now());
+    }
+
 }

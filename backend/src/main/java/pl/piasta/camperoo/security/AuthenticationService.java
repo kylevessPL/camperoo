@@ -13,11 +13,11 @@ import pl.piasta.camperoo.user.domain.UserRepository;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 class AuthenticationService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(EmailAddress.of(username))
                 .filter(User::isActive)

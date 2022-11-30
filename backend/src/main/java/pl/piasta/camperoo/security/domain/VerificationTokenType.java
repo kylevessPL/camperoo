@@ -1,4 +1,4 @@
-package pl.piasta.camperoo.user.domain;
+package pl.piasta.camperoo.security.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,7 +16,7 @@ import pl.piasta.camperoo.common.domain.AbstractEntity;
 public class VerificationTokenType extends AbstractEntity {
 
     public static final Long ACCOUNT_CREATION = 1L;
-    public static final Long ACCOUNT_RECOVERY = 2L;
+    public static final Long PASSWORD_RECOVERY = 2L;
 
     @Id
     private Long id;

@@ -22,6 +22,6 @@ public class RouteDistanceDto {
     private Integer distance;
 
     @JsonAlias("country_code")
-    @NotEmpty(message = "{validation.countryCodes.empty}")
+    @NotEmpty(message = "{validation.countryCode.empty}")
     private List<String> countryCodes;
 }

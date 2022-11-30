@@ -17,6 +17,6 @@ public class AddressDto {
     private String address;
 
     @JsonUnwrapped
-    @NotNull(message = "{validation.coordinates.null}")
+    @NotNull(message = "{validation.coordinate.null}")
     private CoordinatesDto coordinates;
 }

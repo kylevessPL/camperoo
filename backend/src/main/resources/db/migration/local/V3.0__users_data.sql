@@ -1,10 +1,10 @@
 --
 -- users
 --
--- customer, pwd: adminpwd
+-- customer, pwd: customerpwd
 INSERT INTO users (id, email, password_hash, active)
 VALUES (NEXTVAL('seq_users_id'), 'customer@camperoo.pl',
-        '$argon2id$v=19$m=16,t=2,p=1$WFRZZklvSWMwMmt2V3N2aQ$GJyrazp1IdfTY0AAEs0dCg', TRUE);
+        '$argon2id$v=19$m=16384,t=2,p=1$RlBLbUYyWTM4VjNna3JiYg$VNomOKqeQTfIgdnfD7xiz9bJtzwPoFC2EqDxJXxmzPw', TRUE);
 
 SELECT SETVAL('seq_users_id', 2);
 
@@ -14,3 +14,9 @@ SELECT SETVAL('seq_users_id', 2);
 -- customer
 INSERT INTO persons (id, first_name, last_name, address_one, zip_code, city, phone_number, user_id)
 VALUES (NEXTVAL('seq_persons_id'), 'Customer', 'Testingowy', 'Testowo 1', '00-002', 'Warszawa', 987654321, 2);
+
+--
+-- users_roles
+--
+INSERT INTO users_roles (user_id, role_id)
+VALUES (2, 2);

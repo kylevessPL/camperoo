@@ -44,8 +44,8 @@ class SecurityConfiguration extends AbstractSecurityWebApplicationInitializer {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/error").permitAll()
                         .requestMatchers(
-                                "/auth/reset-password",
-                                "/auth/reset-password/init"
+                                "/auth/password-recovery",
+                                "/auth/password-recovery/init"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

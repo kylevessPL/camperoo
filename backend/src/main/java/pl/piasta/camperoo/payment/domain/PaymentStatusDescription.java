@@ -21,7 +21,7 @@ public class PaymentStatusDescription extends DescriptionOrientedEntity<Locale> 
     @Id
     private Long id;
 
-    @Column(name = "description", nullable = false)
+    @Column(nullable = false)
     private String description;
 
     @ManyToOne(optional = false)

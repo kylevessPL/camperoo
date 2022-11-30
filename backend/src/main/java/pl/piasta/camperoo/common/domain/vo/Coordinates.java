@@ -42,16 +42,24 @@ public class Coordinates implements ValueObject {
     }
 
     private static class CoordinatesValidationException extends ValidationException {
-        private CoordinatesValidationException(String message, String coordinateType) {
-            super(message, ErrorProperty.COORDINATE_OUT_OF_BOUNDS, coordinateType);
+        private CoordinatesValidationException(String message, ErrorProperty property, String coordinateType) {
+            super(message, property, coordinateType);
         }
 
         public static CoordinatesValidationException latitudeOutOfBounds() {
-            return new CoordinatesValidationException("Latitude is out of bounds", "latitude");
+            return new CoordinatesValidationException(
+                    "Latitude is out of bounds",
+                    ErrorProperty.COORDINATE_OUT_OF_BOUNDS,
+                    "latitude"
+            );
         }
 
         public static CoordinatesValidationException longitudeOutOfBounds() {
-            return new CoordinatesValidationException("Longitude is out of bounds", "longitude");
+            return new CoordinatesValidationException(
+                    "Longitude is out of bounds",
+                    ErrorProperty.COORDINATE_OUT_OF_BOUNDS,
+                    "longitude"
+            );
         }
     }
 }

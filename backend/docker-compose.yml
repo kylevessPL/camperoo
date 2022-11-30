@@ -43,9 +43,14 @@ services:
     environment:
       - CATALINA_OPTS
       - PROFILES_ACTIVE
+      - FRONTEND_URL
       - DB_URL
       - DB_USER
       - DB_PASSWORD
+      - MAIL_HOST
+      - MAIL_PORT
+      - MAIL_USER
+      - MAIL_PASSWORD
       - JWT_SECRET
       - GEOAPIFY_API_KEY
       - RECAPTCHA_SITE

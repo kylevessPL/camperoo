@@ -2,6 +2,7 @@ package pl.piasta.camperoo.infrastructure.user;
 
 import lombok.RequiredArgsConstructor;
 import pl.piasta.camperoo.common.domain.vo.EmailAddress;
+import pl.piasta.camperoo.security.domain.AuthenticationRepository;
 import pl.piasta.camperoo.user.domain.User;
 import pl.piasta.camperoo.user.domain.UserRepository;
 
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-class UserDatabaseRepository implements UserRepository {
+class UserDatabaseRepository implements UserRepository, AuthenticationRepository {
     private final UserJpaRepository repository;
 
     @Override
@@ -30,11 +31,6 @@ class UserDatabaseRepository implements UserRepository {
     @Override
     public void delete(Long id) {
         repository.deleteById(id);
-    }
-
-    @Override
-    public boolean existsByEmail(EmailAddress email) {
-        return repository.existsByEmail(email);
     }
 
     @Override
