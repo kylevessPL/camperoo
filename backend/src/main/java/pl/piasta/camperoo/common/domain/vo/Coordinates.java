@@ -12,6 +12,10 @@ import pl.piasta.camperoo.common.exception.ValidationException;
 @Getter
 public class Coordinates implements ValueObject {
 
+    public static final String LATITUDE_MIN_VALUE = "-90";
+    public static final String LATITUDE_MAX_VALUE = "-90";
+    public static final String LONGITUDE_MIN_VALUE = "-180";
+    public static final String LONGITUDE_MAX_VALUE = "-180";
     public static final double LATITUDE_BOUND = 90;
     public static final double LONGITUDE_BOUND = 180;
 

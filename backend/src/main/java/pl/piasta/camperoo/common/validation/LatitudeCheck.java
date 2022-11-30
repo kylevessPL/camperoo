@@ -11,14 +11,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import static pl.piasta.camperoo.common.domain.vo.Coordinates.LATITUDE_MAX_VALUE;
+import static pl.piasta.camperoo.common.domain.vo.Coordinates.LATITUDE_MIN_VALUE;
 import static pl.piasta.camperoo.common.validation.LatitudeCheck.MESSAGE;
 
 @Documented
 @Constraint(validatedBy = {})
 @Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@DecimalMin(value = "-90", message = MESSAGE)
-@DecimalMax(value = "90", message = MESSAGE)
+@DecimalMin(value = LATITUDE_MIN_VALUE, message = MESSAGE)
+@DecimalMax(value = LATITUDE_MAX_VALUE, message = MESSAGE)
 public @interface LatitudeCheck {
     String MESSAGE = "{validation.latitude.invalid}";
 
