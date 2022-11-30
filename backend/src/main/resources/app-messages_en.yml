@@ -1,10 +1,13 @@
 error:
-  captcha:
+  recaptcha:
     response-token-invalid: 'ReCAPTCHA response token is invalid'
     response-token-revoked: 'ReCAPTCHA response token is either expired or has already been used'
     generic: 'Couldn''t verify reCAPTCHA response token'
+  verification-token:
+    not-found: 'Verification token with {0} = {1} does not exist'
   email:
     delivery-error: 'Failed to deliver email to {0}'
+    email-regex: 'Email address is not valid'
   common:
     wrong-old-password: 'Old password is incorrect'
     password-unchanged: 'New password must be different from current password'
@@ -14,9 +17,11 @@ error:
     longitude-out-of-bounds: 'Longitude is out of bounds'
   user:
     not-found: 'User with {0} = {1} does not exist'
-    email-invalid: 'Email address is not valid'
+    account-disabled: 'Account of user with id = {0} is disabled'
+    password-min: 'Password must be at least {0} characters long'
+    password-max: 'Password must be at most {0} characters long'
 validation:
-  coordinates:
+  coordinate:
     null: 'Coordinates cannot be null'
     origin:
       null: 'Origin coordinates cannot be null'
@@ -28,17 +33,25 @@ validation:
   longitude:
     null: 'Longtitude cannot be null'
     invalid: 'Longitude is not valid'
+  email:
+    blank: 'Email address cannot be blank'
+    invalid: 'Email address is not valid'
   query:
     blank: 'Query cannot be blank'
   address:
     blank: 'Address cannot be blank'
   distance:
     min-0: 'Distance must be greater than or equal to zero'
-  countryCodes:
+  countryCode:
     empty: 'Country codes cannot be empty'
   issuanceTime:
     null: 'Issuance time cannot be null'
   expirationTime:
     null: 'Issuance time cannot be null'
-  roles:
+  code:
+    null: 'Code cannot be null'
+  role:
     empty: 'Roles cannot be empty'
+  password:
+    blank: 'Password cannot be blank'
+    length: 'Password contains invalid characters'
