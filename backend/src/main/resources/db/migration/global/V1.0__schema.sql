@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS users
     id            BIGINT PRIMARY KEY,
     version       BIGINT       NOT NULL DEFAULT 0,
     email         VARCHAR(255) NOT NULL UNIQUE CHECK (LENGTH(email) > 0),
-    password_hash VARCHAR(73)  NOT NULL CHECK (LENGTH(password_hash) > 0),
+    password_hash VARCHAR(97)  NOT NULL CHECK (LENGTH(password_hash) = 97),
     active        BOOLEAN      NOT NULL DEFAULT FALSE
 );
 
@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS verification_tokens
 (
     id              BIGINT PRIMARY KEY,
     version         BIGINT                   NOT NULL DEFAULT 0,
+    code            UUID                     NOT NULL DEFAULT uuid_generate_v4(),
     expiration_date TIMESTAMP WITH TIME ZONE NOT NULL,
     type_id         BIGINT                   NOT NULL REFERENCES verification_token_types (id),
     user_id         BIGINT                   NOT NULL REFERENCES users (id)

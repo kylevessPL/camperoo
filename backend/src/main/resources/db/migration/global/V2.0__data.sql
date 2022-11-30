@@ -10,7 +10,8 @@ VALUES (1, 'pl', FALSE),
 --
 -- admin, pwd: adminpwd
 INSERT INTO users (id, email, password_hash, active)
-VALUES (1, 'admin@camperoo.pl', '$argon2id$v=19$m=12,t=3,p=1$eXEwdzN5eTR2NW4wMDAwMA$p7F3YqUv5nYnSDzIs8O2FA', TRUE);
+VALUES (1, 'admin@camperoo.pl',
+        '$argon2id$v=19$m=16384,t=2,p=1$RlBLbUYyWTM4VjNna3JiYg$wLijXEtoUP84spXpDG1DPFEoLWy8nskLleiwqa4fGj8', TRUE);
 
 SELECT SETVAL('seq_users_id', 1);
 
@@ -28,7 +29,7 @@ SELECT SETVAL('seq_persons_id', 1);
 --
 INSERT INTO verification_token_types (id, name)
 VALUES (1, 'ACCOUNT_CREATION'),
-       (2, 'ACCOUNT_RECOVERY');
+       (2, 'PASSWORD_RECOVERY');
 
 --
 -- roles
