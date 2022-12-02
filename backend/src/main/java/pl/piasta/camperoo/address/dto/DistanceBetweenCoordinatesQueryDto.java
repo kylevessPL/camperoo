@@ -12,10 +12,10 @@ import pl.piasta.camperoo.common.dto.CoordinatesDto;
 @NoArgsConstructor
 public class DistanceBetweenCoordinatesQueryDto {
     @Valid
-    @NotNull(message = "{validation.coordinate.origin.null}")
+    @NotNull
     private CoordinatesDto origin;
 
     @Valid
-    @NotNull(message = "{validation.coordinate.destination.null}")
+    @NotNull
     private CoordinatesDto destination;
 }

@@ -17,6 +17,11 @@ class OrderDatabaseRepository implements OrderRepository {
     }
 
     @Override
+    public Order getReference(Long id) {
+        return repository.getReferenceById(id);
+    }
+
+    @Override
     public Optional<Order> get(Long id) {
         return repository.findById(id);
     }
@@ -29,6 +34,11 @@ class OrderDatabaseRepository implements OrderRepository {
     @Override
     public void delete(Long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public boolean exists(Long id) {
+        return repository.existsById(id);
     }
 }
 

@@ -19,6 +19,11 @@ class UserDatabaseRepository implements UserRepository, AuthenticationRepository
     }
 
     @Override
+    public User getReference(Long id) {
+        return repository.getReferenceById(id);
+    }
+
+    @Override
     public Optional<User> get(Long id) {
         return repository.findById(id);
     }
@@ -34,8 +39,18 @@ class UserDatabaseRepository implements UserRepository, AuthenticationRepository
     }
 
     @Override
-    public Optional<User> findByEmail(EmailAddress emailAddress) {
-        return repository.findByEmail(emailAddress);
+    public boolean exists(Long id) {
+        return repository.existsById(id);
+    }
+
+    @Override
+    public boolean existsByEmailAddress(EmailAddress emailAddress) {
+        return repository.existsByEmailAddress(emailAddress);
+    }
+
+    @Override
+    public Optional<User> findByEmailAddress(EmailAddress emailAddress) {
+        return repository.findByEmailAddress(emailAddress);
     }
 }
 

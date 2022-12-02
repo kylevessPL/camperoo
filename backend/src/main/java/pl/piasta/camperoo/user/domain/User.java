@@ -20,10 +20,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.ArrayUtils;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
 import pl.piasta.camperoo.common.domain.vo.EmailAddress;
 import pl.piasta.camperoo.order.domain.Order;
-import pl.piasta.camperoo.security.exception.UserAccountDisabledException;
+import pl.piasta.camperoo.user.exception.AccountWithoutRoleException;
+import pl.piasta.camperoo.user.exception.UserAccountDisabledException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -33,7 +35,7 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
+@Builder(toBuilder = true)
 @Entity
 @Table(name = "users")
 public class User extends AbstractEntity {
@@ -44,7 +46,7 @@ public class User extends AbstractEntity {
 
     @Embedded
     @Column(nullable = false)
-    private EmailAddress email;
+    private EmailAddress emailAddress;
 
     @Column(nullable = false, length = 73)
     private String passwordHash;
@@ -78,9 +80,23 @@ public class User extends AbstractEntity {
         active = false;
     }
 
+    public void changeRoles(Role... roles) {
+        checkIfEnabled();
+        checkIfRoleProvided(roles);
+        Set<Role> roleSet = Set.of(roles);
+        this.roles.retainAll(roleSet);
+        this.roles.addAll(roleSet);
+    }
+
     private void checkIfEnabled() {
         if (!active) {
             throw new UserAccountDisabledException(id);
+        }
+    }
+
+    private static void checkIfRoleProvided(Role[] roles) {
+        if (ArrayUtils.isEmpty(roles)) {
+            throw new AccountWithoutRoleException();
         }
     }
 }

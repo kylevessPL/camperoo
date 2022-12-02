@@ -1,6 +1,7 @@
 package pl.piasta.camperoo.user.domain;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -16,11 +17,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
+import pl.piasta.camperoo.user.domain.vo.PhoneNumber;
+import pl.piasta.camperoo.user.domain.vo.ZipCode;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
+@Builder(toBuilder = true)
 @Entity
 @Table(name = "persons")
 public class Person extends AbstractEntity {
@@ -41,14 +44,16 @@ public class Person extends AbstractEntity {
     @Column
     private String addressTwo;
 
+    @Embedded
     @Column(nullable = false, length = 6)
-    private String zipCode;
+    private ZipCode zipCode;
 
     @Column(nullable = false, length = 60)
     private String city;
 
+    @Embedded
     @Column(nullable = false, length = 9)
-    private String phoneNumber;
+    private PhoneNumber phoneNumber;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, unique = true)

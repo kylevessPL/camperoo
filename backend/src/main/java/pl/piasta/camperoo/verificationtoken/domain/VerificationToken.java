@@ -1,4 +1,4 @@
-package pl.piasta.camperoo.security.domain;
+package pl.piasta.camperoo.verificationtoken.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -25,7 +25,7 @@ import java.time.Instant;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
+@Builder(toBuilder = true)
 @Entity
 @Table(name = "verification_tokens")
 public class VerificationToken extends AbstractEntity {
@@ -53,5 +53,4 @@ public class VerificationToken extends AbstractEntity {
     public boolean isExpired() {
         return expirationDate.isBefore(Instant.now());
     }
-
 }

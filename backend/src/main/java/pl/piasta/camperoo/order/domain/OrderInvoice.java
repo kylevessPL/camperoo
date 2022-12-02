@@ -251,7 +251,7 @@ class OrderInvoice implements Closeable {
         }
         builder.append(System.lineSeparator()).append(person.getZipCode()).append(" ").append(person.getCity());
         builder.append(System.lineSeparator()).append("Phone: ").append(person.getPhoneNumber());
-        builder.append(System.lineSeparator()).append("Email: ").append(user.getEmail().getEmail());
+        builder.append(System.lineSeparator()).append("Email: ").append(user.getEmailAddress().getEmail());
         return builder.toString();
     }
 

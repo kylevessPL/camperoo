@@ -10,7 +10,7 @@ import pl.piasta.camperoo.common.validation.EmailCheck;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PasswordRecoveryInitDto {
-    @NotBlank(message = "{validation.email.blank}")
+    @NotBlank
     @EmailCheck
     private String email;
 }

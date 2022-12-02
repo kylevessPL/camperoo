@@ -21,6 +21,7 @@ public enum ErrorCode {
     // user
     USER_NOT_FOUND,
     ACCOUNT_DISABLED,
+    ACCOUNT_ALREADY_EXISTS,
     WRONG_OLD_PASSWORD,
     PASSWORD_UNCHANGED
 }

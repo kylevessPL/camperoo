@@ -7,16 +7,18 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.piasta.camperoo.common.validation.AlphaNumericCheck;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddressDto {
     @JsonAlias("formatted")
-    @NotBlank(message = "{validation.address.blank}")
+    @NotBlank
+    @AlphaNumericCheck
     private String address;
 
     @JsonUnwrapped
-    @NotNull(message = "{validation.coordinate.null}")
+    @NotNull
     private CoordinatesDto coordinates;
 }

@@ -1,10 +1,10 @@
-package pl.piasta.camperoo.security.exception;
+package pl.piasta.camperoo.verificationtoken.exception;
 
 import pl.piasta.camperoo.common.domain.vo.VerificationTokenCode;
 import pl.piasta.camperoo.common.exception.ErrorCode;
 import pl.piasta.camperoo.common.exception.ErrorProperty;
 import pl.piasta.camperoo.common.exception.NotFoundException;
-import pl.piasta.camperoo.security.domain.VerificationTokenType;
+import pl.piasta.camperoo.verificationtoken.domain.VerificationTokenType;
 
 public class VerificationTokenNotFoundException extends NotFoundException {
 

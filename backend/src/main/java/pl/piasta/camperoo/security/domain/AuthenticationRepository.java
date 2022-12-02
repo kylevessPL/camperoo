@@ -7,6 +7,5 @@ import pl.piasta.camperoo.user.domain.User;
 import java.util.Optional;
 
 public interface AuthenticationRepository extends Repository<User, Long> {
-    Optional<User> findByEmail(EmailAddress emailAddress);
+    Optional<User> findByEmailAddress(EmailAddress emailAddress);
 }
-

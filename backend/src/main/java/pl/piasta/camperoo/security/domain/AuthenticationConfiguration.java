@@ -8,18 +8,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 class AuthenticationConfiguration {
     @Bean
-    AuthenticationFacade userFacade(
+    AuthenticationFacade authenticationFacade(
             PasswordEncoder passwordEncoder,
             AuthenticationEmailNotifier authenticationEmailNotifier,
             AuthenticationRepository authenticationRepository,
-            VerificationTokenRepository verificationTokenRepository,
-            VerificationTokenTypeRepository verificationTokenTypeRepository,
+            AuthenticationTokenRepository authenticationTokenRepository,
+            AuthenticationTokenTypeRepository authenticationTokenTypeRepository,
             @Value("${app.security.passwordRecoveryToken.validMinutes}") int passwordRecoveryTokenValidMinutes
     ) {
         var userPasswordManager = new AuthenticationPasswordManager(
                 passwordEncoder,
-                verificationTokenRepository,
-                verificationTokenTypeRepository,
+                authenticationTokenRepository,
+                authenticationTokenTypeRepository,
                 passwordRecoveryTokenValidMinutes
         );
         return new AuthenticationFacade(authenticationRepository, userPasswordManager, authenticationEmailNotifier);

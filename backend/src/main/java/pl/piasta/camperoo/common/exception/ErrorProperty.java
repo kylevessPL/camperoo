@@ -25,10 +25,14 @@ public enum ErrorProperty {
     // user
     USER_NOT_FOUND("user.not-found"),
     ACCOUNT_DISABLED("user.account-disabled"),
+    ACCOUNT_ALREADY_EXISTS("user.account-already-exists"),
+    ACCOUNT_WITHOUT_ROLE("user.account-without-role"),
     PASSWORD_LENGTH_MIN("user.password-min"),
     PASSWORD_LENGTH_MAX("user.password-max"),
-    WRONG_OLD_PASSWORD("common.wrong-old-password"),
-    PASSWORD_UNCHANGED("common.password-unchanged");
+    WRONG_OLD_PASSWORD("user.wrong-old-password"),
+    PASSWORD_UNCHANGED("user.password-unchanged"),
+    ZIP_CODE_REGEX("user.zip-code-regex"),
+    PHONE_NUMBER_REGEX("user.phone-number-regex");
 
     private final String property;
 }
