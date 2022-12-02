@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS persons
     last_name    VARCHAR(255) NOT NULL,
     address_one  VARCHAR(255) NOT NULL,
     address_two  VARCHAR(255),
-    zip_code     VARCHAR(6)   NOT NULL,
+    zip_code     VARCHAR(6)   NOT NULL CHECK (LENGTH(zip_code) = 6),
     city         VARCHAR(60)  NOT NULL,
     phone_number VARCHAR(9)   NOT NULL CHECK (LENGTH(phone_number) = 9),
     user_id      BIGINT       NOT NULL UNIQUE REFERENCES users (id)
