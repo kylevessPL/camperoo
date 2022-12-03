@@ -20,6 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Singular;
 import org.apache.commons.lang3.ArrayUtils;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
 import pl.piasta.camperoo.common.domain.vo.EmailAddress;
@@ -27,8 +28,7 @@ import pl.piasta.camperoo.order.domain.Order;
 import pl.piasta.camperoo.user.exception.AccountWithoutRoleException;
 import pl.piasta.camperoo.user.exception.UserAccountDisabledException;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -54,21 +54,22 @@ public class User extends AbstractEntity {
     @Column(nullable = false)
     private boolean active;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "person_id", nullable = false, unique = true)
     private Person person;
 
-    @Builder.Default
+    @Singular
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
-    private Set<Role> roles = new HashSet<>();
+    private Set<Role> roles = Collections.emptySet();
 
-    @Builder.Default
+    @Singular
     @OrderBy("placementDate DESC")
     @OneToMany(mappedBy = "user")
-    private List<Order> orders = new ArrayList<>();
+    private List<Order> orders = Collections.emptyList();
 
     public void changePasswordHash(String passwordHash) {
         checkIfEnabled();

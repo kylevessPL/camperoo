@@ -12,20 +12,6 @@ CREATE TABLE IF NOT EXISTS locales
 CREATE UNIQUE INDEX ON locales (fallback) WHERE fallback;
 
 --
--- users
---
-CREATE TABLE IF NOT EXISTS users
-(
-    id            BIGINT PRIMARY KEY,
-    version       BIGINT       NOT NULL DEFAULT 0,
-    email         VARCHAR(255) NOT NULL UNIQUE CHECK (LENGTH(email) > 0),
-    password_hash VARCHAR(97)  NOT NULL CHECK (LENGTH(password_hash) = 97),
-    active        BOOLEAN      NOT NULL DEFAULT FALSE
-);
-
-CREATE SEQUENCE IF NOT EXISTS seq_users_id;
-
---
 -- persons
 --
 CREATE TABLE IF NOT EXISTS persons
@@ -38,11 +24,25 @@ CREATE TABLE IF NOT EXISTS persons
     address_two  VARCHAR(255),
     zip_code     VARCHAR(6)   NOT NULL CHECK (LENGTH(zip_code) = 6),
     city         VARCHAR(60)  NOT NULL,
-    phone_number VARCHAR(9)   NOT NULL CHECK (LENGTH(phone_number) = 9),
-    user_id      BIGINT       NOT NULL UNIQUE REFERENCES users (id)
+    phone_number VARCHAR(9)   NOT NULL CHECK (LENGTH(phone_number) = 9)
 );
 
 CREATE SEQUENCE IF NOT EXISTS seq_persons_id;
+
+--
+-- users
+--
+CREATE TABLE IF NOT EXISTS users
+(
+    id            BIGINT PRIMARY KEY,
+    version       BIGINT       NOT NULL DEFAULT 0,
+    email         VARCHAR(255) NOT NULL UNIQUE CHECK (LENGTH(email) > 0),
+    password_hash VARCHAR(97)  NOT NULL CHECK (LENGTH(password_hash) = 97),
+    active        BOOLEAN      NOT NULL DEFAULT FALSE,
+    person_id     BIGINT       NOT NULL UNIQUE REFERENCES persons (id)
+);
+
+CREATE SEQUENCE IF NOT EXISTS seq_users_id;
 
 --
 -- verification_token_types
