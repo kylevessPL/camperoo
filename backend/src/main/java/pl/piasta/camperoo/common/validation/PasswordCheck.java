@@ -27,5 +27,6 @@ public @interface PasswordCheck {
     String message() default "{validation.password}";
 
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

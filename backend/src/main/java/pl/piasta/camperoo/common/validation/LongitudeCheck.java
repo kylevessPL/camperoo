@@ -26,5 +26,6 @@ public @interface LongitudeCheck {
     String message() default "{validation.longitude}";
 
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

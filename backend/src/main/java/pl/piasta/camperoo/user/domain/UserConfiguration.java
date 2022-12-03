@@ -11,6 +11,7 @@ class UserConfiguration {
             UserConverter userConverter,
             UserEmailNotifier userEmailNotifier,
             UserRepository userRepository,
+            PersonRepository personRepository,
             RoleRepository roleRepository,
             UserAccountTokenRepository userAccountTokenRepository,
             UserAccountTokenTypeRepository userAccountTokenTypeRepository,
@@ -18,6 +19,7 @@ class UserConfiguration {
     ) {
         var userPasswordManager = new UserAccountManager(
                 userRepository,
+                personRepository,
                 roleRepository,
                 userAccountTokenRepository,
                 userAccountTokenTypeRepository,

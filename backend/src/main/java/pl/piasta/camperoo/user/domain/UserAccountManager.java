@@ -14,6 +14,7 @@ import static pl.piasta.camperoo.verificationtoken.domain.VerificationTokenType.
 @RequiredArgsConstructor
 class UserAccountManager {
     private final UserRepository userRepository;
+    private final PersonRepository personRepository;
     private final RoleRepository roleRepository;
     private final UserAccountTokenRepository userAccountTokenRepository;
     private final UserAccountTokenTypeRepository userAccountTokenTypeRepository;
@@ -30,7 +31,10 @@ class UserAccountManager {
         if (userRepository.existsByEmailAddress(emailAddress)) {
             throw new AccountDuplicateException(emailAddress);
         }
-        user.changeRoles(role);
+        user = user.toBuilder()
+                .role(role)
+                .build();
+        personRepository.save(user.getPerson());
         return userRepository.save(user);
     }
 

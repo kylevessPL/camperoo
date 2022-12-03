@@ -25,6 +25,7 @@ public @interface EmailCheck {
     String message() default "{validation.email}";
 
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }
 

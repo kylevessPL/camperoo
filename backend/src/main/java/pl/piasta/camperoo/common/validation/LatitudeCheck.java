@@ -26,5 +26,6 @@ public @interface LatitudeCheck {
     String message() default "{validation.latitude}";
 
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

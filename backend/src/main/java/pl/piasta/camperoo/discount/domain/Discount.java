@@ -14,11 +14,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Singular;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
 import pl.piasta.camperoo.common.domain.LocalizableDescription;
 
 import java.time.Instant;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Set;
 
 @Getter
@@ -45,7 +46,7 @@ public class Discount extends AbstractEntity implements LocalizableDescription<D
     @Column(nullable = false)
     private boolean active = true;
 
-    @Builder.Default
+    @Singular
     @OneToMany(mappedBy = "discount", fetch = FetchType.EAGER)
-    private Set<DiscountDescription> descriptions = new HashSet<>();
+    private Set<DiscountDescription> descriptions = Collections.emptySet();
 }

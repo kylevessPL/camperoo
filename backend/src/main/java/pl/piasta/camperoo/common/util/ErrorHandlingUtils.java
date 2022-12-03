@@ -23,7 +23,6 @@ import pl.piasta.camperoo.common.exception.AppException;
 import pl.piasta.camperoo.common.exception.ErrorCode;
 
 import java.time.Instant;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -122,8 +121,7 @@ public class ErrorHandlingUtils {
         private int status;
         private String error;
         private String message;
-        @Builder.Default
-        private Set<SingleError> errors = new HashSet<>();
+        private Set<SingleError> errors;
         private String path;
     }
 
