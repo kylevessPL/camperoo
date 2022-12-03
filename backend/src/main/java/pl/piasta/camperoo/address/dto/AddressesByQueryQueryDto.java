@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddressesByQueryQueryDto {
-    @NotBlank(message = "{validation.query.blank}")
+    @NotBlank
     private String query;
 }

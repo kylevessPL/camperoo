@@ -22,6 +22,9 @@ import java.util.Set;
 @Entity
 @Table(name = "roles")
 public class Role extends AbstractEntity implements LocalizableDescription<RoleDescription> {
+    public static final Long ADMIN = 1L;
+    public static final Long CUSTOMER = 2L;
+
     @Id
     private Long id;
 

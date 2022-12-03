@@ -19,7 +19,7 @@ class AuthenticationService implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(EmailAddress.of(username))
+        return userRepository.findByEmailAddress(EmailAddress.of(username))
                 .filter(User::isActive)
                 .map(this::authenticatedUser)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
@@ -27,7 +27,7 @@ class AuthenticationService implements UserDetailsService {
 
     private AuthenticatedUserDetails authenticatedUser(User account) {
         var id = account.getId();
-        var email = account.getEmail().getEmail();
+        var email = account.getEmailAddress().getEmail();
         var password = account.getPasswordHash();
         var roles = account.getRoles()
                 .stream()

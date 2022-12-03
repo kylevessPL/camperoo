@@ -21,7 +21,7 @@ import pl.piasta.camperoo.global.domain.Locale;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
+@Builder(toBuilder = true)
 @Entity
 @Table(name = "product_category_names")
 public class ProductCategoryName extends NameOrientedEntity<Locale> {

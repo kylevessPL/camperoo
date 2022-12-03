@@ -6,23 +6,23 @@ VALUES (1, 'pl', FALSE),
        (2, 'en', TRUE);
 
 --
--- users
---
--- admin, pwd: adminpwd
-INSERT INTO users (id, email, password_hash, active)
-VALUES (1, 'admin@camperoo.pl',
-        '$argon2id$v=19$m=16384,t=2,p=1$RlBLbUYyWTM4VjNna3JiYg$wLijXEtoUP84spXpDG1DPFEoLWy8nskLleiwqa4fGj8', TRUE);
-
-SELECT SETVAL('seq_users_id', 1);
-
---
 -- persons
 --
 -- admin
-INSERT INTO persons (id, first_name, last_name, address_one, zip_code, city, phone_number, user_id)
-VALUES (1, 'Admin', 'Adminowski', 'Adminowo 1', '00-001', 'Warszawa', 123456789, 1);
+INSERT INTO persons (id, first_name, last_name, address_one, zip_code, city, phone_number)
+VALUES (1, 'Admin', 'Adminowski', 'Adminowo 1', '00-001', 'Warszawa', 123456789);
 
 SELECT SETVAL('seq_persons_id', 1);
+
+--
+-- users
+--
+-- admin, pwd: adminpwd
+INSERT INTO users (id, email, password_hash, active, person_id)
+VALUES (1, 'admin@camperoo.pl',
+        '$argon2id$v=19$m=16384,t=2,p=1$RlBLbUYyWTM4VjNna3JiYg$wLijXEtoUP84spXpDG1DPFEoLWy8nskLleiwqa4fGj8', TRUE, 1);
+
+SELECT SETVAL('seq_users_id', 1);
 
 --
 -- verification_token_types

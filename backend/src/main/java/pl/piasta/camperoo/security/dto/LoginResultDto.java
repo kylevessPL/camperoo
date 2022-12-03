@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.piasta.camperoo.common.validation.UnixTimestampCheck;
 
 import java.util.Set;
 
@@ -12,12 +13,14 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginResultDto {
-    @NotNull(message = "{validation.issuanceTime.null}")
+    @NotNull
+    @UnixTimestampCheck
     private Long issuanceTime;
 
-    @NotNull(message = "{validation.expirationTime.null}")
+    @NotNull
+    @UnixTimestampCheck
     private Long expirationTime;
 
-    @NotEmpty(message = "{validation.role.empty}")
+    @NotEmpty
     private Set<String> roles;
 }

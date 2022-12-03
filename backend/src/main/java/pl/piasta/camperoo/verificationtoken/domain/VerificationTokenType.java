@@ -1,4 +1,4 @@
-package pl.piasta.camperoo.security.domain;
+package pl.piasta.camperoo.verificationtoken.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

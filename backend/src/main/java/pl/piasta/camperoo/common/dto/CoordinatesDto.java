@@ -13,12 +13,12 @@ import pl.piasta.camperoo.common.validation.LongitudeCheck;
 @NoArgsConstructor
 public class CoordinatesDto {
     @JsonAlias("lat")
-    @NotNull(message = "{validation.latitude.null}")
+    @NotNull
     @LatitudeCheck
     private Double latitude;
 
     @JsonAlias("lon")
-    @NotNull(message = "{validation.longitude.null}")
+    @NotNull
     @LongitudeCheck
     private Double longitude;
 }

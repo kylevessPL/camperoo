@@ -12,6 +12,7 @@ import pl.piasta.camperoo.common.exception.ValidationException;
 @EqualsAndHashCode
 @Getter
 public class Password implements ValueObject {
+    public static final String REGEX = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\\W_]).*$";
     public static final int LENGTH_MIN = 12;
     public static final int LENGTH_MAX = 32;
 

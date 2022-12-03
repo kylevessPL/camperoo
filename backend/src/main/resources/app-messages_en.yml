@@ -7,10 +7,6 @@ error:
     not-found: 'Verification token with {0} = {1} does not exist'
   email:
     delivery-error: 'Failed to deliver email to {0}'
-    email-regex: 'Email address is not valid'
-  common:
-    wrong-old-password: 'Old password is incorrect'
-    password-unchanged: 'New password must be different from current password'
   address:
     route-calculation-error: 'Couldn''t find route between original and destination points'
     latitude-out-of-bounds: 'Latitude is out of bounds'
@@ -18,40 +14,21 @@ error:
   user:
     not-found: 'User with {0} = {1} does not exist'
     account-disabled: 'Account of user with id = {0} is disabled'
+    account-already-exists: 'Account {0} = {1} already exists'
+    account-without-role: 'Account must have at least one role assigned'
     password-min: 'Password must be at least {0} characters long'
     password-max: 'Password must be at most {0} characters long'
+    wrong-old-password: 'Old password is incorrect'
+    password-unchanged: 'New password must be different from current password'
+    email-regex: 'Email address is not valid'
+    phone-number-regex: 'Phone number is not valid'
+    zip-code-regex: 'Zip code is not valid'
 validation:
-  coordinate:
-    null: 'Coordinates cannot be null'
-    origin:
-      null: 'Origin coordinates cannot be null'
-    destination:
-      null: 'Destination coordinates cannot be null'
-  latitude:
-    null: 'Latitude cannot be null'
-    invalid: 'Latitude is not valid'
-  longitude:
-    null: 'Longtitude cannot be null'
-    invalid: 'Longitude is not valid'
-  email:
-    blank: 'Email address cannot be blank'
-    invalid: 'Email address is not valid'
-  query:
-    blank: 'Query cannot be blank'
-  address:
-    blank: 'Address cannot be blank'
-  distance:
-    min-0: 'Distance must be greater than or equal to zero'
-  countryCode:
-    empty: 'Country codes cannot be empty'
-  issuanceTime:
-    null: 'Issuance time cannot be null'
-  expirationTime:
-    null: 'Issuance time cannot be null'
-  code:
-    null: 'Code cannot be null'
-  role:
-    empty: 'Roles cannot be empty'
-  password:
-    blank: 'Password cannot be blank'
-    length: 'Password contains invalid characters'
+  alphaNumeric: 'must be alphanumeric characters'
+  email: 'must be valid email address'
+  latitude: 'must be valid latitude'
+  longitude: 'must be valid longitude'
+  password: 'must be 12-32 characters long and contain at least one uppercase letter, one lowercase letter, one digit and one special character'
+  phoneNumber: 'must be valid phone number'
+  unixTimestamp: 'must be valid unix timestamp'
+  zipCode: 'must be valid zip code'

@@ -7,27 +7,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import pl.piasta.camperoo.security.domain.AuthenticationFacade;
-import pl.piasta.camperoo.user.dto.PasswordRecoveryDto;
-import pl.piasta.camperoo.user.dto.PasswordRecoveryInitDto;
+import pl.piasta.camperoo.common.dto.ResourceCreatedDto;
+import pl.piasta.camperoo.user.domain.UserFacade;
+import pl.piasta.camperoo.user.dto.ConfirmAccountDto;
+import pl.piasta.camperoo.user.dto.CreateAccountDto;
 
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
 class UserController {
-    private final AuthenticationFacade authenticationFacade;
+    private final UserFacade userFacade;
 
-    @ResponseStatus(NO_CONTENT)
-    @PostMapping("/password-recovery")
-    void recoverPassword(@RequestBody @Valid PasswordRecoveryDto dto) {
-        authenticationFacade.recoverPassword(dto);
+    @ResponseStatus(CREATED)
+    @PostMapping
+    ResourceCreatedDto createCustomerAccount(@RequestBody @Valid CreateAccountDto dto) {
+        return userFacade.createAccount(dto);
     }
 
     @ResponseStatus(NO_CONTENT)
-    @PostMapping("/password-recovery/init")
-    void initPasswordRecovery(@RequestBody @Valid PasswordRecoveryInitDto dto) {
-        authenticationFacade.generatePasswordRecoveryToken(dto);
+    @PostMapping("/confirmation")
+    void confirmAccount(@RequestBody @Valid ConfirmAccountDto dto) {
+        userFacade.confirmAccount(dto);
     }
 }

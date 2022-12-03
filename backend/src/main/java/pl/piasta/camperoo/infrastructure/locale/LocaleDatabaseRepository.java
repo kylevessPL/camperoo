@@ -17,6 +17,11 @@ class LocaleDatabaseRepository implements LocaleRepository {
     }
 
     @Override
+    public Locale getReference(Long id) {
+        return repository.getReferenceById(id);
+    }
+
+    @Override
     public Optional<Locale> get(Long id) {
         return repository.findById(id);
     }
@@ -29,5 +34,10 @@ class LocaleDatabaseRepository implements LocaleRepository {
     @Override
     public void delete(Long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public boolean exists(Long id) {
+        return repository.existsById(id);
     }
 }

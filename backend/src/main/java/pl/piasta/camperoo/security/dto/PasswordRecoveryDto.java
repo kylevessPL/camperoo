@@ -1,22 +1,21 @@
-package pl.piasta.camperoo.user.dto;
+package pl.piasta.camperoo.security.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.UUID;
 import pl.piasta.camperoo.common.validation.PasswordCheck;
-
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class PasswordRecoveryDto {
-    @NotNull(message = "{validation.code.null}")
-    private UUID code;
+    @NotBlank
+    @UUID
+    private String code;
 
-    @NotBlank(message = "{validation.password.blank}")
+    @NotBlank
     @PasswordCheck
     private String password;
 }

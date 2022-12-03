@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.Range;
 import pl.piasta.camperoo.common.exception.ErrorProperty;
 import pl.piasta.camperoo.common.exception.ValidationException;
 
@@ -16,8 +17,6 @@ public class Coordinates implements ValueObject {
     public static final String LATITUDE_MAX_VALUE = "-90";
     public static final String LONGITUDE_MIN_VALUE = "-180";
     public static final String LONGITUDE_MAX_VALUE = "-180";
-    public static final double LATITUDE_BOUND = 90;
-    public static final double LONGITUDE_BOUND = 180;
 
     private Double latitude;
     private Double longitude;
@@ -32,17 +31,23 @@ public class Coordinates implements ValueObject {
     }
 
     private Double validateLatitude(Double latitude) {
-        if (Math.ceil(Math.abs(latitude)) > LATITUDE_BOUND) {
+        if (isOutOfBounds(LATITUDE_MIN_VALUE, LATITUDE_MAX_VALUE, latitude)) {
             throw CoordinatesValidationException.latitudeOutOfBounds();
         }
         return latitude;
     }
 
     private Double validateLongitude(Double longitude) {
-        if (Math.ceil(Math.abs(this.longitude)) > LONGITUDE_BOUND) {
+        if (isOutOfBounds(LONGITUDE_MIN_VALUE, LONGITUDE_MAX_VALUE, longitude)) {
             throw CoordinatesValidationException.longitudeOutOfBounds();
         }
         return longitude;
+    }
+
+    private boolean isOutOfBounds(String coordinateMin, String coordinateMax, double coordinate) {
+        var start = Double.parseDouble(coordinateMin);
+        var end = Double.parseDouble(coordinateMax);
+        return !Range.between(start, end).contains(coordinate);
     }
 
     private static class CoordinatesValidationException extends ValidationException {

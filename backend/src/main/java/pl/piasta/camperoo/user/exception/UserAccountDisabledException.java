@@ -1,4 +1,4 @@
-package pl.piasta.camperoo.security.exception;
+package pl.piasta.camperoo.user.exception;
 
 import pl.piasta.camperoo.common.exception.BusinessException;
 import pl.piasta.camperoo.common.exception.ErrorCode;

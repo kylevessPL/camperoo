@@ -7,10 +7,6 @@ error:
     not-found: 'Token weryfikacyjny o parametrze {0} = {1} nie istnieje'
   email:
     delivery-error: 'Nie znaleziono tokenu weryfikacyjnego o parametrze {0} = {1}'
-    email-regex: 'Adres mailowy jest nieprawidłowy'
-  common:
-    wrong-old-password: 'Stare hasło jest niepoprawne'
-    password-unchanged: 'Nowe hasło musi się różnić od starego'
   address:
     route-calculation-error: 'Nie znaleziono trasy pomiędzy współrzędnymi pochodzenia a przeznaczenia'
     latitude-out-of-bounds: 'Szerokość geograficzna wykracza poza zakres'
@@ -18,40 +14,21 @@ error:
   user:
     not-found: 'Nie znaleziono użytkownika o parametrze {0} = {1}'
     account-disabled: 'Konto użytkownika o id = {0} jest wyłączone'
+    account-already-exists: 'Konto użytkownika o parametrze {0} = {1} już istnieje'
+    account-without-role: 'Konto musi mieć przypisaną minimum jedną rolę'
     password-min: 'Długość hasła musi wynosić przynajmniej {0} znaków'
     password-max: 'Długość hasła musi wynosić maksymalnie {0} znaków'
+    wrong-old-password: 'Stare hasło jest niepoprawne'
+    password-unchanged: 'Nowe hasło musi się różnić od starego'
+    email-regex: 'Adres email jest nieprawidłowy'
+    phone-number-regex: 'Numer telefonu jest nieprawidłowy'
+    zip-code-regex: 'Kod pocztowy jest nieprawidłowy'
 validation:
-  coordinate:
-    null: 'Współrzędne muszą mieć wartość inną niż NULL'
-    origin:
-      null: 'Współrzędne pochodzenia muszą mieć wartość inną niż NULL'
-    destination:
-      null: 'Współrzędne przeznaczenia muszą mieć wartość inną niż NULL'
-  latitude:
-    null: 'Szerokość geograficzna musi mieć wartość inną niż NULL'
-    invalid: 'Szerokość geograficzna jest nieprawidłowa'
-  longitude:
-    null: 'Długość geograficzna musi mieć wartość inną niż NULL'
-    invalid: 'Długość geograficzna jest nieprawidłowa'
-  email:
-    blank: 'Adres email nie może być pusty'
-    invalid: 'Adres email jest nieprawidłowy'
-  query:
-    blank: 'Zapytanie nie może być puste'
-  address:
-    blank: 'Adres nie może być pusty'
-  distance:
-    min-0: 'Odległość musi mieć wartość większą bądź równą zero'
-  countryCode:
-    empty: 'Lista kodów kraju nie może być pusta'
-  issuanceTime:
-    null: 'Czas wydania musi mieć wartość inną niż NULL'
-  expirationTime:
-    null: 'Czas wygaśnięcia musi mieć wartość inną niż NULL'
-  code:
-    null: 'Kod nie może byc pusty'
-  role:
-    empty: 'Lista ról nie może być pusta'
-  password:
-    blank: 'Hasło nie może być puste'
-    invalid: 'Hasło zawiera niedozwolone znaki'
+  alphaNumeric: 'musi mieć znaki alfanumeryczne'
+  email: 'musi być poprawnym adresem email'
+  latitude: 'musi być poprawną szerokością geograficzną'
+  longitude: 'musi być poprawną długością geograficzną'
+  password: 'musi mieć 12-32 znaków i zawierać przynajmniej jedną wielką literę, jedną małą literę, jedną cyfrę oraz jeden znak specjalny'
+  phoneNumber: 'musi być poprawnym numerem telefonu'
+  unixTimestamp: 'musi być poprawnym czasem uniksowym'
+  zipCode: 'musi być poprawnym kodem pocztowym'

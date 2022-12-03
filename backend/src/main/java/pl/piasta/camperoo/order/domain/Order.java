@@ -19,6 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Singular;
 import pl.piasta.camperoo.branch.domain.CompanyBranch;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
 import pl.piasta.camperoo.delivery.domain.DeliveryType;
@@ -29,8 +30,7 @@ import pl.piasta.camperoo.user.domain.User;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -38,7 +38,7 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder
+@Builder(toBuilder = true)
 @Entity
 @Table(name = "orders")
 public class Order extends AbstractEntity {
@@ -95,14 +95,14 @@ public class Order extends AbstractEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Builder.Default
+    @Singular
     @OrderBy("deadline DESC")
     @OneToMany(mappedBy = "order")
-    private List<Payment> payments = new ArrayList<>();
+    private List<Payment> payments = Collections.emptyList();
 
-    @Builder.Default
+    @Singular
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private Set<OrderProduct> orderProducts = new HashSet<>();
+    private Set<OrderProduct> orderProducts;
 
     public Optional<Payment> getPayment() {
         return payments.stream().findFirst();

@@ -14,8 +14,8 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -25,9 +25,9 @@ import pl.piasta.camperoo.common.exception.NotFoundException;
 import pl.piasta.camperoo.common.exception.ValidationException;
 import pl.piasta.camperoo.common.util.ErrorHandlingUtils;
 
-@RestControllerAdvice
+@ControllerAdvice
 @Setter(onMethod_ = @Override, onParam_ = @NonNull)
-class AppErrorHandler extends ResponseEntityExceptionHandler implements MessageSourceAware {
+public class AppErrorHandler extends ResponseEntityExceptionHandler implements MessageSourceAware {
     private MessageSource messageSource;
 
     @ExceptionHandler(NotFoundException.class)
@@ -111,7 +111,7 @@ class AppErrorHandler extends ResponseEntityExceptionHandler implements MessageS
         logger.warn(ex.getMessage(), ex);
         var path = ErrorHandlingUtils.resolveRequestPath(req);
         var body = ErrorHandlingUtils.createErrorAttributes(ex, status, path, messageSource);
-        return new ResponseEntity<>(body, headers, status);
+        return createResponseEntity(body, headers, status, req);
     }
 }
 

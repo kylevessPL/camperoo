@@ -8,7 +8,7 @@ app:
       validMinutes: 15
     passwordRecoveryToken:
       validMinutes: 60
-  auth:
+  user:
     accountCreationToken:
       validMinutes: 1440
 

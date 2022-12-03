@@ -11,4 +11,9 @@ class UserRepositoryConfiguration {
     UserDatabaseRepository userRepository(UserJpaRepository jpaRepository) {
         return new UserDatabaseRepository(jpaRepository);
     }
+
+    @Bean
+    PersonDatabaseRepository personRepository(PersonJpaRepository jpaRepository) {
+        return new PersonDatabaseRepository(jpaRepository);
+    }
 }

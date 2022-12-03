@@ -4,14 +4,14 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.piasta.camperoo.common.validation.EmailCheck;
+import org.hibernate.validator.constraints.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PasswordRecoveryInitDto {
-    @NotBlank(message = "{validation.email.blank}")
-    @EmailCheck
-    private String email;
+public class ConfirmAccountDto {
+    @NotBlank
+    @UUID
+    private String code;
 }
 
