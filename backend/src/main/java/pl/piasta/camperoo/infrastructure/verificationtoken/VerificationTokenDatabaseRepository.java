@@ -3,7 +3,7 @@ package pl.piasta.camperoo.infrastructure.verificationtoken;
 import lombok.RequiredArgsConstructor;
 import pl.piasta.camperoo.common.domain.vo.VerificationTokenCode;
 import pl.piasta.camperoo.security.domain.AuthenticationTokenRepository;
-import pl.piasta.camperoo.user.domain.UserAccountTokenRepository;
+import pl.piasta.camperoo.user.domain.UserTokenRepository;
 import pl.piasta.camperoo.verificationtoken.domain.VerificationToken;
 import pl.piasta.camperoo.verificationtoken.domain.VerificationTokenType;
 
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-class VerificationTokenDatabaseRepository implements AuthenticationTokenRepository, UserAccountTokenRepository {
+class VerificationTokenDatabaseRepository implements AuthenticationTokenRepository, UserTokenRepository {
     private final VerificationTokenJpaRepository repository;
 
     @Override

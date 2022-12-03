@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import pl.piasta.camperoo.security.domain.AuthenticationFacade;
 import pl.piasta.camperoo.security.dto.LoginResultDto;
-import pl.piasta.camperoo.user.dto.PasswordRecoveryDto;
-import pl.piasta.camperoo.user.dto.PasswordRecoveryInitDto;
+import pl.piasta.camperoo.security.dto.PasswordRecoveryDto;
+import pl.piasta.camperoo.security.dto.PasswordRecoveryInitDto;
 
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 

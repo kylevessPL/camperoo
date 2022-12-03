@@ -1,4 +1,4 @@
-package pl.piasta.camperoo.user.dto;
+package pl.piasta.camperoo.security.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

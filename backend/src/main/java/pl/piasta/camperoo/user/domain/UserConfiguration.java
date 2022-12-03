@@ -13,16 +13,16 @@ class UserConfiguration {
             UserRepository userRepository,
             PersonRepository personRepository,
             RoleRepository roleRepository,
-            UserAccountTokenRepository userAccountTokenRepository,
-            UserAccountTokenTypeRepository userAccountTokenTypeRepository,
+            UserTokenRepository userTokenRepository,
+            UserTokenTypeRepository userTokenTypeRepository,
             @Value("${app.user.accountCreationToken.validMinutes}") int accountCreationTokenValidMinutes
     ) {
         var userPasswordManager = new UserAccountManager(
                 userRepository,
                 personRepository,
                 roleRepository,
-                userAccountTokenRepository,
-                userAccountTokenTypeRepository,
+                userTokenRepository,
+                userTokenTypeRepository,
                 accountCreationTokenValidMinutes
         );
         return new UserFacade(userConverter, userPasswordManager, userEmailNotifier);

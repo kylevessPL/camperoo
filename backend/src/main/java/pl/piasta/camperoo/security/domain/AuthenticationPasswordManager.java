@@ -22,24 +22,25 @@ class AuthenticationPasswordManager {
     private final int passwordRecoveryTokenValidMinutes;
 
     public void recover(VerificationTokenCode token, Password password) {
-        var recoveryTokenType = authenticationTokenTypeRepository.getReference(PASSWORD_RECOVERY);
-        VerificationToken recoveryToken = authenticationTokenRepository.findByIdAndType(token, recoveryTokenType)
-                .filter(verificationToken -> !verificationToken.isExpired())
-                .orElseThrow(() -> VerificationTokenNotFoundException.passwordRecovery(token));
-        reset(recoveryToken.getUser(), password);
-        authenticationTokenRepository.delete(recoveryToken.getId());
+        var passwordRecoveryTokenType = authenticationTokenTypeRepository.getReference(PASSWORD_RECOVERY);
+        VerificationToken passwordRecoveryToken =
+                authenticationTokenRepository.findByIdAndType(token, passwordRecoveryTokenType)
+                        .filter(verificationToken -> !verificationToken.isExpired())
+                        .orElseThrow(() -> VerificationTokenNotFoundException.passwordRecovery(token));
+        reset(passwordRecoveryToken.getUser(), password);
+        authenticationTokenRepository.delete(passwordRecoveryToken.getId());
     }
 
     public VerificationTokenCode generateRecoveryToken(User user) {
         var expirationDate = Instant.now().plus(passwordRecoveryTokenValidMinutes, MINUTES);
-        var recoveryTokenType = authenticationTokenTypeRepository.getReference(PASSWORD_RECOVERY);
-        var recoveryToken = VerificationToken.builder()
+        var passwordRecoveryTokenType = authenticationTokenTypeRepository.getReference(PASSWORD_RECOVERY);
+        var passwordRecoveryToken = VerificationToken.builder()
                 .code(VerificationTokenCode.random())
                 .expirationDate(expirationDate)
-                .type(recoveryTokenType)
+                .type(passwordRecoveryTokenType)
                 .user(user)
                 .build();
-        return authenticationTokenRepository.save(recoveryToken).getCode();
+        return authenticationTokenRepository.save(passwordRecoveryToken).getCode();
     }
 
     private void reset(User user, Password password) {

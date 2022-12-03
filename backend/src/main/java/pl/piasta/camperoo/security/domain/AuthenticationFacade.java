@@ -5,8 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.piasta.camperoo.common.domain.vo.EmailAddress;
 import pl.piasta.camperoo.common.domain.vo.VerificationTokenCode;
 import pl.piasta.camperoo.security.domain.vo.Password;
-import pl.piasta.camperoo.user.dto.PasswordRecoveryDto;
-import pl.piasta.camperoo.user.dto.PasswordRecoveryInitDto;
+import pl.piasta.camperoo.security.dto.PasswordRecoveryDto;
+import pl.piasta.camperoo.security.dto.PasswordRecoveryInitDto;
 
 import java.util.UUID;
 

@@ -77,8 +77,11 @@ public class User extends AbstractEntity {
     }
 
     public void disableAccount() {
-        checkIfEnabled();
         active = false;
+    }
+
+    public void enableAccount() {
+        active = true;
     }
 
     public void changeRoles(Role... roles) {
