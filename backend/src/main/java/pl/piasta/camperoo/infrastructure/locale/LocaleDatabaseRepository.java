@@ -3,12 +3,14 @@ package pl.piasta.camperoo.infrastructure.locale;
 import lombok.RequiredArgsConstructor;
 import pl.piasta.camperoo.global.domain.Locale;
 import pl.piasta.camperoo.global.domain.LocaleRepository;
+import pl.piasta.camperoo.global.query.LocaleProjection;
+import pl.piasta.camperoo.global.query.LocaleQueryClient;
 
 import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-class LocaleDatabaseRepository implements LocaleRepository {
+class LocaleDatabaseRepository implements LocaleRepository, LocaleQueryClient {
     private final LocaleJpaRepository repository;
 
     @Override
@@ -27,11 +29,6 @@ class LocaleDatabaseRepository implements LocaleRepository {
     }
 
     @Override
-    public List<Locale> getAll() {
-        return repository.findAll();
-    }
-
-    @Override
     public void delete(Long id) {
         repository.deleteById(id);
     }
@@ -39,5 +36,15 @@ class LocaleDatabaseRepository implements LocaleRepository {
     @Override
     public boolean exists(Long id) {
         return repository.existsById(id);
+    }
+
+    @Override
+    public List<Locale> getAll() {
+        return repository.findAll();
+    }
+
+    @Override
+    public List<LocaleProjection> findAllLocales() {
+        return repository.findAllBy();
     }
 }

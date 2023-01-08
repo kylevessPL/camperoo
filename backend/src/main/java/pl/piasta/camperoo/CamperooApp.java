@@ -16,6 +16,12 @@ public class CamperooApp implements WebApplicationInitializer {
 
     private static final String ACTIVE_PROFILES_PROPERTY = "PROFILES_ACTIVE";
 
+    private static DispatcherServlet createDispatcher(AnnotationConfigWebApplicationContext applicationContext) {
+        var dispatcher = new DispatcherServlet(applicationContext);
+        dispatcher.setThrowExceptionIfNoHandlerFound(true);
+        return dispatcher;
+    }
+
     @Override
     public void onStartup(@NonNull ServletContext servletContext) {
         var applicationContext = createApplicationContext();
@@ -31,12 +37,6 @@ public class CamperooApp implements WebApplicationInitializer {
         applicationContext.setConfigLocation("pl.piasta.camperoo");
         applicationContext.setBeanNameGenerator(FullyQualifiedAnnotationBeanNameGenerator.INSTANCE);
         return applicationContext;
-    }
-
-    private static DispatcherServlet createDispatcher(AnnotationConfigWebApplicationContext applicationContext) {
-        var dispatcher = new DispatcherServlet(applicationContext);
-        dispatcher.setThrowExceptionIfNoHandlerFound(true);
-        return dispatcher;
     }
 
     private void setupProfiles(ConfigurableEnvironment environment) {

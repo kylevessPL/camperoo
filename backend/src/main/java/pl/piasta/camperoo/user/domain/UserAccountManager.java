@@ -37,7 +37,7 @@ class UserAccountManager {
     }
 
     private User createUser(User user, Role role) {
-        var emailAddress = user.getEmailAddress();
+        var emailAddress = user.getEmail();
         if (userRepository.existsByEmailAddress(emailAddress)) {
             throw new AccountDuplicateException(emailAddress);
         }

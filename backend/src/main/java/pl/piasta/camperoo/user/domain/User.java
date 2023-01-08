@@ -10,6 +10,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.OrderBy;
@@ -28,7 +31,8 @@ import pl.piasta.camperoo.order.domain.Order;
 import pl.piasta.camperoo.user.exception.AccountWithoutRoleException;
 import pl.piasta.camperoo.user.exception.UserAccountDisabledException;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -38,6 +42,27 @@ import java.util.Set;
 @Builder(toBuilder = true)
 @Entity
 @Table(name = "users")
+@NamedEntityGraph(
+        name = "users-graph",
+        attributeNodes = {
+                @NamedAttributeNode("person"),
+                @NamedAttributeNode(value = "roles", subgraph = "description-graph")
+        },
+        subgraphs = {
+                @NamedSubgraph(
+                        name = "description-graph",
+                        attributeNodes = {
+                                @NamedAttributeNode(value = "descriptions", subgraph = "description-child-graph"),
+                        }
+                ),
+                @NamedSubgraph(
+                        name = "description-child-graph",
+                        attributeNodes = {
+                                @NamedAttributeNode("locale")
+                        }
+                )
+        }
+)
 public class User extends AbstractEntity {
     @Id
     @SequenceGenerator(name = "gen_users_id", sequenceName = "seq_users_id", allocationSize = 1)
@@ -46,7 +71,7 @@ public class User extends AbstractEntity {
 
     @Embedded
     @Column(nullable = false)
-    private EmailAddress emailAddress;
+    private EmailAddress email;
 
     @Column(nullable = false, length = 73)
     private String passwordHash;
@@ -64,12 +89,18 @@ public class User extends AbstractEntity {
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
-    private Set<Role> roles = Collections.emptySet();
+    private Set<Role> roles = new HashSet<>();
 
     @Singular
     @OrderBy("placementDate DESC")
     @OneToMany(mappedBy = "user")
-    private List<Order> orders = Collections.emptyList();
+    private List<Order> orders = new ArrayList<>();
+
+    private static void checkIfRoleProvided(Role[] roles) {
+        if (ArrayUtils.isEmpty(roles)) {
+            throw new AccountWithoutRoleException();
+        }
+    }
 
     public void changePasswordHash(String passwordHash) {
         checkIfEnabled();
@@ -95,12 +126,6 @@ public class User extends AbstractEntity {
     private void checkIfEnabled() {
         if (!active) {
             throw new UserAccountDisabledException(id);
-        }
-    }
-
-    private static void checkIfRoleProvided(Role[] roles) {
-        if (ArrayUtils.isEmpty(roles)) {
-            throw new AccountWithoutRoleException();
         }
     }
 }

@@ -19,7 +19,7 @@ public class LocalizationUtils {
             compareBoolean(description -> description.getLocale().isFallback());
 
     private <T> Comparator<T> compareBoolean(Function<T, Boolean> extractor) {
-        return Comparator.comparing(extractor, Comparator.reverseOrder());
+        return Comparator.comparing(extractor);
     }
 
     public boolean ofLocaleOrDefault(Map.Entry<java.util.Locale, Boolean> entry, java.util.Locale locale) {

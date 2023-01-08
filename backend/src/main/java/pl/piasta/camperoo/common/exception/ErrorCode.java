@@ -19,6 +19,15 @@ public enum ErrorCode {
     // address
     ROUTE_CALCULATION_ERROR,
 
+    // product
+    PRODUCT_NOT_FOUND,
+
+    // order
+    ORDER_NOT_FOUND,
+
+    // file
+    FILE_NOT_FOUND,
+
     // user
     USER_NOT_FOUND,
     ACCOUNT_DISABLED,

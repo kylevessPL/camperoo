@@ -19,6 +19,11 @@ class VerificationTokenTypeDatabaseRepository
     }
 
     @Override
+    public VerificationTokenType getReference(Long id) {
+        return repository.getReferenceById(id);
+    }
+
+    @Override
     public Optional<VerificationTokenType> get(Long id) {
         return repository.findById(id);
     }
@@ -36,11 +41,6 @@ class VerificationTokenTypeDatabaseRepository
     @Override
     public boolean exists(Long id) {
         return repository.existsById(id);
-    }
-
-    @Override
-    public VerificationTokenType getReference(Long id) {
-        return repository.getReferenceById(id);
     }
 }
 

@@ -8,6 +8,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -30,6 +33,36 @@ import java.util.Set;
 @Builder(toBuilder = true)
 @Entity
 @Table(name = "products")
+@NamedEntityGraph(
+        name = "products-graph",
+        attributeNodes = {
+                @NamedAttributeNode(value = "names", subgraph = "name-description-child-graph"),
+                @NamedAttributeNode(value = "descriptions", subgraph = "name-description-child-graph"),
+                @NamedAttributeNode(value = "category", subgraph = "name-description-graph"),
+                @NamedAttributeNode(value = "image", subgraph = "image-child-graph"),
+        },
+        subgraphs = {
+                @NamedSubgraph(
+                        name = "name-description-graph",
+                        attributeNodes = {
+                                @NamedAttributeNode(value = "names", subgraph = "name-description-child-graph"),
+                                @NamedAttributeNode(value = "descriptions", subgraph = "name-description-child-graph"),
+                        }
+                ),
+                @NamedSubgraph(
+                        name = "name-description-child-graph",
+                        attributeNodes = {
+                                @NamedAttributeNode("locale")
+                        }
+                ),
+                @NamedSubgraph(
+                        name = "image-child-graph",
+                        attributeNodes = {
+                                @NamedAttributeNode("content")
+                        }
+                )
+        }
+)
 public class Product extends AbstractEntity
         implements LocalizableName<ProductName>, LocalizableDescription<ProductDescription> {
     @Id

@@ -22,6 +22,15 @@ public enum ErrorProperty {
     EMAIL_DELIVERY_ERROR("email.delivery-error"),
     EMAIL_REGEX("user.email-regex"),
 
+    // product
+    PRODUCT_NOT_FOUND("product.not-found"),
+
+    // order
+    ORDER_NOT_FOUND("order.not-found"),
+
+    // file
+    FILE_NOT_FOUND("file.not-found"),
+
     // user
     USER_NOT_FOUND("user.not-found"),
     ACCOUNT_DISABLED("user.account-disabled"),

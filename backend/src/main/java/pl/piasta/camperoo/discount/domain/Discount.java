@@ -19,7 +19,7 @@ import pl.piasta.camperoo.common.domain.AbstractEntity;
 import pl.piasta.camperoo.common.domain.LocalizableDescription;
 
 import java.time.Instant;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -48,5 +48,5 @@ public class Discount extends AbstractEntity implements LocalizableDescription<D
 
     @Singular
     @OneToMany(mappedBy = "discount", fetch = FetchType.EAGER)
-    private Set<DiscountDescription> descriptions = Collections.emptySet();
+    private Set<DiscountDescription> descriptions = new HashSet<>();
 }

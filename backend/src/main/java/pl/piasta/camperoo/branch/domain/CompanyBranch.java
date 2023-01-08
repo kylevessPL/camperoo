@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
 import pl.piasta.camperoo.common.domain.vo.EmailAddress;
+import pl.piasta.camperoo.user.domain.vo.PhoneNumber;
 
 import java.math.BigDecimal;
 
@@ -46,6 +47,7 @@ public class CompanyBranch extends AbstractEntity {
     @Column(nullable = false)
     private EmailAddress email;
 
+    @Embedded
     @Column(length = 9)
-    private String phoneNumber;
+    private PhoneNumber phoneNumber;
 }

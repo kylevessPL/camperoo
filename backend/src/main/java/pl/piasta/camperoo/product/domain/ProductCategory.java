@@ -6,6 +6,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -26,6 +29,21 @@ import java.util.Set;
 @Builder(toBuilder = true)
 @Entity
 @Table(name = "product_categories")
+@NamedEntityGraph(
+        name = "product-categories-graph",
+        attributeNodes = {
+                @NamedAttributeNode(value = "names", subgraph = "name-description-child-graph"),
+                @NamedAttributeNode(value = "descriptions", subgraph = "name-description-child-graph")
+        },
+        subgraphs = {
+                @NamedSubgraph(
+                        name = "name-description-child-graph",
+                        attributeNodes = {
+                                @NamedAttributeNode("locale")
+                        }
+                )
+        }
+)
 public class ProductCategory extends AbstractEntity
         implements LocalizableName<ProductCategoryName>, LocalizableDescription<ProductCategoryDescription> {
     @Id

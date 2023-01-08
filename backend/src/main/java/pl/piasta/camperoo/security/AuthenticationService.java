@@ -27,7 +27,7 @@ class AuthenticationService implements UserDetailsService {
 
     private AuthenticatedUserDetails authenticatedUser(User account) {
         var id = account.getId();
-        var email = account.getEmailAddress().getEmail();
+        var email = account.getEmail().getEmail();
         var password = account.getPasswordHash();
         var roles = account.getRoles()
                 .stream()

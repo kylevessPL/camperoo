@@ -16,7 +16,7 @@ import pl.piasta.camperoo.user.dto.CreateAccountDto;
 abstract class UserConverter {
     protected PasswordEncoder passwordEncoder;
 
-    @Mapping(target = "emailAddress", source = "email")
+    @Mapping(target = "email", source = "email")
     @Mapping(target = "passwordHash", expression = "java(passwordEncoder.encode(dto.getPassword()))")
     @Mapping(target = "person", source = ".")
     abstract User convert(CreateAccountDto dto);
