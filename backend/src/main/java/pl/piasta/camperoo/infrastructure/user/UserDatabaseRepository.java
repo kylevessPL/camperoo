@@ -1,16 +1,24 @@
 package pl.piasta.camperoo.infrastructure.user;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import pl.piasta.camperoo.common.domain.vo.EmailAddress;
+import pl.piasta.camperoo.common.query.IdProjection;
+import pl.piasta.camperoo.common.util.PageBuilder;
 import pl.piasta.camperoo.security.domain.AuthenticationRepository;
 import pl.piasta.camperoo.user.domain.User;
 import pl.piasta.camperoo.user.domain.UserRepository;
+import pl.piasta.camperoo.user.exception.UserNotFoundException;
+import pl.piasta.camperoo.user.query.UserBasicProjection;
+import pl.piasta.camperoo.user.query.UserProjection;
+import pl.piasta.camperoo.user.query.UserQueryClient;
 
 import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-class UserDatabaseRepository implements UserRepository, AuthenticationRepository {
+class UserDatabaseRepository implements UserRepository, AuthenticationRepository, UserQueryClient {
     private final UserJpaRepository repository;
 
     @Override
@@ -45,12 +53,29 @@ class UserDatabaseRepository implements UserRepository, AuthenticationRepository
 
     @Override
     public boolean existsByEmailAddress(EmailAddress emailAddress) {
-        return repository.existsByEmailAddress(emailAddress);
+        return repository.existsByEmail(emailAddress);
     }
 
     @Override
     public Optional<User> findByEmailAddress(EmailAddress emailAddress) {
-        return repository.findByEmailAddress(emailAddress);
+        return repository.findByEmail(emailAddress);
+    }
+
+    @Override
+    public Page<UserBasicProjection> findAllUsers(Pageable pageable) {
+        var page = repository.findAllIdsBy(pageable);
+        var ids = IdProjection.retrieveAllIds(page.toList());
+        var content = repository.findAllByIdIn(ids, pageable.getSort());
+        return PageBuilder.fromContent(content)
+                .page(page)
+                .build();
+    }
+
+    @Override
+    public UserProjection findUserById(Long userId) {
+        return repository
+                .findOneById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
     }
 }
 

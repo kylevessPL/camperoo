@@ -20,6 +20,14 @@ import java.util.Optional;
 class TokenAuthenticationFilter extends OncePerRequestFilter {
     private final TokenAuthenticationProvider authProvider;
 
+    public static Optional<String> extractToken(HttpServletRequest request) {
+        return Optional.ofNullable(request.getCookies())
+                .flatMap(cookies -> Arrays.stream(cookies)
+                        .filter(cookie -> TokenAuthenticationProvider.ACCESS_TOKEN.equals(cookie.getName()))
+                        .findFirst())
+                .map(Cookie::getValue);
+    }
+
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
@@ -32,17 +40,9 @@ class TokenAuthenticationFilter extends OncePerRequestFilter {
         chain.doFilter(request, response);
     }
 
-    public static Optional<String> extractToken(HttpServletRequest request) {
-        return Optional.ofNullable(request.getCookies())
-                .flatMap(cookies -> Arrays.stream(cookies)
-                        .filter(cookie -> TokenAuthenticationProvider.ACCESS_TOKEN.equals(cookie.getName()))
-                        .findFirst())
-                .map(Cookie::getValue);
-    }
-
     private void authenticate(String token, HttpServletRequest request) {
         var principal = authProvider.extractAuthenticationPrincipal(token);
-        var auth = new UsernamePasswordAuthenticationToken(principal, null, principal.getAuthorities());
+        var auth = new UsernamePasswordAuthenticationToken(principal, null, principal.authorities());
         auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(auth);
     }

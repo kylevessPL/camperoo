@@ -12,6 +12,9 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -28,6 +31,34 @@ import java.time.Instant;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type_id", discriminatorType = DiscriminatorType.INTEGER, columnDefinition = "INT8")
 @Table(name = "payments")
+@NamedEntityGraph(
+        name = "payments-graph",
+        attributeNodes = {
+                @NamedAttributeNode(value = "type", subgraph = "payment-types-graph"),
+                @NamedAttributeNode(value = "status", subgraph = "name-description-graph")
+        },
+        subgraphs = {
+                @NamedSubgraph(
+                        name = "payment-types-graph",
+                        attributeNodes = {
+                                @NamedAttributeNode(value = "names", subgraph = "name-description-child-graph")
+                        }
+                ),
+                @NamedSubgraph(
+                        name = "name-description-graph",
+                        attributeNodes = {
+                                @NamedAttributeNode(value = "names", subgraph = "name-description-child-graph"),
+                                @NamedAttributeNode(value = "descriptions", subgraph = "name-description-child-graph"),
+                        }
+                ),
+                @NamedSubgraph(
+                        name = "name-description-child-graph",
+                        attributeNodes = {
+                                @NamedAttributeNode("locale")
+                        }
+                )
+        }
+)
 public class Payment extends AbstractEntity {
     @Id
     @SequenceGenerator(name = "gen_payments_id", sequenceName = "seq_payments_id", allocationSize = 1)
@@ -58,5 +89,14 @@ public class Payment extends AbstractEntity {
         this.statusChangeDate = statusChangeDate;
         this.status = status;
         this.order = order;
+    }
+
+    public void updateStatus(PaymentStatus status) {
+        this.status = status;
+        this.statusChangeDate = Instant.now();
+    }
+
+    public boolean isValid() {
+        return !deadline.isBefore(Instant.now());
     }
 }

@@ -1,9 +1,9 @@
 --
 -- locales
 --
-INSERT INTO locales (id, code, fallback)
-VALUES (1, 'pl', FALSE),
-       (2, 'en', TRUE);
+INSERT INTO locales (id, name, code, fallback)
+VALUES (1, 'Polski', 'pl', FALSE),
+       (2, 'English', 'en', TRUE);
 
 --
 -- persons
@@ -173,7 +173,7 @@ VALUES (1, 'Door-to-door', 1, 1),
 INSERT INTO delivery_type_descriptions (id, description, locale_id, delivery_type_id)
 VALUES (1, 'Dostawa door-to-door', 1, 1),
        (2, 'Door-to-door delivery', 2, 1),
-       (3, 'Odbiór osobisty ', 1, 2),
+       (3, 'Odbiór osobisty', 1, 2),
        (4, 'Self pick-up when ready', 2, 2);
 
 --

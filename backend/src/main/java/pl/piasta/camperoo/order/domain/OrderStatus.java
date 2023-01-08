@@ -1,5 +1,6 @@
 package pl.piasta.camperoo.order.domain;
 
+import jakarta.persistence.Cacheable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -9,6 +10,8 @@ import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
 import pl.piasta.camperoo.common.domain.LocalizableDescription;
 import pl.piasta.camperoo.common.domain.LocalizableName;
@@ -19,6 +22,8 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "order_statuses")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 public class OrderStatus extends AbstractEntity
         implements LocalizableName<OrderStatusName>, LocalizableDescription<OrderStatusDescription> {
     public static final Long PLACED = 1L;
@@ -34,9 +39,11 @@ public class OrderStatus extends AbstractEntity
     @Column(nullable = false, length = 60)
     private String code;
 
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @OneToMany(mappedBy = "orderStatus", fetch = FetchType.EAGER)
     private Set<OrderStatusName> names;
 
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @OneToMany(mappedBy = "orderStatus", fetch = FetchType.EAGER)
     private Set<OrderStatusDescription> descriptions;
 }

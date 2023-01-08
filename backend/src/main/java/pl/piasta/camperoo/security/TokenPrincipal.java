@@ -13,7 +13,7 @@ public record TokenPrincipal(Long id, String email, Set<String> roles) {
                 authenticatedUserDetails.getRoles());
     }
 
-    public Collection<GrantedAuthority> getAuthorities() {
+    public Collection<GrantedAuthority> authorities() {
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .collect(Collectors.toUnmodifiableSet());

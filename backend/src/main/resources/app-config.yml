@@ -11,6 +11,15 @@ app:
   user:
     accountCreationToken:
       validMinutes: 1440
+  order:
+    payment:
+      deadlineDays: 7
+  file:
+    thumbnail:
+      sizePx: 50
+  scheduling:
+    expired-payments-cleanup-cron: 0 5 0 * * ?
+    unpaid-orders-cleanup-cron: 0 10 0 * * ?
 
 geoapify:
   apiKey: ${GEOAPIFY_API_KEY}

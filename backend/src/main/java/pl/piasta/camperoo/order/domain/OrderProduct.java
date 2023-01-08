@@ -49,12 +49,12 @@ public class OrderProduct {
     private BigDecimal totalPrice;
 
     @Override
-    public boolean equals(Object o) {
-        return this == o || o instanceof OrderProduct orderProduct && Objects.equals(id, orderProduct.getId());
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
+    public boolean equals(Object o) {
+        return this == o || o instanceof OrderProduct orderProduct && Objects.equals(id, orderProduct.getId());
     }
 }

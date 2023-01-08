@@ -5,12 +5,18 @@ error:
     generic: 'Couldn''t verify reCAPTCHA response token'
   verification-token:
     not-found: 'Verification token with {0} = {1} does not exist'
-  email:
-    delivery-error: 'Failed to deliver email to {0}'
   address:
     route-calculation-error: 'Couldn''t find route between original and destination points'
     latitude-out-of-bounds: 'Latitude is out of bounds'
     longitude-out-of-bounds: 'Longitude is out of bounds'
+  email:
+    delivery-error: 'Failed to deliver email to {0}'
+  product:
+    not-found: 'Product with {0} = {1} does not exist'
+  order:
+    not-found: 'order with {0} = {1} does not exist'
+  file:
+    not-found: 'File with {0} = {1} does not exist'
   user:
     not-found: 'User with {0} = {1} does not exist'
     account-disabled: 'Account of user with id = {0} is disabled'
@@ -32,3 +38,4 @@ validation:
   phoneNumber: 'must be valid phone number'
   unixTimestamp: 'must be valid unix timestamp'
   zipCode: 'must be valid zip code'
+  money: 'must be valid money of maximum of 12 integral part digits and 2 fractional places'

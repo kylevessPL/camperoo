@@ -6,6 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -25,6 +27,12 @@ import java.util.UUID;
 @Builder(toBuilder = true)
 @Entity
 @Table(name = "files")
+@NamedEntityGraph(
+        name = "files-graph",
+        attributeNodes = {
+                @NamedAttributeNode(value = "content"),
+        }
+)
 public class File extends AbstractEntity {
     @Id
     @SequenceGenerator(name = "gen_files_id", sequenceName = "seq_files_id", allocationSize = 1)

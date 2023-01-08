@@ -9,6 +9,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.OrderBy;
@@ -30,7 +33,7 @@ import pl.piasta.camperoo.user.domain.User;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -41,6 +44,85 @@ import java.util.Set;
 @Builder(toBuilder = true)
 @Entity
 @Table(name = "orders")
+@NamedEntityGraph(
+        name = "orders-basic-graph",
+        attributeNodes = {
+                @NamedAttributeNode("invoice"),
+                @NamedAttributeNode(value = "deliveryType", subgraph = "name-description-graph"),
+                @NamedAttributeNode(value = "status", subgraph = "name-description-graph")
+        },
+        subgraphs = {
+                @NamedSubgraph(
+                        name = "name-description-graph",
+                        attributeNodes = {
+                                @NamedAttributeNode(value = "names", subgraph = "name-description-child-graph"),
+                                @NamedAttributeNode(value = "descriptions", subgraph = "name-description-child-graph"),
+                        }
+                ),
+                @NamedSubgraph(
+                        name = "name-description-child-graph",
+                        attributeNodes = {
+                                @NamedAttributeNode("locale")
+                        }
+                )
+        }
+)
+@NamedEntityGraph(
+        name = "orders-graph",
+        attributeNodes = {
+                @NamedAttributeNode("discount"),
+                @NamedAttributeNode("invoice"),
+                @NamedAttributeNode("companyBranch"),
+                @NamedAttributeNode("user"),
+                @NamedAttributeNode(value = "payments", subgraph = "payments-graph"),
+                @NamedAttributeNode(value = "products", subgraph = "order-products-graph"),
+                @NamedAttributeNode(value = "deliveryType", subgraph = "name-description-graph"),
+                @NamedAttributeNode(value = "status", subgraph = "name-description-graph")
+        },
+        subgraphs = {
+                @NamedSubgraph(
+                        name = "payments-graph",
+                        attributeNodes = {
+                                @NamedAttributeNode(value = "type", subgraph = "payment-types-graph"),
+                                @NamedAttributeNode(value = "status", subgraph = "name-description-graph"),
+                        }
+                ),
+                @NamedSubgraph(
+                        name = "payment-types-graph",
+                        attributeNodes = {
+                                @NamedAttributeNode(value = "names", subgraph = "name-description-child-graph")
+                        }
+                ),
+                @NamedSubgraph(
+                        name = "order-products-graph",
+                        attributeNodes = {
+                                @NamedAttributeNode(value = "product", subgraph = "products-graph")
+                        }
+                ),
+                @NamedSubgraph(
+                        name = "products-graph",
+                        attributeNodes = {
+                                @NamedAttributeNode(value = "names", subgraph = "name-description-child-graph"),
+                                @NamedAttributeNode(value = "descriptions", subgraph = "name-description-child-graph"),
+                                @NamedAttributeNode(value = "category", subgraph = "name-description-graph"),
+                                @NamedAttributeNode(value = "image"),
+                        }
+                ),
+                @NamedSubgraph(
+                        name = "name-description-graph",
+                        attributeNodes = {
+                                @NamedAttributeNode(value = "names", subgraph = "name-description-child-graph"),
+                                @NamedAttributeNode(value = "descriptions", subgraph = "name-description-child-graph"),
+                        }
+                ),
+                @NamedSubgraph(
+                        name = "name-description-child-graph",
+                        attributeNodes = {
+                                @NamedAttributeNode("locale")
+                        }
+                )
+        }
+)
 public class Order extends AbstractEntity {
     @Id
     @SequenceGenerator(name = "gen_orders_id", sequenceName = "seq_orders_id", allocationSize = 1)
@@ -98,13 +180,18 @@ public class Order extends AbstractEntity {
     @Singular
     @OrderBy("deadline DESC")
     @OneToMany(mappedBy = "order")
-    private List<Payment> payments = Collections.emptyList();
+    private List<Payment> payments = new ArrayList<>();
 
     @Singular
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private Set<OrderProduct> orderProducts;
+    private Set<OrderProduct> products;
 
     public Optional<Payment> getPayment() {
         return payments.stream().findFirst();
+    }
+
+    public void updateStatus(OrderStatus status) {
+        this.status = status;
+        this.statusChangeDate = Instant.now();
     }
 }

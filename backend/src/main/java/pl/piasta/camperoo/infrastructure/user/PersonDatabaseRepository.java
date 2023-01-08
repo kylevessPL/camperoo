@@ -17,6 +17,11 @@ class PersonDatabaseRepository implements PersonRepository {
     }
 
     @Override
+    public Person getReference(Long id) {
+        return repository.getReferenceById(id);
+    }
+
+    @Override
     public Optional<Person> get(Long id) {
         return repository.findById(id);
     }
@@ -34,11 +39,6 @@ class PersonDatabaseRepository implements PersonRepository {
     @Override
     public boolean exists(Long id) {
         return repository.existsById(id);
-    }
-
-    @Override
-    public Person getReference(Long id) {
-        return repository.getReferenceById(id);
     }
 }
 

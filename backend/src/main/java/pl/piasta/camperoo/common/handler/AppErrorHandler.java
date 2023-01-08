@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -45,7 +46,7 @@ public class AppErrorHandler extends ResponseEntityExceptionHandler implements M
         return sendError(ex, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
-    @ExceptionHandler({ValidationException.class, ConstraintViolationException.class})
+    @ExceptionHandler({ValidationException.class, ConstraintViolationException.class, PropertyReferenceException.class})
     protected ResponseEntity<Object> handleValidationError(Exception ex, WebRequest request) {
         return sendError(ex, new HttpHeaders(), HttpStatus.UNPROCESSABLE_ENTITY, request);
     }
@@ -76,8 +77,8 @@ public class AppErrorHandler extends ResponseEntityExceptionHandler implements M
 
     @Override
     @NonNull
-    protected ResponseEntity<Object> handleHttpMessageNotReadable(
-            @NonNull HttpMessageNotReadableException ex,
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            @NonNull MethodArgumentNotValidException ex,
             @NonNull HttpHeaders headers,
             @NonNull HttpStatusCode status,
             @NonNull WebRequest request
@@ -87,8 +88,8 @@ public class AppErrorHandler extends ResponseEntityExceptionHandler implements M
 
     @Override
     @NonNull
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(
-            @NonNull MethodArgumentNotValidException ex,
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(
+            @NonNull HttpMessageNotReadableException ex,
             @NonNull HttpHeaders headers,
             @NonNull HttpStatusCode status,
             @NonNull WebRequest request

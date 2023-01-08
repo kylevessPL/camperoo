@@ -64,6 +64,52 @@ class OrderInvoice implements Closeable {
         createInvoice();
     }
 
+    private static String processAddress(String address) {
+        return address.replace(", ", System.lineSeparator());
+    }
+
+    private static PDFont loadFont(PDDocument document, String filename) throws IOException {
+        var resource = new ClassPathResource("fonts/%s.ttf".formatted(filename));
+        try (var inputStream = resource.getInputStream()) {
+            return PDType0Font.load(document, inputStream);
+        }
+    }
+
+    private static void drawText(PDPageContentStream content, String text,
+                                 PDFont font, int fontSize,
+                                 float offsetX, float offsetY
+    ) throws IOException {
+        content.beginText();
+        content.newLineAtOffset(offsetX, offsetY);
+        content.setFont(font, fontSize);
+        content.showText(text);
+        content.endText();
+    }
+
+    private static void drawTable(PDDocument document, TableDrawer drawer) throws IOException {
+        drawer.draw(() -> document, OrderInvoice::createPage, PADDING);
+    }
+
+    private static float calculateTextWidth(String text, PDFont font, int fontSize) throws IOException {
+        return font.getStringWidth(text) / 1000 * fontSize;
+    }
+
+    private static float getTableMaxWidth(PDPage page) {
+        return getPageWidth(page) - 2 * PADDING;
+    }
+
+    private static float getPageWidth(PDPage page) {
+        return page.getMediaBox().getWidth();
+    }
+
+    private static float getPageHeight(PDPage page) {
+        return page.getMediaBox().getHeight();
+    }
+
+    private static PDPage createPage() {
+        return new PDPage(PDRectangle.A4);
+    }
+
     public byte[] getRawData() throws IOException {
         try (var output = new ByteArrayOutputStream()) {
             invoice.save(output);
@@ -251,7 +297,7 @@ class OrderInvoice implements Closeable {
         }
         builder.append(System.lineSeparator()).append(person.getZipCode()).append(" ").append(person.getCity());
         builder.append(System.lineSeparator()).append("Phone: ").append(person.getPhoneNumber());
-        builder.append(System.lineSeparator()).append("Email: ").append(user.getEmailAddress().getEmail());
+        builder.append(System.lineSeparator()).append("Email: ").append(user.getEmail().getEmail());
         return builder.toString();
     }
 
@@ -270,7 +316,7 @@ class OrderInvoice implements Closeable {
 
     private List<Row> createSummaryProductRows() {
         IntFunction<Color> backgroundColor = index -> index % 2 == 0 ? BLUE_LIGHT_1 : BLUE_LIGHT_2;
-        var items = order.getOrderProducts().toArray(OrderProduct[]::new);
+        var items = order.getProducts().toArray(OrderProduct[]::new);
         return IntStream
                 .range(0, items.length)
                 .mapToObj(i -> createProductRow(items[i], backgroundColor.apply(i)))
@@ -334,52 +380,6 @@ class OrderInvoice implements Closeable {
                 .font(fonts.get(FontType.OPEN_SANS_BOLD_ITALIC))
                 .verticalAlignment(TOP)
                 .build();
-    }
-
-    private static String processAddress(String address) {
-        return address.replace(", ", System.lineSeparator());
-    }
-
-    private static PDFont loadFont(PDDocument document, String filename) throws IOException {
-        var resource = new ClassPathResource("fonts/%s.ttf".formatted(filename));
-        try (var inputStream = resource.getInputStream()) {
-            return PDType0Font.load(document, inputStream);
-        }
-    }
-
-    private static void drawText(PDPageContentStream content, String text,
-                                 PDFont font, int fontSize,
-                                 float offsetX, float offsetY
-    ) throws IOException {
-        content.beginText();
-        content.newLineAtOffset(offsetX, offsetY);
-        content.setFont(font, fontSize);
-        content.showText(text);
-        content.endText();
-    }
-
-    private static void drawTable(PDDocument document, TableDrawer drawer) throws IOException {
-        drawer.draw(() -> document, OrderInvoice::createPage, PADDING);
-    }
-
-    private static float calculateTextWidth(String text, PDFont font, int fontSize) throws IOException {
-        return font.getStringWidth(text) / 1000 * fontSize;
-    }
-
-    private static float getTableMaxWidth(PDPage page) {
-        return getPageWidth(page) - 2 * PADDING;
-    }
-
-    private static float getPageWidth(PDPage page) {
-        return page.getMediaBox().getWidth();
-    }
-
-    private static float getPageHeight(PDPage page) {
-        return page.getMediaBox().getHeight();
-    }
-
-    private static PDPage createPage() {
-        return new PDPage(PDRectangle.A4);
     }
 
     @RequiredArgsConstructor(access = AccessLevel.PRIVATE)

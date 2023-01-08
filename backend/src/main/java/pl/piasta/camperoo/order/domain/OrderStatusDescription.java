@@ -1,5 +1,6 @@
 package pl.piasta.camperoo.order.domain;
 
+import jakarta.persistence.Cacheable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,6 +11,8 @@ import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import pl.piasta.camperoo.common.domain.DescriptionOrientedEntity;
 import pl.piasta.camperoo.global.domain.Locale;
 
@@ -17,6 +20,8 @@ import pl.piasta.camperoo.global.domain.Locale;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "order_status_descriptions")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 public class OrderStatusDescription extends DescriptionOrientedEntity<Locale> {
     @Id
     private Long id;
@@ -24,6 +29,7 @@ public class OrderStatusDescription extends DescriptionOrientedEntity<Locale> {
     @Column(nullable = false)
     private String description;
 
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @ManyToOne(optional = false)
     @JoinColumn(name = "locale_id", nullable = false)
     private Locale locale;

@@ -9,6 +9,8 @@ import pl.piasta.camperoo.security.domain.AuthenticationEmailNotifier;
 import pl.piasta.camperoo.user.domain.User;
 import pl.piasta.camperoo.user.domain.UserEmailNotifier;
 
+import java.util.Map;
+
 @Slf4j
 @RequiredArgsConstructor
 class EmailNotifier implements AuthenticationEmailNotifier, UserEmailNotifier {
@@ -23,11 +25,13 @@ class EmailNotifier implements AuthenticationEmailNotifier, UserEmailNotifier {
     public void sendPasswordResetToken(VerificationTokenCode token, User user) {
         logger.info("Sending password reset email for token: " + token);
         var context = new Context();
-        context.setVariable("passwordResetTokenCode", token);
-        context.setVariable("accountName", user.getPerson().getFirstName());
-        context.setVariable("frontendUrl", frontendUrl);
+        context.setVariables(Map.of(
+                "passwordResetTokenCode", token,
+                "accountName", user.getPerson().getFirstName(),
+                "frontendUrl", frontendUrl
+        ));
         emailSender.sendMail(
-                user.getEmailAddress(),
+                user.getEmail(),
                 "Camperoo – password reset",
                 emailTemplateEngine.process(PASSWORD_RESET_TEMPLATE, context)
         );
@@ -37,11 +41,13 @@ class EmailNotifier implements AuthenticationEmailNotifier, UserEmailNotifier {
     public void sendAccountCreationToken(VerificationTokenCode token, User user) {
         logger.info("Sending account creation email for token: " + token);
         var context = new Context();
-        context.setVariable("accountCreationTokenCode", token);
-        context.setVariable("accountName", user.getPerson().getFirstName());
-        context.setVariable("frontendUrl", frontendUrl);
+        context.setVariables(Map.of(
+                "accountCreationTokenCode", token,
+                "accountName", user.getPerson().getFirstName(),
+                "frontendUrl", frontendUrl
+        ));
         emailSender.sendMail(
-                user.getEmailAddress(),
+                user.getEmail(),
                 "Camperoo – account created",
                 emailTemplateEngine.process(ACCOUNT_CREATION_TEMPLATE, context)
         );
