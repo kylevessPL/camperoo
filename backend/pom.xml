@@ -1,258 +1,286 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://maven.apache.org/POM/4.0.0"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>pl.piasta</groupId>
     <artifactId>camperoo-backend</artifactId>
+    <groupId>pl.piasta</groupId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
-
     <name>Camperoo Backend</name>
 
     <properties>
+        <angus-mail.version>1.0.0</angus-mail.version>
+        <bouncycastle.version>1.72</bouncycastle.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
+        <easytable.version>0.8.5</easytable.version>
+        <findbugs-jsr305.version>3.0.2</findbugs-jsr305.version>
+        <flyway.version>9.11.0</flyway.version>
+        <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
+        <hibernate-ehcache.version>6.0.0.Alpha7</hibernate-ehcache.version>
+        <hibernate.version>6.1.6.Final</hibernate.version>
+        <hikari.version>5.0.1</hikari.version>
+        <ehcache.version>3.10.8</ehcache.version>
+        <jaxb.version>2.3.1</jaxb.version>
+        <jackson.version>2.14.1</jackson.version>
+        <jakarta.version>10.0.0</jakarta.version>
+        <javafaker.version>1.0.2</javafaker.version>
+        <jsonwebtoken.version>0.11.5</jsonwebtoken.version>
+        <log4j.version>2.19.0</log4j.version>
+        <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
+        <lombok.version>1.18.24</lombok.version>
+        <mapstruct.version>1.5.3.Final</mapstruct.version>
+        <maven-compiler.version>3.10.1</maven-compiler.version>
+        <maven-war.version>3.3.2</maven-war.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <pdfbox.version>2.0.27</pdfbox.version>
+        <postgresql.version>42.5.1</postgresql.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven-war.version>3.3.2</maven-war.version>
-        <maven-compiler.version>3.10.1</maven-compiler.version>
-        <versions-plugin.version>2.13.0</versions-plugin.version>
+        <slf4j.version>2.0.6</slf4j.version>
+        <snakeyaml.version>1.33</snakeyaml.version>
+        <spring-data.version>2022.0.0</spring-data.version>
         <spring-framework.version>6.0.3</spring-framework.version>
         <spring-security.version>6.0.1</spring-security.version>
-        <spring-data.version>2022.0.0</spring-data.version>
-        <findbugs-jsr305.version>3.0.2</findbugs-jsr305.version>
         <suppress-warnings.version>4.0.0-20160619211629</suppress-warnings.version>
+        <thumbnailator.version>0.4.19</thumbnailator.version>
         <thymeleaf.version>3.1.1.RELEASE</thymeleaf.version>
-        <specification-with-projections.version>2.0.2</specification-with-projections.version>
-        <commons-lang3.version>3.12.0</commons-lang3.version>
-        <pdfbox.version>2.0.27</pdfbox.version>
-        <jackson.version>2.14.1</jackson.version>
-        <bouncycastle.version>1.72</bouncycastle.version>
-        <log4j.version>2.19.0</log4j.version>
-        <slf4j.version>2.0.6</slf4j.version>
+        <versions-plugin.version>2.13.0</versions-plugin.version>
         <yaml-properties.version>1.1.3</yaml-properties.version>
-        <flyway.version>9.10.2</flyway.version>
-        <postgresql.version>42.5.1</postgresql.version>
-        <hikari.version>5.0.1</hikari.version>
-        <hibernate.version>6.1.6.Final</hibernate.version>
-        <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
-        <quartz.version>2.3.2</quartz.version>
-        <angus-mail.version>1.0.0</angus-mail.version>
-        <jakarta.version>10.0.0</jakarta.version>
-        <jsonwebtoken.version>0.11.5</jsonwebtoken.version>
         <yaml-resource-bundle.version>0.1</yaml-resource-bundle.version>
-        <snakeyaml.version>1.33</snakeyaml.version>
-        <javafaker.version>1.0.2</javafaker.version>
-        <easytable.version>0.8.5</easytable.version>
-        <lombok.version>1.18.24</lombok.version>
-        <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
-        <mapstruct.version>1.5.3.Final</mapstruct.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
+            <groupId>org.springframework</groupId>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
             <artifactId>spring-webflux</artifactId>
+            <groupId>org.springframework</groupId>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework</groupId>
+        </dependency>
+        <dependency>
             <artifactId>spring-orm</artifactId>
+            <groupId>org.springframework</groupId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
+            <groupId>org.springframework.security</groupId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.security</groupId>
+        </dependency>
+        <dependency>
             <artifactId>spring-security-config</artifactId>
+            <groupId>org.springframework.security</groupId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
+            <groupId>org.springframework.data</groupId>
         </dependency>
         <dependency>
-            <groupId>th.co.geniustree.springdata.jpa</groupId>
-            <artifactId>specification-with-projections</artifactId>
-            <version>${specification-with-projections.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
+            <groupId>com.google.code.findbugs</groupId>
             <version>${findbugs-jsr305.version}</version>
         </dependency>
         <dependency>
-            <groupId>de.xn--ho-hia.quality</groupId>
             <artifactId>suppress-warnings</artifactId>
+            <groupId>de.xn--ho-hia.quality</groupId>
             <version>${suppress-warnings.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.thymeleaf</groupId>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>${thumbnailator.version}</version>
+        </dependency>
+        <dependency>
             <artifactId>thymeleaf-spring6</artifactId>
+            <groupId>org.thymeleaf</groupId>
             <version>${thymeleaf.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+            <groupId>com.fasterxml.jackson.core</groupId>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
         </dependency>
         <dependency>
-            <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk18on</artifactId>
+            <groupId>org.bouncycastle</groupId>
             <version>${bouncycastle.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+            <groupId>org.slf4j</groupId>
             <version>${slf4j.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
+            <groupId>org.apache.logging.log4j</groupId>
         </dependency>
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j2-impl</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
+            <artifactId>log4j-slf4j2-impl</artifactId>
+            <groupId>org.apache.logging.log4j</groupId>
+        </dependency>
+        <dependency>
             <artifactId>commons-lang3</artifactId>
+            <groupId>org.apache.commons</groupId>
             <version>${commons-lang3.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.pdfbox</groupId>
             <artifactId>pdfbox</artifactId>
+            <groupId>org.apache.pdfbox</groupId>
             <version>${pdfbox.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
+            <groupId>org.flywaydb</groupId>
             <version>${flyway.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
+            <groupId>org.postgresql</groupId>
             <scope>runtime</scope>
+            <version>${postgresql.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
+            <groupId>com.zaxxer</groupId>
             <version>${hikari.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${hibernate.version}</version>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>${jaxb.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>${jaxb.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>${ehcache.version}</version>
             <exclusions>
                 <exclusion>
-                    <groupId>com.sun.activation</groupId>
-                    <artifactId>jakarta.activation</artifactId>
+                    <groupId>org.glassfish.jaxb</groupId>
+                    <artifactId>jaxb-runtime</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jakarta.activation</artifactId>
+                    <groupId>com.sun.activation</groupId>
+                </exclusion>
+            </exclusions>
+            <groupId>org.hibernate.orm</groupId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+            <version>${hibernate-ehcache.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-jcache</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
             <artifactId>hibernate-validator</artifactId>
+            <groupId>org.hibernate.validator</groupId>
             <version>${hibernate-validator.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.quartz-scheduler</groupId>
-            <artifactId>quartz</artifactId>
-            <version>${quartz.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.angus</groupId>
             <artifactId>jakarta.mail</artifactId>
+            <groupId>org.eclipse.angus</groupId>
             <version>${angus-mail.version}</version>
         </dependency>
         <dependency>
-            <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
+            <groupId>jakarta.servlet</groupId>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>
+            <groupId>jakarta.persistence</groupId>
         </dependency>
         <dependency>
-            <groupId>jakarta.transaction</groupId>
             <artifactId>jakarta.transaction-api</artifactId>
+            <groupId>jakarta.transaction</groupId>
         </dependency>
         <dependency>
-            <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
+            <groupId>jakarta.annotation</groupId>
         </dependency>
         <dependency>
-            <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
+            <groupId>io.jsonwebtoken</groupId>
             <version>${jsonwebtoken.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-impl</artifactId>
-            <version>${jsonwebtoken.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
             <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-jackson</artifactId>
-            <version>${jsonwebtoken.version}</version>
             <scope>runtime</scope>
+            <version>${jsonwebtoken.version}</version>
         </dependency>
         <dependency>
-            <groupId>ru.maksimvoloshin.utility</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <groupId>io.jsonwebtoken</groupId>
+            <scope>runtime</scope>
+            <version>${jsonwebtoken.version}</version>
+        </dependency>
+        <dependency>
             <artifactId>yaml-resource-bundle</artifactId>
+            <groupId>ru.maksimvoloshin.utility</groupId>
             <version>${yaml-resource-bundle.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
+            <groupId>org.yaml</groupId>
             <version>${snakeyaml.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
+            <groupId>com.github.javafaker</groupId>
             <version>${javafaker.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.vandeseer</groupId>
             <artifactId>easytable</artifactId>
+            <groupId>com.github.vandeseer</groupId>
             <version>${easytable.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
+            <groupId>org.projectlombok</groupId>
             <optional>true</optional>
             <scope>provided</scope>
+            <version>${lombok.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
+            <groupId>org.mapstruct</groupId>
             <version>${mapstruct.version}</version>
         </dependency>
     </dependencies>
@@ -261,31 +289,29 @@
         <finalName>camperoo-backend</finalName>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
                 <version>${maven-war.version}</version>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler.version}</version>
                 <configuration>
                     <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.mapstruct</groupId>
-                            <artifactId>mapstruct-processor</artifactId>
-                            <version>${mapstruct.version}</version>
-                        </path>
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                            <version>${lombok.version}</version>
-                        </path>
                         <dependency>
-                            <groupId>org.projectlombok</groupId>
                             <artifactId>lombok-mapstruct-binding</artifactId>
+                            <groupId>org.projectlombok</groupId>
                             <version>${lombok-mapstruct-binding.version}</version>
                         </dependency>
+                        <path>
+                            <artifactId>lombok</artifactId>
+                            <groupId>org.projectlombok</groupId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <groupId>org.mapstruct</groupId>
+                            <version>${mapstruct.version}</version>
+                        </path>
                     </annotationProcessorPaths>
                     <compilerArgs>
                         <compilerArg>--enable-preview</compilerArg>
@@ -294,10 +320,12 @@
                         <compilerArg>-Amapstruct.unmappedTargetPolicy=IGNORE</compilerArg>
                     </compilerArgs>
                 </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <version>${maven-compiler.version}</version>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
                 <version>${versions-plugin.version}</version>
             </plugin>
         </plugins>
@@ -306,46 +334,46 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.springframework</groupId>
                 <artifactId>spring-framework-bom</artifactId>
+                <groupId>org.springframework</groupId>
+                <scope>import</scope>
+                <type>pom</type>
                 <version>${spring-framework.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-bom</artifactId>
+                <groupId>org.springframework.security</groupId>
+                <scope>import</scope>
+                <type>pom</type>
                 <version>${spring-security.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>jakarta.platform</groupId>
                 <artifactId>jakarta.jakartaee-bom</artifactId>
+                <groupId>jakarta.platform</groupId>
+                <scope>import</scope>
+                <type>pom</type>
                 <version>${jakarta.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-bom</artifactId>
+                <groupId>org.springframework.data</groupId>
+                <scope>import</scope>
+                <type>pom</type>
                 <version>${spring-data.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>com.fasterxml.jackson</groupId>
                 <artifactId>jackson-bom</artifactId>
-                <version>${jackson.version}</version>
-                <type>pom</type>
+                <groupId>com.fasterxml.jackson</groupId>
                 <scope>import</scope>
+                <type>pom</type>
+                <version>${jackson.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-bom</artifactId>
-                <version>${log4j.version}</version>
-                <type>pom</type>
+                <groupId>org.apache.logging.log4j</groupId>
                 <scope>import</scope>
+                <type>pom</type>
+                <version>${log4j.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
