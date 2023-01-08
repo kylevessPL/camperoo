@@ -5,12 +5,18 @@ error:
     generic: 'Nie udało się zweryfikować tokenu reCAPTCHA'
   verification-token:
     not-found: 'Token weryfikacyjny o parametrze {0} = {1} nie istnieje'
-  email:
-    delivery-error: 'Nie znaleziono tokenu weryfikacyjnego o parametrze {0} = {1}'
   address:
     route-calculation-error: 'Nie znaleziono trasy pomiędzy współrzędnymi pochodzenia a przeznaczenia'
     latitude-out-of-bounds: 'Szerokość geograficzna wykracza poza zakres'
     longitude-out-of-bounds: 'Długość geograficzna wykracza poza zakres'
+  email:
+    delivery-error: 'Nie znaleziono tokenu weryfikacyjnego o parametrze {0} = {1}'
+  product:
+    not-found: 'Nie znaleziono produktu o parametrze {0} = {1}'
+  order:
+    not-found: 'Nie znaleziono zamówienia o parametrze {0} = {1}'
+  file:
+    not-found: 'Nie znaleziono pliku o parametrze {0} = {1}'
   user:
     not-found: 'Nie znaleziono użytkownika o parametrze {0} = {1}'
     account-disabled: 'Konto użytkownika o id = {0} jest wyłączone'
