@@ -22,11 +22,15 @@ public enum ErrorProperty {
     EMAIL_DELIVERY_ERROR("email.delivery-error"),
     EMAIL_REGEX("user.email-regex"),
 
+    // branch
+    COMPANY_BRANCHES_NOT_AVAILABLE("branch.not-available"),
+
     // product
     PRODUCT_NOT_FOUND("product.not-found"),
 
     // order
     ORDER_NOT_FOUND("order.not-found"),
+    ORDER_STATUS_NOT_FOUND("order.status.not-found"),
 
     // file
     FILE_NOT_FOUND("file.not-found"),
@@ -34,6 +38,8 @@ public enum ErrorProperty {
     // user
     USER_NOT_FOUND("user.not-found"),
     ACCOUNT_DISABLED("user.account-disabled"),
+    ACCOUNT_ALREADY_DISABLED("user.account-already-disabled"),
+    ACCOUNT_ALREADY_ENABLED("user.account-already-enabled"),
     ACCOUNT_ALREADY_EXISTS("user.account-already-exists"),
     ACCOUNT_WITHOUT_ROLE("user.account-without-role"),
     PASSWORD_LENGTH_MIN("user.password-min"),

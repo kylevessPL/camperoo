@@ -43,6 +43,18 @@ class UserController {
         userFacade.confirmAccount(dto);
     }
 
+    @ResponseStatus(NO_CONTENT)
+    @PostMapping("/{id}/status:enable")
+    void enableAccount(@PathVariable Long id) {
+        userFacade.updateAccountStatus(id, true);
+    }
+
+    @ResponseStatus(NO_CONTENT)
+    @PostMapping("/{id}/status:disable")
+    void disableAccount(@PathVariable Long id) {
+        userFacade.updateAccountStatus(id, false);
+    }
+
     @GetMapping
     Page<UserBasicProjection> getAllOrders(Pageable pageable) {
         return userQueryClient.findAllUsers(pageable);

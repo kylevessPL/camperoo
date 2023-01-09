@@ -17,10 +17,10 @@ import java.util.Optional;
 
 @Repository
 public interface ProductJpaRepository extends JpaRepository<Product, Long> {
-    Page<IdProjection> findAllIdsBy(Pageable pageable);
+    Page<IdProjection> findAllIdsByTransportationIsNull(Pageable pageable);
 
     @EntityGraph("products-graph")
-    List<ProductBasicProjection> findAllByIdIn(Collection<Long> ids, Sort sort);
+    List<ProductBasicProjection> findAllByTransportationIsNullAndIdIn(Collection<Long> ids, Sort sort);
 
     @EntityGraph("products-graph")
     Optional<ProductProjection> findOneById(Long id);

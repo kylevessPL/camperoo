@@ -13,8 +13,6 @@ public interface ProductBasicProjection extends NameDescriptionProjection {
 
     ImageBasicProjection getImage();
 
-    boolean isLimited();
-
     Integer getQuantity();
 
     interface ImageBasicProjection {

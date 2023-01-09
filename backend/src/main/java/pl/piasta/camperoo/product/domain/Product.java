@@ -87,9 +87,8 @@ public class Product extends AbstractEntity
     @JoinColumn(name = "image_id")
     private File image;
 
-    @Builder.Default
-    @Column(nullable = false)
-    private boolean limited = true;
+    @Column
+    private Boolean transportation;
 
     @Builder.Default
     @Column(nullable = false)

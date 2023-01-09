@@ -16,6 +16,9 @@ public enum ErrorCode {
     PASSWORD_RECOVERY_TOKEN_NOT_FOUND,
     VERIFICATION_TOKEN_REVOKED,
 
+    // branch
+    COMPANY_BRANCHES_NOT_AVAILABLE,
+
     // address
     ROUTE_CALCULATION_ERROR,
 
@@ -24,6 +27,7 @@ public enum ErrorCode {
 
     // order
     ORDER_NOT_FOUND,
+    ORDER_STATUS_NOT_FOUND,
 
     // file
     FILE_NOT_FOUND,
@@ -31,6 +35,7 @@ public enum ErrorCode {
     // user
     USER_NOT_FOUND,
     ACCOUNT_DISABLED,
+    ACCOUNT_STATUS_UNCHANGED,
     ACCOUNT_ALREADY_EXISTS,
     WRONG_OLD_PASSWORD,
     PASSWORD_UNCHANGED

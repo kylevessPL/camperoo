@@ -11,6 +11,8 @@ app:
   user:
     accountCreationToken:
       validMinutes: 1440
+  delivery:
+    acceptedCountryCodes: pl
   order:
     payment:
       deadlineDays: 7

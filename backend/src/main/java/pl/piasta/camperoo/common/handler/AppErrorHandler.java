@@ -21,7 +21,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import pl.piasta.camperoo.common.exception.BusinessException;
-import pl.piasta.camperoo.common.exception.DuplicateException;
+import pl.piasta.camperoo.common.exception.ConflictException;
 import pl.piasta.camperoo.common.exception.NotFoundException;
 import pl.piasta.camperoo.common.exception.ValidationException;
 import pl.piasta.camperoo.common.util.ErrorHandlingUtils;
@@ -36,8 +36,8 @@ public class AppErrorHandler extends ResponseEntityExceptionHandler implements M
         return sendError(ex, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
-    @ExceptionHandler(DuplicateException.class)
-    protected ResponseEntity<Object> handleDuplicateError(Exception ex, WebRequest request) {
+    @ExceptionHandler(ConflictException.class)
+    protected ResponseEntity<Object> handleConflictError(Exception ex, WebRequest request) {
         return sendError(ex, new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 

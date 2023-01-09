@@ -3,6 +3,7 @@ package pl.piasta.camperoo.user.domain;
 import lombok.RequiredArgsConstructor;
 import pl.piasta.camperoo.common.domain.vo.VerificationTokenCode;
 import pl.piasta.camperoo.user.exception.AccountDuplicateException;
+import pl.piasta.camperoo.user.exception.UserNotFoundException;
 import pl.piasta.camperoo.verificationtoken.domain.VerificationToken;
 import pl.piasta.camperoo.verificationtoken.exception.VerificationTokenNotFoundException;
 
@@ -27,13 +28,20 @@ class UserAccountManager {
         return generateAccountCreationToken(user);
     }
 
-    void confirmAccount(VerificationTokenCode token) {
+    public void confirmAccount(VerificationTokenCode token) {
         var accountCreationTokenType = userTokenTypeRepository.getReference(ACCOUNT_CREATION);
         VerificationToken accountCreationToken = userTokenRepository.findByIdAndType(token, accountCreationTokenType)
                 .filter(verificationToken -> !verificationToken.isExpired())
                 .orElseThrow(() -> VerificationTokenNotFoundException.accountCreation(token));
         accountCreationToken.getUser().enableAccount();
         userTokenRepository.delete(accountCreationToken.getId());
+    }
+
+    public void updateAccountStatus(Long userId, boolean active) {
+        userRepository.get(userId).ifPresentOrElse(
+                user -> changeStatus(user, active),
+                () -> {throw new UserNotFoundException(userId);}
+        );
     }
 
     private User createUser(User user, Role role) {
@@ -58,5 +66,13 @@ class UserAccountManager {
                 .user(user)
                 .build();
         return userTokenRepository.save(accountCreationToken);
+    }
+
+    private void changeStatus(User user, boolean active) {
+        if (active) {
+            user.enableAccount();
+        } else {
+            user.disableAccount();
+        }
     }
 }

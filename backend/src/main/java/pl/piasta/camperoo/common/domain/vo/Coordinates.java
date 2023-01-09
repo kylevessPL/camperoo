@@ -8,15 +8,17 @@ import org.apache.commons.lang3.Range;
 import pl.piasta.camperoo.common.exception.ErrorProperty;
 import pl.piasta.camperoo.common.exception.ValidationException;
 
+import java.math.BigDecimal;
+
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode
 @Getter
 public class Coordinates implements ValueObject {
 
     public static final String LATITUDE_MIN_VALUE = "-90";
-    public static final String LATITUDE_MAX_VALUE = "-90";
+    public static final String LATITUDE_MAX_VALUE = "90";
     public static final String LONGITUDE_MIN_VALUE = "-180";
-    public static final String LONGITUDE_MAX_VALUE = "-180";
+    public static final String LONGITUDE_MAX_VALUE = "180";
 
     private Double latitude;
     private Double longitude;
@@ -28,6 +30,10 @@ public class Coordinates implements ValueObject {
 
     public static Coordinates of(Double latitude, Double longitude) {
         return new Coordinates(latitude, longitude);
+    }
+
+    public static Coordinates of(BigDecimal latitude, BigDecimal longitude) {
+        return new Coordinates(latitude.doubleValue(), longitude.doubleValue());
     }
 
     private Double validateLatitude(Double latitude) {

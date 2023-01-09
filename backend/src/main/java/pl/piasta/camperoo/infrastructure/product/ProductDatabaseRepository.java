@@ -16,9 +16,9 @@ class ProductDatabaseRepository implements ProductQueryClient {
 
     @Override
     public Page<ProductBasicProjection> findAllProducts(Pageable pageable) {
-        var page = repository.findAllIdsBy(pageable);
+        var page = repository.findAllIdsByTransportationIsNull(pageable);
         var ids = IdProjection.retrieveAllIds(page.toList());
-        var content = repository.findAllByIdIn(ids, pageable.getSort());
+        var content = repository.findAllByTransportationIsNullAndIdIn(ids, pageable.getSort());
         return PageBuilder.fromContent(content)
                 .page(page)
                 .build();

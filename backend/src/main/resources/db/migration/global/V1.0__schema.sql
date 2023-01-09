@@ -182,13 +182,13 @@ CREATE SEQUENCE IF NOT EXISTS seq_product_category_descriptions_id;
 --
 CREATE TABLE IF NOT EXISTS products
 (
-    id          BIGINT PRIMARY KEY,
-    version     BIGINT               NOT NULL DEFAULT 0,
-    category_id BIGINT               NOT NULL REFERENCES product_categories (id),
-    price       NUMERIC(12, 2)       NOT NULL CHECK (price >= 0),
-    image_id    BIGINT REFERENCES files (id),
-    limited     BOOLEAN DEFAULT TRUE NOT NULL,
-    quantity    INT     DEFAULT 0    NOT NULL CHECK (quantity >= 0)
+    id             BIGINT PRIMARY KEY,
+    version        BIGINT         NOT NULL DEFAULT 0,
+    category_id    BIGINT         NOT NULL REFERENCES product_categories (id),
+    price          NUMERIC(12, 2) NOT NULL CHECK (price >= 0),
+    image_id       BIGINT REFERENCES files (id),
+    transportation BOOLEAN UNIQUE CHECK (transportation <> FALSE),
+    quantity       INT                     DEFAULT 0 NOT NULL CHECK (quantity >= -1)
 );
 
 CREATE SEQUENCE IF NOT EXISTS seq_products_id;

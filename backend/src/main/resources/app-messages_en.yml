@@ -11,15 +11,21 @@ error:
     longitude-out-of-bounds: 'Longitude is out of bounds'
   email:
     delivery-error: 'Failed to deliver email to {0}'
+  branch:
+    not-available: 'No company branches are available'
   product:
     not-found: 'Product with {0} = {1} does not exist'
   order:
-    not-found: 'order with {0} = {1} does not exist'
+    not-found: 'Order with {0} = {1} does not exist'
+    status:
+      not-found: 'Order status with {0} = {1} does not exist'
   file:
     not-found: 'File with {0} = {1} does not exist'
   user:
     not-found: 'User with {0} = {1} does not exist'
     account-disabled: 'Account of user with id = {0} is disabled'
+    account-already-disabled: 'Account of user with id = {0} is already disabled'
+    account-already-enabled: 'Account of user with id = {0} is already enabled'
     account-already-exists: 'Account {0} = {1} already exists'
     account-without-role: 'Account must have at least one role assigned'
     password-min: 'Password must be at least {0} characters long'

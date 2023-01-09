@@ -14,6 +14,11 @@ class OrderConfiguration {
     }
 
     @Bean
+    OrderStatusDatabaseRepository orderStatusRepository(OrderStatusJpaRepository jpaRepository) {
+        return new OrderStatusDatabaseRepository(jpaRepository);
+    }
+
+    @Bean
     OrderPermissionsManager orderPermissionsManager(OrderJpaRepository jpaRepository) {
         return new OrderAccessService(jpaRepository);
     }

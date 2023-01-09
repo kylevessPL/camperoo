@@ -3,6 +3,7 @@ package pl.piasta.camperoo.infrastructure.geocoding;
 import lombok.RequiredArgsConstructor;
 import pl.piasta.camperoo.address.dto.RouteDistanceDto;
 import pl.piasta.camperoo.address.query.AddressGeocodingQueryClient;
+import pl.piasta.camperoo.branch.domain.CompanyBranchGeocodingClient;
 import pl.piasta.camperoo.common.dto.AddressDto;
 import pl.piasta.camperoo.common.util.CollectionUtils;
 import pl.piasta.camperoo.order.domain.OrderGeocodingClient;
@@ -11,7 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-class GeoapifyGeocodingClient implements AddressGeocodingQueryClient, OrderGeocodingClient {
+class GeoapifyGeocodingClient
+        implements AddressGeocodingQueryClient, CompanyBranchGeocodingClient, OrderGeocodingClient {
     protected final GeocodingAutocompleteService autocompleteService;
     protected final GeocodingRoutingService routingService;
 

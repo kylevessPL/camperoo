@@ -65,7 +65,7 @@ VALUES (1, 'TRAVEL_TRAILER'),
        (6, 'CLASS_A_MOTORHOME'),
        (7, 'CLASS_B_CAMPER_VAN'),
        (8, 'CLASS_C_MOTORHOME'),
-       (9, 'ACCESSORY');
+       (9, 'TRANSPORTATION');
 
 SELECT SETVAL('seq_product_categories_id', 9);
 
@@ -89,8 +89,8 @@ VALUES (1, 'Przyczepy podróżne', 1, 1),
        (14, 'Class B Camper Vans', 2, 7),
        (15, 'Kampery mieszkalne – klasa C', 1, 8),
        (16, 'Class C Motorhomes', 2, 8),
-       (17, 'Akcesoria', 1, 9),
-       (18, 'Accessories', 2, 9);
+       (17, 'Transport', 1, 9),
+       (18, 'Transportation', 2, 9);
 
 SELECT SETVAL('seq_product_category_names_id', 18);
 
@@ -146,8 +146,8 @@ VALUES (1,
        (16,
         'Class Cs are recognizable by their over-cab sleeping / storage areas which provide additional living space for families of all sizes. Offering much of the craftsmanship of Class As, Class Cs are smaller in size and offer a wide range of features.',
         2, 8),
-       (17, 'Dodatkowe akcesoria dla samochodów kempingowych. Dostępne tylko przy zamówieniu kampera.', 1, 9),
-       (18, 'Additional accessories for RVs. Cannot be ordered separately.', 2, 9);
+       (17, 'Transport. Nie może być zamówiony osobno.', 1, 9),
+       (18, 'Transportation. Cannot be ordered separately.', 2, 9);
 
 SELECT SETVAL('seq_product_category_descriptions_id', 18);
 
