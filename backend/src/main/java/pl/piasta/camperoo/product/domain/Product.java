@@ -12,6 +12,7 @@ import jakarta.persistence.NamedAttributeNode;
 import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PostLoad;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -26,6 +27,8 @@ import pl.piasta.camperoo.file.domain.File;
 
 import java.math.BigDecimal;
 import java.util.Set;
+
+import static java.util.Objects.requireNonNullElse;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -87,10 +90,15 @@ public class Product extends AbstractEntity
     @JoinColumn(name = "image_id")
     private File image;
 
-    @Column
-    private Boolean transportation;
-
     @Builder.Default
     @Column(nullable = false)
     private Integer quantity = 0;
+
+    @Column(nullable = false, insertable = false, updatable = false)
+    private Boolean transportation;
+
+    @PostLoad
+    void initFallback() {
+        transportation = requireNonNullElse(transportation, false);
+    }
 }

@@ -2,7 +2,7 @@
 -- locales
 --
 INSERT INTO locales (id, name, code, fallback)
-VALUES (1, 'Polski', 'pl', FALSE),
+VALUES (1, 'Polski', 'pl', NULL),
        (2, 'English', 'en', TRUE);
 
 --
