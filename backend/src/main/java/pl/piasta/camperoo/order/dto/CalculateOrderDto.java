@@ -16,6 +16,9 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CalculateOrderDto {
+    @NotNull
+    private Integer days;
+
     @Valid
     @NotNull
     private CoordinatesDto destination;

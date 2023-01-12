@@ -337,6 +337,7 @@ CREATE TABLE IF NOT EXISTS orders
     subtotal_price     NUMERIC(12, 2)           NOT NULL CHECK (total_price >= 0),
     total_price        NUMERIC(12, 2)           NOT NULL CHECK (total_price >= 0),
     discount_id        BIGINT REFERENCES discounts (id),
+    days               INT                      NOT NULL CHECK (days > 1),
     address            VARCHAR(255)             NOT NULL,
     latitude           NUMERIC(17, 15)          NOT NULL CHECK (latitude BETWEEN -90 AND 90),
     longitude          NUMERIC(17, 15)          NOT NULL CHECK (latitude BETWEEN -180 AND 180),

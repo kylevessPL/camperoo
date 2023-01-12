@@ -47,10 +47,11 @@ class OrderManager {
     }
 
     public OrderCalculationResult calculateOrder(OrderCalculationDetails details) {
+        var days = details.days();
         var discount = getDiscount(details.discountCode());
         var products = getProductsWithQuantity(details.products());
         var branch = companyBranchManager.findNearestCompanyBranch(details.deliveryTypeId(), details.destination());
-        return calculationManager.calculateOrderPrice(products, branch, discount);
+        return calculationManager.calculateOrderPrice(days, products, branch, discount);
     }
 
     public Order createOrder(OrderPlacementDetails placementDetails, OrderCalculationResult calculationResult) {
@@ -62,6 +63,7 @@ class OrderManager {
         var orderStatus = orderStatusRepository.getReference(OrderStatus.PLACED);
         var orderProducts = createOrderProducts(calculationResult.productCalculations());
         var order = Order.builder()
+                .days(calculationResult.days())
                 .latitude(destination.getLatitude())
                 .longitude(destination.getLongitude())
                 .address(placementDetails.address())
@@ -110,7 +112,7 @@ class OrderManager {
     }
 
     @NonNull
-    private List<OrderProduct> createOrderProducts(List<ProductPriceCalculation> productCalculations) {
+    private List<OrderProduct> createOrderProducts(List<OrderProductCalculation> productCalculations) {
         return productCalculations
                 .stream()
                 .map(e -> createOrderProduct(e.product(), e.quantity(), e.totalPrice()))

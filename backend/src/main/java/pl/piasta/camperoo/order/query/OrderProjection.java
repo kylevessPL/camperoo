@@ -13,6 +13,8 @@ import java.util.Set;
 public interface OrderProjection extends OrderBasicProjection {
     BigDecimal getSubtotalPrice();
 
+    Integer getDays();
+
     String getAddress();
 
     BigDecimal getLatitude();

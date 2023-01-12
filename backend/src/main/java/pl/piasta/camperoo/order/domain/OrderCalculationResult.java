@@ -7,10 +7,11 @@ import java.math.BigDecimal;
 import java.util.List;
 
 record OrderCalculationResult(
+        Integer days,
         Discount discount,
         CompanyBranch companyBranch,
         Integer distance,
-        List<ProductPriceCalculation> productCalculations,
+        List<OrderProductCalculation> productCalculations,
         BigDecimal transportationPrice,
         BigDecimal priceSubtotal,
         BigDecimal priceTotal) {

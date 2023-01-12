@@ -145,6 +145,9 @@ public class Order extends AbstractEntity {
     private BigDecimal totalPrice;
 
     @Column(nullable = false)
+    private Integer days;
+
+    @Column(nullable = false)
     private String address;
 
     @Column(nullable = false, precision = 7)

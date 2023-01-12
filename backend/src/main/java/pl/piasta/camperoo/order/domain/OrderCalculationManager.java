@@ -20,14 +20,16 @@ class OrderCalculationManager {
     private final OrderProductRepository productRepository;
 
     public OrderCalculationResult calculateOrderPrice(
+            int days,
             Map<Product, Integer> products,
             Pair<CompanyBranch, Integer> companyBranch,
             Discount discount
     ) {
-        var productsPrice = calculateProductsPrice(products);
-        var transportationPrice = calculateTransportationTotalPrice(companyBranch.getValue());
-        var finalPrice = calculateFinalPrice(productsPrice.getValue(), transportationPrice, discount);
+        var productsPrice = calculateProductsPrice(products, days);
+        var transportationPrice = calculateTransportationTotalPrice(productsPrice, companyBranch.getValue());
+        var finalPrice = calculateFinalPrice(productsPrice.getValue(), discount);
         return new OrderCalculationResult(
+                days,
                 discount,
                 companyBranch.getLeft(),
                 companyBranch.getRight(),
@@ -38,38 +40,49 @@ class OrderCalculationManager {
         );
     }
 
-    private Pair<List<ProductPriceCalculation>, BigDecimal> calculateProductsPrice(Map<Product, Integer> products) {
-        List<ProductPriceCalculation> prices = new ArrayList<>();
+    private Pair<List<OrderProductCalculation>, BigDecimal> calculateProductsPrice(
+            Map<Product, Integer> products,
+            int days
+    ) {
+        List<OrderProductCalculation> prices = new ArrayList<>();
         var totalPrice = products.entrySet()
                 .stream()
-                .map(e -> calculateProductPrice(prices, e))
+                .map(e -> calculateProductPrice(prices, e, days))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         return Pair.of(prices, totalPrice);
     }
 
-    private BigDecimal calculateTransportationTotalPrice(Integer distance) {
+    private BigDecimal calculateTransportationTotalPrice(
+            Pair<List<OrderProductCalculation>, BigDecimal> products,
+            Integer distance
+    ) {
         var transportation = productRepository.getTransportationProduct();
-        return transportation.getPrice().multiply(BigDecimal.valueOf(distance));
+        var price = transportation.getPrice().multiply(BigDecimal.valueOf(distance));
+        var calculation = new OrderProductCalculation(transportation, distance, price);
+        products.getKey().add(calculation);
+        products.setValue(products.getValue().add(price));
+        return price;
     }
 
-    private Pair<BigDecimal, BigDecimal> calculateFinalPrice(
-            BigDecimal productsPrice,
-            BigDecimal transportationPrice,
-            Discount discount
-    ) {
+    private Pair<BigDecimal, BigDecimal> calculateFinalPrice(BigDecimal subtotal, Discount discount) {
         var discountValue = BigDecimal.valueOf(1 - discount.getValue() / 100D);
-        var subtotal = productsPrice.add(transportationPrice);
-        var total = productsPrice.multiply(discountValue).setScale(2, RoundingMode.HALF_UP);
+        var total = subtotal.multiply(discountValue).setScale(2, RoundingMode.HALF_UP);
         return Pair.of(subtotal, total);
     }
 
     @NonNull
-    private BigDecimal calculateProductPrice(List<ProductPriceCalculation> prices, Entry<Product, Integer> products) {
+    private BigDecimal calculateProductPrice(
+            List<OrderProductCalculation> prices,
+            Entry<Product, Integer> products,
+            int days
+    ) {
         var product = products.getKey();
         var quantity = products.getValue();
         checkProductAvailability(product, quantity);
-        var price = product.getPrice().multiply(BigDecimal.valueOf(quantity));
-        prices.add(new ProductPriceCalculation(product, quantity, price));
+        var price = product.getPrice()
+                .multiply(BigDecimal.valueOf(quantity))
+                .multiply(BigDecimal.valueOf(days));
+        prices.add(new OrderProductCalculation(product, quantity, price));
         return price;
     }
 
