@@ -32,7 +32,7 @@ public class ProductDescription extends DescriptionOrientedEntity<Locale> {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_product_descriptions_id")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1024)
     private String description;
 
     @ManyToOne(optional = false)

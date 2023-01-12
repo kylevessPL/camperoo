@@ -7,7 +7,8 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - ./docker/db:/docker-entrypoint-initdb.d
+      - ./docker/db/sql:/docker-entrypoint-initdb.d
+      - ./docker/db/images:/images
     environment:
       - POSTGRES_DB=$DB_NAME
       - POSTGRES_USER=$DB_USER
