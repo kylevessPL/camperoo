@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -21,6 +22,7 @@ import java.nio.charset.StandardCharsets;
 import static java.util.Objects.requireNonNull;
 
 @Configuration
+@ComponentScan(basePackages = "pl.piasta.camperoo")
 class AppConfiguration {
     public static final String APP_CONFIG_PROPERTIES = "app-config.yml";
     public static final String APP_MESSAGES_BASENAME = "app-messages";

@@ -1,12 +1,10 @@
 package pl.piasta.camperoo.infrastructure.payment;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import pl.piasta.camperoo.order.domain.OrderPaymentDetailsProvider;
 
 @Configuration
-@ComponentScan
 class PaymentConfiguration {
     @Bean
     PaymentDatabaseRepository paymentRepository(PaymentJpaRepository jpaRepository) {

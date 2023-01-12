@@ -2,14 +2,12 @@ package pl.piasta.camperoo.infrastructure.file;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import pl.piasta.camperoo.file.domain.FilePermissionsManager;
 import pl.piasta.camperoo.file.domain.FileProcessor;
 import pl.piasta.camperoo.infrastructure.order.OrderJpaRepository;
 
 @Configuration
-@ComponentScan
 class FileConfiguration {
     @Bean
     FileDatabaseRepository fileRepository(FileJpaRepository jpaRepository) {
