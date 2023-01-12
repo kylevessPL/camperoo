@@ -24,7 +24,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.LocaleResolver;
 import pl.piasta.camperoo.common.util.ErrorHandlingUtils;
 import pl.piasta.camperoo.common.util.ResponseCookieUtils;
-import pl.piasta.camperoo.user.domain.UserRepository;
+import pl.piasta.camperoo.user.domain.UserUserRepository;
 
 import java.nio.charset.StandardCharsets;
 
@@ -87,7 +87,7 @@ class SecurityConfiguration extends AbstractSecurityWebApplicationInitializer {
     }
 
     @Bean
-    UserDetailsService userDetailsService(UserRepository userRepository) {
+    UserDetailsService userDetailsService(UserUserRepository userRepository) {
         return new AuthenticationService(userRepository);
     }
 

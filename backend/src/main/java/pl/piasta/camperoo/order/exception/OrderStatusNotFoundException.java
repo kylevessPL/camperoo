@@ -6,7 +6,7 @@ import pl.piasta.camperoo.common.exception.NotFoundException;
 import pl.piasta.camperoo.order.domain.OrderStatus;
 
 public class OrderStatusNotFoundException extends NotFoundException {
-    public OrderStatusNotFoundException(String code) {
-        super(OrderStatus.class, "code", code, ErrorCode.ORDER_STATUS_NOT_FOUND, ErrorProperty.ORDER_STATUS_NOT_FOUND);
+    public OrderStatusNotFoundException(Long id) {
+        super(OrderStatus.class, "id", id, ErrorCode.ORDER_STATUS_NOT_FOUND, ErrorProperty.ORDER_STATUS_NOT_FOUND);
     }
 }

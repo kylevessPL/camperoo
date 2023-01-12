@@ -1,8 +1,7 @@
 package pl.piasta.camperoo.order.domain;
 
-import java.util.Optional;
+import pl.piasta.camperoo.common.domain.Repository;
 
-public interface OrderStatusRepository {
-    Optional<OrderStatus> getByCode(String code);
+public interface OrderStatusRepository extends Repository<OrderStatus, Long> {
 }
 

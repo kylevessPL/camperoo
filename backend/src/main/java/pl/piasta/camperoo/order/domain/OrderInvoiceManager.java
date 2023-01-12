@@ -2,18 +2,28 @@ package pl.piasta.camperoo.order.domain;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import pl.piasta.camperoo.common.util.NamedByteArrayResource;
+import org.springframework.http.MediaType;
+import pl.piasta.camperoo.file.domain.File;
 
 @RequiredArgsConstructor
 class OrderInvoiceManager {
-    private final OrderRepository orderRepository;
+    private static final String FILENAME_PATTERN = "invoice_%d.pdf";
+    private final OrderFileRepository fileRepository;
+
+    public File generateInvoice(Order order) {
+        var invoiceContent = createInvoice(order);
+        var invoice = File.builder()
+                .content(invoiceContent)
+                .contentType(MediaType.APPLICATION_PDF_VALUE)
+                .name(FILENAME_PATTERN.formatted(order.getId()))
+                .build();
+        return fileRepository.save(invoice);
+    }
 
     @SneakyThrows
-    public NamedByteArrayResource generateInvoice(Long orderId) {
-        var filename = "invoice_%d.pdf".formatted(orderId);
-        var order = orderRepository.get(orderId).orElseThrow();
+    private byte[] createInvoice(Order order) {
         try (var invoice = new OrderInvoice(order)) {
-            return new NamedByteArrayResource(invoice.getRawData(), filename);
+            return invoice.getRawData();
         }
     }
 }

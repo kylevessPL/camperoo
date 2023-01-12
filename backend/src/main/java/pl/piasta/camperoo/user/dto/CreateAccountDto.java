@@ -16,6 +16,9 @@ import pl.piasta.camperoo.common.validation.ZipCodeCheck;
 @NoArgsConstructor
 public class CreateAccountDto {
     @NotBlank
+    private String captchaToken;
+
+    @NotBlank
     @EmailCheck
     private String email;
 
@@ -38,7 +41,7 @@ public class CreateAccountDto {
     @AlphaNumericCheck
     private String addressOne;
 
-    @Size(max = 255)
+    @Size(min = 1, max = 255)
     @AlphaNumericCheck
     private String addressTwo;
 

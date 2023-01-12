@@ -15,12 +15,13 @@ import static pl.piasta.camperoo.verificationtoken.domain.VerificationTokenType.
 
 @RequiredArgsConstructor
 class UserAccountManager {
-    private final UserRepository userRepository;
-    private final PersonRepository personRepository;
-    private final RoleRepository roleRepository;
+    private final UserTokenCleanupScheduler userTokenCleanupScheduler;
+    private final UserUserRepository userRepository;
+    private final UserPersonRepository personRepository;
+    private final UserRoleRepository roleRepository;
     private final UserTokenRepository userTokenRepository;
     private final UserTokenTypeRepository userTokenTypeRepository;
-    private final int accountCreationTokenValidMinutes;
+    private final long accountCreationTokenValidMinutes;
 
     public VerificationToken createCustomer(User user) {
         var role = roleRepository.getReference(CUSTOMER);
@@ -31,7 +32,7 @@ class UserAccountManager {
     public void confirmAccount(VerificationTokenCode token) {
         var accountCreationTokenType = userTokenTypeRepository.getReference(ACCOUNT_CREATION);
         VerificationToken accountCreationToken = userTokenRepository.findByIdAndType(token, accountCreationTokenType)
-                .filter(verificationToken -> !verificationToken.isExpired())
+                .filter(VerificationToken::isValid)
                 .orElseThrow(() -> VerificationTokenNotFoundException.accountCreation(token));
         accountCreationToken.getUser().enableAccount();
         userTokenRepository.delete(accountCreationToken.getId());
@@ -65,7 +66,9 @@ class UserAccountManager {
                 .type(accountCreationTokenType)
                 .user(user)
                 .build();
-        return userTokenRepository.save(accountCreationToken);
+        var token = userTokenRepository.save(accountCreationToken);
+        userTokenCleanupScheduler.scheduleExpiredVerificationTokenCleanup(token.getId(), expirationDate);
+        return token;
     }
 
     private void changeStatus(User user, boolean active) {

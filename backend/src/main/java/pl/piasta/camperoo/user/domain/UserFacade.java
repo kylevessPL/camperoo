@@ -14,11 +14,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserFacade {
     private final UserConverter userConverter;
-    private final UserAccountManager userAccountManager;
     private final UserEmailNotifier userEmailNotifier;
+    private final UserVerificationManager userVerificationManager;
+    private final UserAccountManager userAccountManager;
 
     @PreAuthorize("permitAll()")
-    public ResourceCreatedDto createAccount(CreateAccountDto dto) {
+    public ResourceCreatedDto createAccount(CreateAccountDto dto, String clientIp) {
+        userVerificationManager.verify(dto.getCaptchaToken(), clientIp);
         var user = userConverter.convert(dto);
         var accountCreationToken = userAccountManager.createCustomer(user);
         user = accountCreationToken.getUser();

@@ -11,10 +11,6 @@ import static pl.piasta.camperoo.security.TokenAuthenticationProvider.ACCESS_TOK
 
 @UtilityClass
 public class ResponseCookieUtils {
-    public ResponseCookie accessToken(String value, long maxAgeSeconds, HttpServletRequest request) {
-        return accessToken(value, Duration.ofSeconds(maxAgeSeconds), request.getServerName(), request.isSecure());
-    }
-
     public ResponseCookie clearAccessToken(HttpServletRequest request) {
         return accessToken(StringUtils.EMPTY, Duration.ZERO, request.getServerName(), request.isSecure());
     }

@@ -30,6 +30,7 @@ import pl.piasta.camperoo.discount.domain.Discount;
 import pl.piasta.camperoo.file.domain.File;
 import pl.piasta.camperoo.payment.domain.Payment;
 import pl.piasta.camperoo.user.domain.User;
+import pl.piasta.camperoo.user.exception.MissingPaymentException;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -37,6 +38,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
+import static java.util.Objects.isNull;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -191,7 +194,20 @@ public class Order extends AbstractEntity {
     }
 
     public void updateStatus(OrderStatus status) {
+        if (status.isProcessed()) {
+            checkIfPaymentReceived();
+        }
         this.status = status;
         this.statusChangeDate = Instant.now();
+    }
+
+    public void addInvoice(File invoice) {
+        this.invoice = invoice;
+    }
+
+    private void checkIfPaymentReceived() {
+        if (isNull(getPayment())) {
+            throw new MissingPaymentException(id);
+        }
     }
 }

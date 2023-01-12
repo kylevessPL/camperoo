@@ -16,6 +16,7 @@ import pl.piasta.camperoo.common.domain.AbstractEntity;
 import pl.piasta.camperoo.common.domain.LocalizableDescription;
 import pl.piasta.camperoo.common.domain.LocalizableName;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -46,4 +47,12 @@ public class OrderStatus extends AbstractEntity
     @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     @OneToMany(mappedBy = "orderStatus", fetch = FetchType.EAGER)
     private Set<OrderStatusDescription> descriptions;
+
+    public boolean isProcessed() {
+        return Objects.equals(id, PROCESSED);
+    }
+
+    public boolean isCanceled() {
+        return Objects.equals(id, CANCELED);
+    }
 }

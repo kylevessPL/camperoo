@@ -13,12 +13,22 @@ error:
     delivery-error: 'Nie znaleziono tokenu weryfikacyjnego o parametrze {0} = {1}'
   branch:
     not-available: 'Żadne oddziały nie są dostępne'
+  delivery:
+    type:
+      not-found: 'Nie znaleziono formy dostawy o parametrze {0} = {1}'
   product:
     not-found: 'Nie znaleziono produktu o parametrze {0} = {1}'
+    not-available: 'Produkt o id = {0} nie jest dostępny w ilości sztuk = {1}'
   order:
     not-found: 'Nie znaleziono zamówienia o parametrze {0} = {1}'
+    payment-missing: 'Operacja nie jest dozwolona dla zamówienia o id = {0} z powodu brakującej płatności'
     status:
       not-found: 'Nie znaleziono statusu zamówienia o parametrze {0} = {1}'
+  discount:
+    not-found: 'Nie znaleziono kodu rabatowego o parametrze {0} = {1}'
+  payment:
+    type:
+      not-found: 'Nie znaleziono sposobu płatności o parametrze {0} = {1}'
   file:
     not-found: 'Nie znaleziono pliku o parametrze {0} = {1}'
   user:

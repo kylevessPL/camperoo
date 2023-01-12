@@ -18,7 +18,7 @@ public class EmailAddress implements ValueObject {
 
     private String email;
 
-    private EmailAddress(String email) {
+    public EmailAddress(String email) {
         this.email = validate(email.toLowerCase().trim());
     }
 

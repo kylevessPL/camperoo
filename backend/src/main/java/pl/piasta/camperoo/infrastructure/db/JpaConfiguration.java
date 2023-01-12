@@ -20,9 +20,7 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 @RequiredArgsConstructor
 class JpaConfiguration {
-
     public static final String JPA_CONFIG_PROPERTIES = "jpa-config.yml";
-
     private final DataSource dataSource;
 
     @Bean

@@ -122,7 +122,7 @@ class OrderInvoice implements Closeable {
         invoice.close();
     }
 
-    protected Map<FontType, PDFont> loadFonts() throws IOException {
+    private Map<FontType, PDFont> loadFonts() throws IOException {
         Map<FontType, PDFont> map = new EnumMap<>(FontType.class);
         for (var type : FontType.values()) {
             map.put(type, loadFont(invoice, type.actualName));
@@ -130,7 +130,7 @@ class OrderInvoice implements Closeable {
         return map;
     }
 
-    protected void createInvoice() throws IOException {
+    private void createInvoice() throws IOException {
         var page = createPage();
         invoice.addPage(page);
         try (var contentStream = new PDPageContentStream(invoice, page)) {

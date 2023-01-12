@@ -1,4 +1,4 @@
-package pl.piasta.camperoo.branch.exception;
+package pl.piasta.camperoo.order.exception;
 
 import pl.piasta.camperoo.common.exception.ConflictException;
 import pl.piasta.camperoo.common.exception.ErrorCode;

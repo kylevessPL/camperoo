@@ -25,12 +25,24 @@ public enum ErrorProperty {
     // branch
     COMPANY_BRANCHES_NOT_AVAILABLE("branch.not-available"),
 
+    // delivery
+    DELIVERY_TYPE_NOT_FOUND("delivery.type.not-found"),
+
     // product
     PRODUCT_NOT_FOUND("product.not-found"),
+    PRODUCT_NOT_AVAILABLE("product.not-available"),
 
     // order
     ORDER_NOT_FOUND("order.not-found"),
     ORDER_STATUS_NOT_FOUND("order.status.not-found"),
+    ORDER_MISSING_PAYMENT("order.payment-missing"),
+
+    // discount
+    DISCOUNT_NOT_FOUND("discount.not-found"),
+    DISCOUNT_NOT_AVAILABLE("discount.not-available"),
+
+    // payment
+    PAYMENT_TYPE_NOT_FOUND("payment.type.not-found"),
 
     // file
     FILE_NOT_FOUND("file.not-found"),

@@ -8,6 +8,7 @@ import pl.piasta.camperoo.common.util.PropertiesLoader;
 @Configuration
 class EmailConfiguration {
     private static final String MAIL_PROPERTIES = "mail-config.yml";
+    private static final String TEMPLATES_DIRECTORY = "/templates/";
 
     @Bean
     EmailNotifier emailNotifier(
@@ -16,7 +17,7 @@ class EmailConfiguration {
     ) {
         var mailProperties = PropertiesLoader.EAGER.load(MAIL_PROPERTIES);
         var mailSender = MailSenderFactory.create(mailProperties);
-        var emailTemplateEngine = EmailTemplateEngineFactory.create("/templates/");
+        var emailTemplateEngine = EmailTemplateEngineFactory.create(TEMPLATES_DIRECTORY);
         var emailSender = new EmailSender(mailSender, senderEmail);
         return new EmailNotifier(emailSender, emailTemplateEngine, frontendUrl);
     }

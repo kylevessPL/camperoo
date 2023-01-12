@@ -14,9 +14,14 @@ import pl.piasta.camperoo.product.query.ProductProjection;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface ProductJpaRepository extends JpaRepository<Product, Long> {
+    List<Product> findAllByTransportationIsNullAndIdIn(Set<Long> ids);
+
+    Product findByTransportationIsTrue();
+
     Page<IdProjection> findAllIdsByTransportationIsNull(Pageable pageable);
 
     @EntityGraph("products-graph")

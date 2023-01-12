@@ -2,15 +2,15 @@ package pl.piasta.camperoo.infrastructure.branch;
 
 import lombok.RequiredArgsConstructor;
 import pl.piasta.camperoo.branch.domain.CompanyBranch;
-import pl.piasta.camperoo.branch.domain.CompanyBranchRepository;
 import pl.piasta.camperoo.branch.query.CompanyBranchProjection;
 import pl.piasta.camperoo.branch.query.CompanyBranchQueryClient;
+import pl.piasta.camperoo.order.domain.OrderCompanyBranchRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-class CompanyBranchDatabaseRepository implements CompanyBranchRepository, CompanyBranchQueryClient {
+class CompanyBranchDatabaseRepository implements OrderCompanyBranchRepository, CompanyBranchQueryClient {
     private final CompanyBranchJpaRepository repository;
 
     @Override

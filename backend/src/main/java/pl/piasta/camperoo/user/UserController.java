@@ -1,5 +1,6 @@
 package pl.piasta.camperoo.user;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import pl.piasta.camperoo.common.dto.ResourceCreatedDto;
+import pl.piasta.camperoo.common.util.HttpRequestUtils;
 import pl.piasta.camperoo.security.TokenPrincipal;
 import pl.piasta.camperoo.user.domain.UserFacade;
 import pl.piasta.camperoo.user.dto.ConfirmAccountDto;
@@ -33,8 +35,9 @@ class UserController {
 
     @ResponseStatus(CREATED)
     @PostMapping
-    ResourceCreatedDto createCustomerAccount(@RequestBody @Valid CreateAccountDto dto) {
-        return userFacade.createAccount(dto);
+    ResourceCreatedDto createCustomerAccount(@RequestBody @Valid CreateAccountDto dto, HttpServletRequest request) {
+        String clientIp = HttpRequestUtils.getClientIp(request);
+        return userFacade.createAccount(dto, clientIp);
     }
 
     @ResponseStatus(NO_CONTENT)

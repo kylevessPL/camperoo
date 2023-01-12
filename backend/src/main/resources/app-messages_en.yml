@@ -13,12 +13,22 @@ error:
     delivery-error: 'Failed to deliver email to {0}'
   branch:
     not-available: 'No company branches are available'
+  delivery:
+    type:
+      not-found: 'Delivery type with {0} = {1} does not exist'
   product:
     not-found: 'Product with {0} = {1} does not exist'
+    not-available: 'Product with id = {0} is not available in quantity of pieces = {1}'
   order:
     not-found: 'Order with {0} = {1} does not exist'
+    payment-missing: 'Operation is not allowed for the order with id = {0} since the payment is missing'
     status:
       not-found: 'Order status with {0} = {1} does not exist'
+  discount:
+    not-found: 'Discount with {0} = {1} does not exist'
+  payment:
+    type:
+      not-found: 'Payment type with {0} = {1} does not exist'
   file:
     not-found: 'File with {0} = {1} does not exist'
   user:

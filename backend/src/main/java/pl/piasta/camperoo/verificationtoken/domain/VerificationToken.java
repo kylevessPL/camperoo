@@ -50,7 +50,7 @@ public class VerificationToken extends AbstractEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public boolean isExpired() {
-        return expirationDate.isBefore(Instant.now());
+    public boolean isValid() {
+        return !expirationDate.isBefore(Instant.now());
     }
 }

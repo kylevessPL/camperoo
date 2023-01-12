@@ -8,13 +8,13 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.piasta.camperoo.common.domain.vo.EmailAddress;
 import pl.piasta.camperoo.user.domain.Role;
 import pl.piasta.camperoo.user.domain.User;
-import pl.piasta.camperoo.user.domain.UserRepository;
+import pl.piasta.camperoo.user.domain.UserUserRepository;
 
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 class AuthenticationService implements UserDetailsService {
-    private final UserRepository userRepository;
+    private final UserUserRepository userRepository;
 
     @Override
     @Transactional(readOnly = true)

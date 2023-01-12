@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import pl.piasta.camperoo.user.domain.Role;
 
 @Repository
-interface RoleJpaRepository extends JpaRepository<Role, Long> {
+public interface RoleJpaRepository extends JpaRepository<Role, Long> {
 }
 

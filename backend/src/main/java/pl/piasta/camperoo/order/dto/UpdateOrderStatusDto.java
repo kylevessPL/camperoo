@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateOrderStatusDto {
     @NotBlank
-    private String statusCode;
+    private Long statusId;
 }
 

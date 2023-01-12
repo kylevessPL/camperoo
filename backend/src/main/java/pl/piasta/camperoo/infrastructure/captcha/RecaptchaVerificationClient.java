@@ -1,11 +1,11 @@
 package pl.piasta.camperoo.infrastructure.captcha;
 
 import lombok.RequiredArgsConstructor;
-import pl.piasta.camperoo.user.domain.CaptchaVerificationClient;
 import pl.piasta.camperoo.user.domain.CaptchaVerificationResult;
+import pl.piasta.camperoo.user.domain.UserCaptchaVerificationClient;
 
 @RequiredArgsConstructor
-class RecaptchaVerificationClient implements CaptchaVerificationClient {
+class RecaptchaVerificationClient implements UserCaptchaVerificationClient {
     protected final RecaptchaSiteVerifyService siteVerifyService;
 
     @Override

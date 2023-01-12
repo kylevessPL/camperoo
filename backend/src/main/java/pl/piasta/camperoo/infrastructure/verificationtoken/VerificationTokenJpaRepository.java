@@ -9,7 +9,7 @@ import pl.piasta.camperoo.verificationtoken.domain.VerificationTokenType;
 import java.util.Optional;
 
 @Repository
-interface VerificationTokenJpaRepository extends JpaRepository<VerificationToken, Long> {
+public interface VerificationTokenJpaRepository extends JpaRepository<VerificationToken, Long> {
     Optional<VerificationToken> findByCodeAndType(VerificationTokenCode code, VerificationTokenType type);
 }
 
