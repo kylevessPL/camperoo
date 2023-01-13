@@ -10,7 +10,7 @@ import pl.piasta.camperoo.branch.query.CompanyBranchQueryClient;
 import java.util.List;
 
 @RestController
-@RequestMapping("/company-branches")
+@RequestMapping("/branches")
 @RequiredArgsConstructor
 class CompanyBranchController {
     private final CompanyBranchQueryClient companyBranchQueryClient;

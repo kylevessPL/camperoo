@@ -9,6 +9,7 @@ import pl.piasta.camperoo.order.domain.OrderFileRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 class FileDatabaseRepository implements OrderFileRepository, FileQueryClient {
@@ -45,10 +46,10 @@ class FileDatabaseRepository implements OrderFileRepository, FileQueryClient {
     }
 
     @Override
-    public FileProjection findFileById(Long fileId) {
+    public FileProjection findFileByUuid(UUID fileUuid) {
         return repository
-                .findOneById(fileId)
-                .orElseThrow(() -> new FileNotFoundException(fileId));
+                .findOneByUuid(fileUuid)
+                .orElseThrow(() -> new FileNotFoundException(fileUuid));
     }
 }
 
