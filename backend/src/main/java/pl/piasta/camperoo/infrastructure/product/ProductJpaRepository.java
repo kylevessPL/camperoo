@@ -10,6 +10,7 @@ import pl.piasta.camperoo.common.query.IdProjection;
 import pl.piasta.camperoo.product.domain.Product;
 import pl.piasta.camperoo.product.query.ProductBasicProjection;
 import pl.piasta.camperoo.product.query.ProductProjection;
+import pl.piasta.camperoo.product.query.ProductQuantityProjection;
 
 import java.util.Collection;
 import java.util.List;
@@ -24,9 +25,11 @@ public interface ProductJpaRepository extends JpaRepository<Product, Long> {
 
     Page<IdProjection> findAllIdsByTransportationIsNull(Pageable pageable);
 
+    List<ProductQuantityProjection> findAllByTransportationIsNullAndIdIn(Collection<Long> ids);
+
     @EntityGraph("products-graph")
     List<ProductBasicProjection> findAllByTransportationIsNullAndIdIn(Collection<Long> ids, Sort sort);
 
     @EntityGraph("products-graph")
-    Optional<ProductProjection> findOneById(Long id);
+    Optional<ProductProjection> findOneByTransportationIsNullAndId(Long id);
 }

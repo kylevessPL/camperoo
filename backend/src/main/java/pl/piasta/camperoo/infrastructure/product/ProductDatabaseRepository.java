@@ -10,6 +10,7 @@ import pl.piasta.camperoo.product.domain.Product;
 import pl.piasta.camperoo.product.exception.ProductNotFoundException;
 import pl.piasta.camperoo.product.query.ProductBasicProjection;
 import pl.piasta.camperoo.product.query.ProductProjection;
+import pl.piasta.camperoo.product.query.ProductQuantityProjection;
 import pl.piasta.camperoo.product.query.ProductQueryClient;
 
 import java.util.List;
@@ -32,8 +33,13 @@ class ProductDatabaseRepository implements OrderProductRepository, ProductQueryC
     @Override
     public ProductProjection findProductById(Long productId) {
         return repository
-                .findOneById(productId)
+                .findOneByTransportationIsNullAndId(productId)
                 .orElseThrow(() -> new ProductNotFoundException(productId));
+    }
+
+    @Override
+    public List<ProductQuantityProjection> findProductQuantitiesByIds(List<Long> ids) {
+        return repository.findAllByTransportationIsNullAndIdIn(ids);
     }
 
     @Override
