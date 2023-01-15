@@ -44,7 +44,7 @@ class CookieSupportedLocaleResolver extends CookieLocaleResolver {
     private Map<Locale, Boolean> getSupportedLocale(LocaleRepository localeRepository) {
         return localeRepository.getAll()
                 .stream()
-                .map(e -> Map.entry(Locale.forLanguageTag(e.getCode()), e.isFallback()))
+                .map(e -> Map.entry(Locale.forLanguageTag(e.getCode()), e.getFallback()))
                 .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
     }
 

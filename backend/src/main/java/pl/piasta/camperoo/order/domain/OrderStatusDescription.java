@@ -30,11 +30,11 @@ public class OrderStatusDescription extends DescriptionOrientedEntity<Locale> {
     private String description;
 
     @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "locale_id", nullable = false)
     private Locale locale;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "order_status_id", nullable = false)
     private OrderStatus orderStatus;
 }

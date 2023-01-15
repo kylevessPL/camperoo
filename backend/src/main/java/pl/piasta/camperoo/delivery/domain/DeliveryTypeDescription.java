@@ -29,12 +29,12 @@ public class DeliveryTypeDescription extends DescriptionOrientedEntity<Locale> {
     @Column(nullable = false)
     private String description;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "locale_id", nullable = false)
     @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
     private Locale locale;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "delivery_type_id", nullable = false)
     private DeliveryType deliveryType;
 }

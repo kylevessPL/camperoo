@@ -6,6 +6,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pl.piasta.camperoo.common.query.IdProjection;
 import pl.piasta.camperoo.order.domain.Order;
@@ -17,6 +18,7 @@ import pl.piasta.camperoo.payment.domain.PaymentStatus;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface OrderJpaRepository extends JpaRepository<Order, Long> {
@@ -34,6 +36,6 @@ public interface OrderJpaRepository extends JpaRepository<Order, Long> {
 
     boolean existsByIdAndUserId(Long orderId, Long userId);
 
-    @Query("select o.user.id from Order o where o.invoice.id = :invoiceId")
-    Long findUserIdByInvoiceId(Long invoiceId);
+    @Query("select o.user.id from Order o where o.invoice.uuid = :invoiceUuid")
+    Long findUserIdByInvoiceUuid(@Param("invoiceUuid") UUID invoiceUuid);
 }

@@ -2,13 +2,13 @@ package pl.piasta.camperoo.infrastructure.role;
 
 import lombok.RequiredArgsConstructor;
 import pl.piasta.camperoo.user.domain.Role;
-import pl.piasta.camperoo.user.domain.RoleRepository;
+import pl.piasta.camperoo.user.domain.UserRoleRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-class RoleDatabaseRepository implements RoleRepository {
+class RoleDatabaseRepository implements UserRoleRepository {
     private final RoleJpaRepository repository;
 
     @Override

@@ -3,7 +3,6 @@ package pl.piasta.camperoo.order.domain;
 import jakarta.persistence.Cacheable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -16,6 +15,7 @@ import pl.piasta.camperoo.common.domain.AbstractEntity;
 import pl.piasta.camperoo.common.domain.LocalizableDescription;
 import pl.piasta.camperoo.common.domain.LocalizableName;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -40,10 +40,18 @@ public class OrderStatus extends AbstractEntity
     private String code;
 
     @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
-    @OneToMany(mappedBy = "orderStatus", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "orderStatus")
     private Set<OrderStatusName> names;
 
     @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
-    @OneToMany(mappedBy = "orderStatus", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "orderStatus")
     private Set<OrderStatusDescription> descriptions;
+
+    public boolean isProcessed() {
+        return Objects.equals(id, PROCESSED);
+    }
+
+    public boolean isCanceled() {
+        return Objects.equals(id, CANCELED);
+    }
 }

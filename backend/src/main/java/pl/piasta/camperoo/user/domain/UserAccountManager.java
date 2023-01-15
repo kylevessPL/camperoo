@@ -3,6 +3,7 @@ package pl.piasta.camperoo.user.domain;
 import lombok.RequiredArgsConstructor;
 import pl.piasta.camperoo.common.domain.vo.VerificationTokenCode;
 import pl.piasta.camperoo.user.exception.AccountDuplicateException;
+import pl.piasta.camperoo.user.exception.UserNotFoundException;
 import pl.piasta.camperoo.verificationtoken.domain.VerificationToken;
 import pl.piasta.camperoo.verificationtoken.exception.VerificationTokenNotFoundException;
 
@@ -14,12 +15,13 @@ import static pl.piasta.camperoo.verificationtoken.domain.VerificationTokenType.
 
 @RequiredArgsConstructor
 class UserAccountManager {
-    private final UserRepository userRepository;
-    private final PersonRepository personRepository;
-    private final RoleRepository roleRepository;
+    private final UserTokenCleanupScheduler userTokenCleanupScheduler;
+    private final UserUserRepository userRepository;
+    private final UserPersonRepository personRepository;
+    private final UserRoleRepository roleRepository;
     private final UserTokenRepository userTokenRepository;
     private final UserTokenTypeRepository userTokenTypeRepository;
-    private final int accountCreationTokenValidMinutes;
+    private final long accountCreationTokenValidMinutes;
 
     public VerificationToken createCustomer(User user) {
         var role = roleRepository.getReference(CUSTOMER);
@@ -27,13 +29,20 @@ class UserAccountManager {
         return generateAccountCreationToken(user);
     }
 
-    void confirmAccount(VerificationTokenCode token) {
+    public void confirmAccount(VerificationTokenCode token) {
         var accountCreationTokenType = userTokenTypeRepository.getReference(ACCOUNT_CREATION);
         VerificationToken accountCreationToken = userTokenRepository.findByIdAndType(token, accountCreationTokenType)
-                .filter(verificationToken -> !verificationToken.isExpired())
+                .filter(VerificationToken::isValid)
                 .orElseThrow(() -> VerificationTokenNotFoundException.accountCreation(token));
         accountCreationToken.getUser().enableAccount();
         userTokenRepository.delete(accountCreationToken.getId());
+    }
+
+    public void updateAccountStatus(Long userId, boolean active) {
+        userRepository.get(userId).ifPresentOrElse(
+                user -> changeStatus(user, active),
+                () -> {throw new UserNotFoundException(userId);}
+        );
     }
 
     private User createUser(User user, Role role) {
@@ -57,6 +66,16 @@ class UserAccountManager {
                 .type(accountCreationTokenType)
                 .user(user)
                 .build();
-        return userTokenRepository.save(accountCreationToken);
+        var token = userTokenRepository.save(accountCreationToken);
+        userTokenCleanupScheduler.scheduleExpiredVerificationTokenCleanup(token.getId(), expirationDate);
+        return token;
+    }
+
+    private void changeStatus(User user, boolean active) {
+        if (active) {
+            user.enableAccount();
+        } else {
+            user.disableAccount();
+        }
     }
 }

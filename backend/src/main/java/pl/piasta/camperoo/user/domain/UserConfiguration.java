@@ -10,14 +10,18 @@ class UserConfiguration {
     UserFacade userFacade(
             UserConverter userConverter,
             UserEmailNotifier userEmailNotifier,
-            UserRepository userRepository,
-            PersonRepository personRepository,
-            RoleRepository roleRepository,
+            UserTokenCleanupScheduler userTokenCleanupScheduler,
+            UserCaptchaVerificationClient userCaptchaVerificationClient,
+            UserUserRepository userRepository,
+            UserPersonRepository personRepository,
+            UserRoleRepository roleRepository,
             UserTokenRepository userTokenRepository,
             UserTokenTypeRepository userTokenTypeRepository,
-            @Value("${app.user.accountCreationToken.validMinutes}") int accountCreationTokenValidMinutes
+            @Value("${app.user.accountCreationToken.validMinutes}") long accountCreationTokenValidMinutes
     ) {
+        var userVerificationManager = new UserVerificationManager(userCaptchaVerificationClient);
         var userPasswordManager = new UserAccountManager(
+                userTokenCleanupScheduler,
                 userRepository,
                 personRepository,
                 roleRepository,
@@ -25,6 +29,6 @@ class UserConfiguration {
                 userTokenTypeRepository,
                 accountCreationTokenValidMinutes
         );
-        return new UserFacade(userConverter, userPasswordManager, userEmailNotifier);
+        return new UserFacade(userConverter, userEmailNotifier, userVerificationManager, userPasswordManager);
     }
 }

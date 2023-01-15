@@ -7,6 +7,7 @@ import pl.piasta.camperoo.infrastructure.order.OrderJpaRepository;
 import pl.piasta.camperoo.infrastructure.order.OrderStatusJpaRepository;
 import pl.piasta.camperoo.infrastructure.payment.PaymentJpaRepository;
 import pl.piasta.camperoo.infrastructure.payment.PaymentStatusJpaRepository;
+import pl.piasta.camperoo.infrastructure.verificationtoken.VerificationTokenJpaRepository;
 import pl.piasta.camperoo.order.domain.OrderStatus;
 import pl.piasta.camperoo.payment.domain.PaymentStatus;
 
@@ -15,10 +16,18 @@ import java.time.Instant;
 @Slf4j
 @RequiredArgsConstructor
 class OrderJobManager {
+    private final VerificationTokenJpaRepository verificationTokenRepository;
     private final OrderJpaRepository orderRepository;
     private final OrderStatusJpaRepository orderStatusRepository;
     private final PaymentJpaRepository paymentRepository;
     private final PaymentStatusJpaRepository paymentStatusRepository;
+
+    @Transactional
+    public void deleteExpiredVerificationToken(Long id) {
+        logger.info("Cleaning verification token of id: " + id);
+        verificationTokenRepository.deleteById(id);
+        logger.info("Completed cleanup of verification token of id: " + id);
+    }
 
     @Transactional
     public void cancelExpiredPayments() {
@@ -39,7 +48,7 @@ class OrderJobManager {
         orderRepository
                 .findAllByStatusIsAndPaymentsStatusIs(placedOrderStatus, cancelledPaymentStatus)
                 .forEach(order -> order.updateStatus(cancelledOrderStatus));
-        logger.info("Complated cleanup of old orders");
+        logger.info("Completed cleanup of old orders");
     }
 }
 

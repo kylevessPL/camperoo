@@ -1,6 +1,7 @@
 package pl.piasta.camperoo.user.domain;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import pl.piasta.camperoo.common.domain.vo.VerificationTokenCode;
 import pl.piasta.camperoo.common.dto.ResourceCreatedDto;
@@ -13,10 +14,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserFacade {
     private final UserConverter userConverter;
-    private final UserAccountManager userAccountManager;
     private final UserEmailNotifier userEmailNotifier;
+    private final UserVerificationManager userVerificationManager;
+    private final UserAccountManager userAccountManager;
 
-    public ResourceCreatedDto createAccount(CreateAccountDto dto) {
+    @PreAuthorize("permitAll()")
+    public ResourceCreatedDto createAccount(CreateAccountDto dto, String clientIp) {
+        userVerificationManager.verify(dto.getCaptchaToken(), clientIp);
         var user = userConverter.convert(dto);
         var accountCreationToken = userAccountManager.createCustomer(user);
         user = accountCreationToken.getUser();
@@ -24,8 +28,14 @@ public class UserFacade {
         return new ResourceCreatedDto(user.getId());
     }
 
+    @PreAuthorize("permitAll()")
     public void confirmAccount(ConfirmAccountDto dto) {
         var token = VerificationTokenCode.of(UUID.fromString(dto.getCode()));
         userAccountManager.confirmAccount(token);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    public void updateAccountStatus(Long userId, boolean active) {
+        userAccountManager.updateAccountStatus(userId, active);
     }
 }

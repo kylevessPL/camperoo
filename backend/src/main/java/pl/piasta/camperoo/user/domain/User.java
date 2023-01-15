@@ -28,8 +28,9 @@ import org.apache.commons.lang3.ArrayUtils;
 import pl.piasta.camperoo.common.domain.AbstractEntity;
 import pl.piasta.camperoo.common.domain.vo.EmailAddress;
 import pl.piasta.camperoo.order.domain.Order;
+import pl.piasta.camperoo.user.exception.AccountDisabledException;
+import pl.piasta.camperoo.user.exception.AccountStatusUnchangedException;
 import pl.piasta.camperoo.user.exception.AccountWithoutRoleException;
-import pl.piasta.camperoo.user.exception.UserAccountDisabledException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -108,10 +109,16 @@ public class User extends AbstractEntity {
     }
 
     public void disableAccount() {
+        if (!active) {
+            throw AccountStatusUnchangedException.disabled(id);
+        }
         active = false;
     }
 
     public void enableAccount() {
+        if (active) {
+            throw AccountStatusUnchangedException.enabled(id);
+        }
         active = true;
     }
 
@@ -125,7 +132,7 @@ public class User extends AbstractEntity {
 
     private void checkIfEnabled() {
         if (!active) {
-            throw new UserAccountDisabledException(id);
+            throw new AccountDisabledException(id);
         }
     }
 }

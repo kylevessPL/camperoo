@@ -7,9 +7,10 @@ import pl.piasta.camperoo.file.domain.File;
 import pl.piasta.camperoo.file.query.FileProjection;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface FileJpaRepository extends JpaRepository<File, Long> {
     @EntityGraph("files-graph")
-    Optional<FileProjection> findOneById(Long id);
+    Optional<FileProjection> findOneByUuid(UUID uuid);
 }

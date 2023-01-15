@@ -39,7 +39,7 @@ public class File extends AbstractEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_files_id")
     private Long id;
 
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(nullable = false, insertable = false, updatable = false)
     private UUID uuid;
 
     @Column(nullable = false)

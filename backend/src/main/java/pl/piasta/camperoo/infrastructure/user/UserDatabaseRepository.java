@@ -6,9 +6,10 @@ import org.springframework.data.domain.Pageable;
 import pl.piasta.camperoo.common.domain.vo.EmailAddress;
 import pl.piasta.camperoo.common.query.IdProjection;
 import pl.piasta.camperoo.common.util.PageBuilder;
+import pl.piasta.camperoo.order.domain.OrderUserRepository;
 import pl.piasta.camperoo.security.domain.AuthenticationRepository;
 import pl.piasta.camperoo.user.domain.User;
-import pl.piasta.camperoo.user.domain.UserRepository;
+import pl.piasta.camperoo.user.domain.UserUserRepository;
 import pl.piasta.camperoo.user.exception.UserNotFoundException;
 import pl.piasta.camperoo.user.query.UserBasicProjection;
 import pl.piasta.camperoo.user.query.UserProjection;
@@ -18,7 +19,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-class UserDatabaseRepository implements UserRepository, AuthenticationRepository, UserQueryClient {
+class UserDatabaseRepository
+        implements UserUserRepository, OrderUserRepository, AuthenticationRepository, UserQueryClient {
     private final UserJpaRepository repository;
 
     @Override

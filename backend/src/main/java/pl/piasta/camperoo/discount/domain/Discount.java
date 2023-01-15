@@ -2,7 +2,6 @@ package pl.piasta.camperoo.discount.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -47,6 +46,6 @@ public class Discount extends AbstractEntity implements LocalizableDescription<D
     private boolean active = true;
 
     @Singular
-    @OneToMany(mappedBy = "discount", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "discount")
     private Set<DiscountDescription> descriptions = new HashSet<>();
 }

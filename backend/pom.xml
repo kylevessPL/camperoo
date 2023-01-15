@@ -12,9 +12,10 @@
     <name>Camperoo Backend</name>
 
     <properties>
-        <angus-mail.version>1.0.0</angus-mail.version>
+        <angus-mail.version>1.1.0</angus-mail.version>
         <bouncycastle.version>1.72</bouncycastle.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
+        <commons-collections.version>4.4</commons-collections.version>
         <easytable.version>0.8.5</easytable.version>
         <findbugs-jsr305.version>3.0.2</findbugs-jsr305.version>
         <flyway.version>9.11.0</flyway.version>
@@ -26,7 +27,7 @@
         <jaxb.version>2.3.1</jaxb.version>
         <jackson.version>2.14.1</jackson.version>
         <jakarta.version>10.0.0</jakarta.version>
-        <javafaker.version>1.0.2</javafaker.version>
+        <datafaker.version>1.7.0</datafaker.version>
         <jsonwebtoken.version>0.11.5</jsonwebtoken.version>
         <log4j.version>2.19.0</log4j.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
@@ -42,7 +43,7 @@
         <slf4j.version>2.0.6</slf4j.version>
         <snakeyaml.version>1.33</snakeyaml.version>
         <spring-data.version>2022.0.0</spring-data.version>
-        <spring-framework.version>6.0.3</spring-framework.version>
+        <spring-framework.version>6.0.4</spring-framework.version>
         <spring-security.version>6.0.1</spring-security.version>
         <suppress-warnings.version>4.0.0-20160619211629</suppress-warnings.version>
         <thumbnailator.version>0.4.19</thumbnailator.version>
@@ -143,6 +144,11 @@
             <artifactId>commons-lang3</artifactId>
             <groupId>org.apache.commons</groupId>
             <version>${commons-lang3.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>${commons-collections.version}</version>
         </dependency>
         <dependency>
             <artifactId>pdfbox</artifactId>
@@ -262,9 +268,9 @@
             <version>${snakeyaml.version}</version>
         </dependency>
         <dependency>
-            <artifactId>javafaker</artifactId>
-            <groupId>com.github.javafaker</groupId>
-            <version>${javafaker.version}</version>
+            <groupId>net.datafaker</groupId>
+            <artifactId>datafaker</artifactId>
+            <version>${datafaker.version}</version>
         </dependency>
         <dependency>
             <artifactId>easytable</artifactId>
@@ -297,11 +303,11 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <annotationProcessorPaths>
-                        <dependency>
+                        <path>
                             <artifactId>lombok-mapstruct-binding</artifactId>
                             <groupId>org.projectlombok</groupId>
                             <version>${lombok-mapstruct-binding.version}</version>
-                        </dependency>
+                        </path>
                         <path>
                             <artifactId>lombok</artifactId>
                             <groupId>org.projectlombok</groupId>

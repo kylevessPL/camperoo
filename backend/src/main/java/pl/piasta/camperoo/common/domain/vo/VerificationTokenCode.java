@@ -13,7 +13,7 @@ import java.util.UUID;
 public class VerificationTokenCode implements ValueObject {
     private UUID code;
 
-    private VerificationTokenCode(UUID code) {
+    public VerificationTokenCode(UUID code) {
         this.code = code;
     }
 

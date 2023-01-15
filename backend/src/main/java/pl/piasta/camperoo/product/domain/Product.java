@@ -12,6 +12,7 @@ import jakarta.persistence.NamedAttributeNode;
 import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PostLoad;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -26,6 +27,8 @@ import pl.piasta.camperoo.file.domain.File;
 
 import java.math.BigDecimal;
 import java.util.Set;
+
+import static java.util.Objects.requireNonNullElse;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -73,13 +76,13 @@ public class Product extends AbstractEntity
     @Column(nullable = false, precision = 2)
     private BigDecimal price;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product")
     private Set<ProductName> names;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product")
     private Set<ProductDescription> descriptions;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
     private ProductCategory category;
 
@@ -89,9 +92,13 @@ public class Product extends AbstractEntity
 
     @Builder.Default
     @Column(nullable = false)
-    private boolean limited = true;
-
-    @Builder.Default
-    @Column(nullable = false)
     private Integer quantity = 0;
+
+    @Column(nullable = false, insertable = false, updatable = false)
+    private Boolean transportation;
+
+    @PostLoad
+    void initFallback() {
+        transportation = requireNonNullElse(transportation, false);
+    }
 }

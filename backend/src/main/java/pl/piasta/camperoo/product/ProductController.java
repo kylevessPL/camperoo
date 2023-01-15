@@ -6,11 +6,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.piasta.camperoo.common.query.ConstantProjection;
 import pl.piasta.camperoo.product.query.ProductBasicProjection;
 import pl.piasta.camperoo.product.query.ProductCategoryQueryClient;
 import pl.piasta.camperoo.product.query.ProductProjection;
+import pl.piasta.camperoo.product.query.ProductQuantityProjection;
 import pl.piasta.camperoo.product.query.ProductQueryClient;
 
 import java.util.List;
@@ -30,6 +32,11 @@ class ProductController {
     @GetMapping("/{id}")
     ProductProjection getProduct(@PathVariable Long id) {
         return productQueryClient.findProductById(id);
+    }
+
+    @GetMapping("/quantities")
+    List<ProductQuantityProjection> getProductQuantities(@RequestParam List<Long> id) {
+        return productQueryClient.findProductQuantitiesByIds(id);
     }
 
     @GetMapping("/categories")

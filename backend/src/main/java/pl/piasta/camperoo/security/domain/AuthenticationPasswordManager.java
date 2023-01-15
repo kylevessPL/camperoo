@@ -17,15 +17,16 @@ import static pl.piasta.camperoo.verificationtoken.domain.VerificationTokenType.
 @RequiredArgsConstructor
 class AuthenticationPasswordManager {
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationTokenCleanupScheduler tokenCleanupScheduler;
     private final AuthenticationTokenRepository authenticationTokenRepository;
     private final AuthenticationTokenTypeRepository authenticationTokenTypeRepository;
-    private final int passwordRecoveryTokenValidMinutes;
+    private final long passwordRecoveryTokenValidMinutes;
 
     public void recover(VerificationTokenCode token, Password password) {
         var passwordRecoveryTokenType = authenticationTokenTypeRepository.getReference(PASSWORD_RECOVERY);
         VerificationToken passwordRecoveryToken =
                 authenticationTokenRepository.findByIdAndType(token, passwordRecoveryTokenType)
-                        .filter(verificationToken -> !verificationToken.isExpired())
+                        .filter(VerificationToken::isValid)
                         .orElseThrow(() -> VerificationTokenNotFoundException.passwordRecovery(token));
         reset(passwordRecoveryToken.getUser(), password);
         authenticationTokenRepository.delete(passwordRecoveryToken.getId());
@@ -40,7 +41,9 @@ class AuthenticationPasswordManager {
                 .type(passwordRecoveryTokenType)
                 .user(user)
                 .build();
-        return authenticationTokenRepository.save(passwordRecoveryToken).getCode();
+        var token = authenticationTokenRepository.save(passwordRecoveryToken);
+        tokenCleanupScheduler.scheduleExpiredVerificationTokenCleanup(token.getId(), expirationDate);
+        return token.getCode();
     }
 
     private void reset(User user, Password password) {

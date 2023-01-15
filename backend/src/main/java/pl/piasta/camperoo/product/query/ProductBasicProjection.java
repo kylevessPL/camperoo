@@ -2,18 +2,17 @@ package pl.piasta.camperoo.product.query;
 
 import org.springframework.beans.factory.annotation.Value;
 import pl.piasta.camperoo.common.query.ConstantProjection;
-import pl.piasta.camperoo.common.query.NameDescriptionProjection;
+import pl.piasta.camperoo.common.query.IdProjection;
+import pl.piasta.camperoo.common.query.NameProjection;
 
 import java.math.BigDecimal;
 
-public interface ProductBasicProjection extends NameDescriptionProjection {
+public interface ProductBasicProjection extends IdProjection, NameProjection {
     BigDecimal getPrice();
 
     ConstantProjection getCategory();
 
     ImageBasicProjection getImage();
-
-    boolean isLimited();
 
     Integer getQuantity();
 

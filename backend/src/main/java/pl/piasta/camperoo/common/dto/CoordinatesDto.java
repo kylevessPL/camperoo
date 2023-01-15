@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import pl.piasta.camperoo.common.validation.LatitudeCheck;
 import pl.piasta.camperoo.common.validation.LongitudeCheck;
 
+import java.math.BigDecimal;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,10 +17,10 @@ public class CoordinatesDto {
     @JsonAlias("lat")
     @NotNull
     @LatitudeCheck
-    private Double latitude;
+    private BigDecimal latitude;
 
     @JsonAlias("lon")
     @NotNull
     @LongitudeCheck
-    private Double longitude;
+    private BigDecimal longitude;
 }

@@ -3,7 +3,6 @@ package pl.piasta.camperoo.delivery.domain;
 import jakarta.persistence.Cacheable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedAttributeNode;
 import jakarta.persistence.NamedEntityGraph;
@@ -54,10 +53,10 @@ public class DeliveryType extends AbstractEntity
     private String code;
 
     @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
-    @OneToMany(mappedBy = "deliveryType", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "deliveryType")
     private Set<DeliveryTypeName> names;
 
     @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
-    @OneToMany(mappedBy = "deliveryType", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "deliveryType")
     private Set<DeliveryTypeDescription> descriptions;
 }

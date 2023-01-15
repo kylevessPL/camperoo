@@ -7,4 +7,9 @@ public abstract class NameOrientedEntity<T extends AbstractEntity> extends Abstr
     public abstract String getName();
 
     public abstract T getLocale();
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

@@ -8,45 +8,47 @@ import org.apache.commons.lang3.Range;
 import pl.piasta.camperoo.common.exception.ErrorProperty;
 import pl.piasta.camperoo.common.exception.ValidationException;
 
+import java.math.BigDecimal;
+
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode
 @Getter
 public class Coordinates implements ValueObject {
 
     public static final String LATITUDE_MIN_VALUE = "-90";
-    public static final String LATITUDE_MAX_VALUE = "-90";
+    public static final String LATITUDE_MAX_VALUE = "90";
     public static final String LONGITUDE_MIN_VALUE = "-180";
-    public static final String LONGITUDE_MAX_VALUE = "-180";
+    public static final String LONGITUDE_MAX_VALUE = "180";
 
-    private Double latitude;
-    private Double longitude;
+    private BigDecimal latitude;
+    private BigDecimal longitude;
 
-    private Coordinates(Double latitude, Double longitude) {
+    public Coordinates(BigDecimal latitude, BigDecimal longitude) {
         this.latitude = validateLatitude(latitude);
         this.longitude = validateLongitude(longitude);
     }
 
-    public static Coordinates of(Double latitude, Double longitude) {
+    public static Coordinates of(BigDecimal latitude, BigDecimal longitude) {
         return new Coordinates(latitude, longitude);
     }
 
-    private Double validateLatitude(Double latitude) {
+    private BigDecimal validateLatitude(BigDecimal latitude) {
         if (isOutOfBounds(LATITUDE_MIN_VALUE, LATITUDE_MAX_VALUE, latitude)) {
             throw CoordinatesValidationException.latitudeOutOfBounds();
         }
         return latitude;
     }
 
-    private Double validateLongitude(Double longitude) {
+    private BigDecimal validateLongitude(BigDecimal longitude) {
         if (isOutOfBounds(LONGITUDE_MIN_VALUE, LONGITUDE_MAX_VALUE, longitude)) {
             throw CoordinatesValidationException.longitudeOutOfBounds();
         }
         return longitude;
     }
 
-    private boolean isOutOfBounds(String coordinateMin, String coordinateMax, double coordinate) {
-        var start = Double.parseDouble(coordinateMin);
-        var end = Double.parseDouble(coordinateMax);
+    private boolean isOutOfBounds(String coordinateMin, String coordinateMax, BigDecimal coordinate) {
+        var start = new BigDecimal(coordinateMin);
+        var end = new BigDecimal(coordinateMax);
         return !Range.between(start, end).contains(coordinate);
     }
 

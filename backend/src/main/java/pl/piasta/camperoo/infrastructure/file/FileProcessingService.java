@@ -14,7 +14,7 @@ import static java.util.Objects.isNull;
 
 @RequiredArgsConstructor
 class FileProcessingService implements FileProcessor {
-    private final int thumbnailSize;
+    private final int thumbnailHeight;
 
     @Override
     public String encodeToBase64GZip(byte[] fileBytes) {
@@ -33,7 +33,7 @@ class FileProcessingService implements FileProcessor {
         }
         try (var inputStream = new ByteArrayInputStream(imageBytes); var outputStream = new ByteArrayOutputStream()) {
             Thumbnails.of(inputStream)
-                    .forceSize(thumbnailSize, thumbnailSize)
+                    .height(thumbnailHeight)
                     .toOutputStream(outputStream);
             return encodeToBase64GZip(outputStream.toByteArray());
         }

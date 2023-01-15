@@ -13,10 +13,10 @@ import java.util.function.Function;
 @UtilityClass
 public class LocalizationUtils {
     public final Comparator<NameOrientedEntity<Locale>> NAME_DEFAULT_LAST_COMPARATOR =
-            compareBoolean(name -> name.getLocale().isFallback());
+            compareBoolean(name -> name.getLocale().getFallback());
 
     public final Comparator<DescriptionOrientedEntity<Locale>> DESCRIPTION_DEFAULT_LAST_COMPARATOR =
-            compareBoolean(description -> description.getLocale().isFallback());
+            compareBoolean(description -> description.getLocale().getFallback());
 
     private <T> Comparator<T> compareBoolean(Function<T, Boolean> extractor) {
         return Comparator.comparing(extractor);
@@ -39,7 +39,7 @@ public class LocalizationUtils {
 
     private boolean isLocaleOrDefault(Locale object, java.util.Locale locale) {
         var compared = java.util.Locale.forLanguageTag(object.getCode());
-        var fallback = object.isFallback();
+        var fallback = object.getFallback();
         return isLocaleOrDefault(compared, locale, fallback);
     }
 
