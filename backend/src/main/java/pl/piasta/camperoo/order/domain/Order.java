@@ -28,18 +28,15 @@ import pl.piasta.camperoo.common.domain.AbstractEntity;
 import pl.piasta.camperoo.delivery.domain.DeliveryType;
 import pl.piasta.camperoo.discount.domain.Discount;
 import pl.piasta.camperoo.file.domain.File;
+import pl.piasta.camperoo.order.exception.OrderStatusUnchangedException;
 import pl.piasta.camperoo.payment.domain.Payment;
 import pl.piasta.camperoo.user.domain.User;
-import pl.piasta.camperoo.user.exception.MissingPaymentException;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-
-import static java.util.Objects.isNull;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -159,7 +156,7 @@ public class Order extends AbstractEntity {
     @Column
     private String notes;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "status_id", nullable = false)
     private OrderStatus status;
 
@@ -171,35 +168,33 @@ public class Order extends AbstractEntity {
     @JoinColumn(name = "invoice_id", unique = true)
     private File invoice;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "company_branch_id", nullable = false)
     private CompanyBranch companyBranch;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "delivery_type_id", nullable = false)
     private DeliveryType deliveryType;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Singular
     @OrderBy("deadline DESC")
     @OneToMany(mappedBy = "order")
-    private List<Payment> payments = new ArrayList<>();
+    private Set<Payment> payments = new HashSet<>();
 
-    @Singular
+    @Builder.Default
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private Set<OrderProduct> products;
+    private Set<OrderProduct> products = new HashSet<>();
 
     public Optional<Payment> getPayment() {
         return payments.stream().findFirst();
     }
 
     public void updateStatus(OrderStatus status) {
-        if (status.isProcessed()) {
-            checkIfPaymentReceived();
-        }
+        checkOrderStatus(status);
         this.status = status;
         this.statusChangeDate = Instant.now();
     }
@@ -208,9 +203,9 @@ public class Order extends AbstractEntity {
         this.invoice = invoice;
     }
 
-    private void checkIfPaymentReceived() {
-        if (isNull(getPayment())) {
-            throw new MissingPaymentException(id);
+    private void checkOrderStatus(OrderStatus status) {
+        if (this.status.equals(status)) {
+            throw new OrderStatusUnchangedException(id, status.getCode());
         }
     }
 }

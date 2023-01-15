@@ -11,12 +11,16 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 import pl.piasta.camperoo.common.dto.ResourceCreatedDto;
 
 import java.net.URI;
+import java.nio.file.Paths;
 
 @ControllerAdvice
 class ResourceCreatedHandler implements ResponseBodyAdvice<Object> {
+    private static final String SEGMENT_SELF = "self";
+
     @Override
     public boolean supports(
             MethodParameter returnType,
@@ -35,17 +39,27 @@ class ResourceCreatedHandler implements ResponseBodyAdvice<Object> {
             @NonNull ServerHttpResponse response
     ) {
         ResourceCreatedDto responseBody = (ResourceCreatedDto) body;
-        URI location = createResourceUri(responseBody.getId());
+        URI location = createResourceUri(request, responseBody.getId());
         response.getHeaders().setLocation(location);
         response.getHeaders().setContentLength(0);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    private URI createResourceUri(Long id) {
-        return ServletUriComponentsBuilder.fromCurrentRequest()
+    private URI createResourceUri(ServerHttpRequest request, Long id) {
+        return getCurrentRequest(request)
                 .path("/{id}")
                 .buildAndExpand(id)
+                .normalize()
                 .encode()
                 .toUri();
+    }
+
+    private UriComponentsBuilder getCurrentRequest(ServerHttpRequest request) {
+        var currentRequest = ServletUriComponentsBuilder.fromCurrentRequest();
+        var isSelf = Paths.get(request.getURI().getPath())
+                .getFileName()
+                .toString()
+                .contains(SEGMENT_SELF);
+        return !isSelf ? currentRequest : currentRequest.path("/..");
     }
 }

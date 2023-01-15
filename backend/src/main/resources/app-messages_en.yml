@@ -21,7 +21,7 @@ error:
     not-available: 'Product with id = {0} is not available in quantity of pieces = {1}'
   order:
     not-found: 'Order with {0} = {1} does not exist'
-    payment-missing: 'Operation is not allowed for the order with id = {0} since the payment is missing'
+    status-unchanged: 'Status of order with id = {0} is already {1}'
     status:
       not-found: 'Order status with {0} = {1} does not exist'
   discount:

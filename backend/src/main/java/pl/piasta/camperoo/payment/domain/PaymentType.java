@@ -3,7 +3,6 @@ package pl.piasta.camperoo.payment.domain;
 import jakarta.persistence.Cacheable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedAttributeNode;
 import jakarta.persistence.NamedEntityGraph;
@@ -53,6 +52,6 @@ public class PaymentType extends AbstractEntity implements LocalizableName<Payme
     private boolean active;
 
     @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
-    @OneToMany(mappedBy = "paymentType", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "paymentType")
     private Set<PaymentTypeName> names;
 }

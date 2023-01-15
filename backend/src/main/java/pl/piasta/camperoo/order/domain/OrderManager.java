@@ -11,7 +11,6 @@ import pl.piasta.camperoo.product.domain.Product;
 import pl.piasta.camperoo.product.exception.ProductNotFoundException;
 import pl.piasta.camperoo.user.exception.UserNotFoundException;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +60,6 @@ class OrderManager {
         var user = userRepository.get(userId).orElseThrow(() -> new UserNotFoundException(userId));
         var type = orderDeliveryTypeRepository.get(typeId).orElseThrow(() -> new DeliveryTypeNotFoundException(typeId));
         var orderStatus = orderStatusRepository.getReference(OrderStatus.PLACED);
-        var orderProducts = createOrderProducts(calculationResult.productCalculations());
         var order = Order.builder()
                 .days(calculationResult.days())
                 .latitude(destination.getLatitude())
@@ -70,7 +68,6 @@ class OrderManager {
                 .notes(placementDetails.notes())
                 .companyBranch(calculationResult.companyBranch())
                 .deliveryType(type)
-                .products(orderProducts)
                 .discount(calculationResult.discount())
                 .subtotalPrice(calculationResult.priceSubtotal())
                 .totalPrice(calculationResult.priceTotal())
@@ -79,6 +76,7 @@ class OrderManager {
                 .status(orderStatus)
                 .user(user)
                 .build();
+        addOrderProducts(order, calculationResult.productCalculations());
         return orderRepository.save(order);
     }
 
@@ -103,28 +101,28 @@ class OrderManager {
         return Map.entry(product, entry.getValue());
     }
 
-    @NonNull
     private Discount getDiscount(String discountCode) {
+        if (isNull(discountCode)) {
+            return null;
+        }
         return orderDiscountRepository
                 .getByCode(discountCode)
                 .filter(Discount::isActive)
                 .orElseThrow(() -> new DiscountNotFoundException(discountCode));
     }
 
-    @NonNull
-    private List<OrderProduct> createOrderProducts(List<OrderProductCalculation> productCalculations) {
-        return productCalculations
+    private void addOrderProducts(Order order, List<OrderProductCalculation> productCalculations) {
+        productCalculations
                 .stream()
-                .map(e -> createOrderProduct(e.product(), e.quantity(), e.totalPrice()))
-                .toList();
+                .map(calculation -> createOrderProduct(order, calculation))
+                .forEach(product -> order.getProducts().add(product));
     }
 
     @NonNull
-    private OrderProduct createOrderProduct(Product product, Integer quantity, BigDecimal totalPrice) {
-        return OrderProduct.builder()
-                .product(product)
-                .quantity(quantity)
-                .totalPrice(totalPrice)
-                .build();
+    private OrderProduct createOrderProduct(Order order, OrderProductCalculation productCalculation) {
+        var product = productCalculation.product();
+        var quantity = productCalculation.quantity();
+        var totalPrice = productCalculation.totalPrice();
+        return new OrderProduct(order, product, quantity, totalPrice);
     }
 }

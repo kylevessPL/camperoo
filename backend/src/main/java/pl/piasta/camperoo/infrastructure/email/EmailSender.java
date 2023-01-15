@@ -2,6 +2,7 @@ package pl.piasta.camperoo.infrastructure.email;
 
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.lang.NonNull;
@@ -23,6 +24,7 @@ class EmailSender {
         sendMail(recipient, subject, body, null);
     }
 
+    @SneakyThrows
     void sendMail(
             @NonNull EmailAddress recipient,
             @NonNull String subject,
@@ -30,7 +32,7 @@ class EmailSender {
             @Nullable Resource attachment
     ) {
         var message = mailSender.createMimeMessage();
-        var messageHelper = new MimeMessageHelper(message);
+        var messageHelper = new MimeMessageHelper(message, nonNull(attachment));
         try {
             messageHelper.setSubject(subject);
             messageHelper.setText(body, true);

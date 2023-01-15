@@ -1,6 +1,7 @@
 package pl.piasta.camperoo.order.domain;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.lang.NonNull;
 import pl.piasta.camperoo.branch.domain.CompanyBranch;
@@ -15,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import static java.util.Objects.nonNull;
+
 @RequiredArgsConstructor
 class OrderCalculationManager {
     private final OrderProductRepository productRepository;
@@ -27,7 +30,8 @@ class OrderCalculationManager {
     ) {
         var productsPrice = calculateProductsPrice(products, days);
         var transportationPrice = calculateTransportationTotalPrice(productsPrice, companyBranch.getValue());
-        var finalPrice = calculateFinalPrice(productsPrice.getValue(), discount);
+        var discountValue = getDiscountValue(discount);
+        var finalPrice = calculateFinalPrice(productsPrice.getValue(), discountValue);
         return new OrderCalculationResult(
                 days,
                 discount,
@@ -49,7 +53,7 @@ class OrderCalculationManager {
                 .stream()
                 .map(e -> calculateProductPrice(prices, e, days))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        return Pair.of(prices, totalPrice);
+        return MutablePair.of(prices, totalPrice);
     }
 
     private BigDecimal calculateTransportationTotalPrice(
@@ -64,9 +68,9 @@ class OrderCalculationManager {
         return price;
     }
 
-    private Pair<BigDecimal, BigDecimal> calculateFinalPrice(BigDecimal subtotal, Discount discount) {
-        var discountValue = BigDecimal.valueOf(1 - discount.getValue() / 100D);
-        var total = subtotal.multiply(discountValue).setScale(2, RoundingMode.HALF_UP);
+    private Pair<BigDecimal, BigDecimal> calculateFinalPrice(BigDecimal subtotal, double discountValue) {
+        var discountRate = BigDecimal.valueOf(1 - discountValue);
+        var total = subtotal.multiply(discountRate).setScale(2, RoundingMode.HALF_UP);
         return Pair.of(subtotal, total);
     }
 
@@ -84,6 +88,13 @@ class OrderCalculationManager {
                 .multiply(BigDecimal.valueOf(days));
         prices.add(new OrderProductCalculation(product, quantity, price));
         return price;
+    }
+
+    private double getDiscountValue(Discount discount) {
+        if (nonNull(discount)) {
+            return discount.getValue() / 100D;
+        }
+        return 0;
     }
 
     private void checkProductAvailability(Product product, Integer quantity) {

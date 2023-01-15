@@ -28,6 +28,7 @@ public enum ErrorCode {
     // order
     ORDER_NOT_FOUND,
     ORDER_STATUS_NOT_FOUND,
+    ORDER_STATUS_UNCHANGED,
     ORDER_MISSING_PAYMENT,
 
     // discount

@@ -3,7 +3,6 @@ package pl.piasta.camperoo.order.domain;
 import jakarta.persistence.Cacheable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -41,11 +40,11 @@ public class OrderStatus extends AbstractEntity
     private String code;
 
     @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
-    @OneToMany(mappedBy = "orderStatus", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "orderStatus")
     private Set<OrderStatusName> names;
 
     @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
-    @OneToMany(mappedBy = "orderStatus", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "orderStatus")
     private Set<OrderStatusDescription> descriptions;
 
     public boolean isProcessed() {

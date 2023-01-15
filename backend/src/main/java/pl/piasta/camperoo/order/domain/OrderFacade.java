@@ -31,13 +31,14 @@ public class OrderFacade {
         return orderConverter.convertToOrderCalculationDto(orderDetails);
     }
 
-    @PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER') and principal.id = #userId")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER') and principal.id == #userId")
     public ResourceCreatedDto createOrder(Long userId, PlaceOrderDto dto) {
         var orderPlacementDetails = orderConverter.convertToOrderPlacementDetails(userId, dto);
         var orderCalculationDetails = orderConverter.convertToOrderCalculationDetails(dto);
         var orderCalculationResult = orderManager.calculateOrder(orderCalculationDetails);
         var order = orderManager.createOrder(orderPlacementDetails, orderCalculationResult);
         paymentManager.createPayment(order, dto.getPaymentTypeId());
+        orderEmailNotifier.sendOrderStatusChangeToken(order);
         return new ResourceCreatedDto(order.getId());
     }
 }

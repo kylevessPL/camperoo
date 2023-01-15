@@ -20,5 +20,5 @@ public interface OrderBasicProjection {
     ConstantProjection getStatus();
 
     @Value("#{target.invoice?.uuid}")
-    Long getInvoiceUuid();
+    String getInvoiceUuid();
 }

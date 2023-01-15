@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import pl.piasta.camperoo.common.domain.vo.VerificationTokenCode;
+import pl.piasta.camperoo.common.util.NamedByteArrayResource;
 import pl.piasta.camperoo.order.domain.Order;
 import pl.piasta.camperoo.order.domain.OrderEmailNotifier;
 import pl.piasta.camperoo.security.domain.AuthenticationEmailNotifier;
@@ -70,7 +71,8 @@ class EmailNotifier implements AuthenticationEmailNotifier, UserEmailNotifier, O
         emailSender.sendMail(
                 order.getUser().getEmail(),
                 "Camperoo – order #%d invoice".formatted(order.getId()),
-                emailTemplateEngine.process(ORDER_INVOICE_TEMPLATE, context)
+                emailTemplateEngine.process(ORDER_INVOICE_TEMPLATE, context),
+                NamedByteArrayResource.fromFile(order.getInvoice())
         );
     }
 

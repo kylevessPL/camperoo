@@ -3,7 +3,6 @@ package pl.piasta.camperoo.payment.domain;
 import jakarta.persistence.Cacheable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
@@ -41,11 +40,11 @@ public class PaymentStatus extends AbstractEntity
     private String code;
 
     @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
-    @OneToMany(mappedBy = "paymentStatus", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "paymentStatus")
     private Set<PaymentStatusName> names;
 
     @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
-    @OneToMany(mappedBy = "paymentStatus", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "paymentStatus")
     private Set<PaymentStatusDescription> descriptions;
 
     @OrderBy("deadline DESC")

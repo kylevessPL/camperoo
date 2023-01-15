@@ -28,12 +28,15 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.IntFunction;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.awt.Color.LIGHT_GRAY;
 import static java.awt.Color.WHITE;
+import static java.util.Collections.singletonList;
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static org.vandeseer.easytable.settings.HorizontalAlignment.CENTER;
 import static org.vandeseer.easytable.settings.HorizontalAlignment.LEFT;
@@ -57,7 +60,7 @@ class OrderInvoice implements Closeable {
     private final PDDocument invoice;
     private final Map<FontType, PDFont> fonts;
 
-    OrderInvoice(@NonNull Order order) throws IOException {
+    public OrderInvoice(@NonNull Order order) throws IOException {
         this.order = order;
         this.invoice = new PDDocument();
         this.fonts = loadFonts();
@@ -209,7 +212,7 @@ class OrderInvoice implements Closeable {
                 .contentStream(content)
                 .table(createSellerBuyerTable(page))
                 .startX(PADDING)
-                .startY(getPageHeight(page) - PADDING - 90)
+                .startY(getPageHeight(page) - PADDING - 110)
                 .endY(PADDING)
                 .build();
     }
@@ -239,18 +242,18 @@ class OrderInvoice implements Closeable {
 
     private List<Row> createSummaryTableRows() {
         return Stream.of(
-                List.of(createSummaryHeaderRow()),
+                singletonList(createSummaryHeaderRow()),
                 createSummaryProductRows(),
-                List.of(createSummaryPriceRow(PriceType.SUBTOTAL)),
-                List.of(createDiscountRow()),
-                List.of(createSummaryPriceRow(PriceType.TOTAL))
-        ).flatMap(List::stream).toList();
+                singletonList(createSummaryPriceRow(PriceType.SUBTOTAL)),
+                singletonList(createDiscountRow()),
+                singletonList(createSummaryPriceRow(PriceType.TOTAL))
+        ).flatMap(List::stream).filter(Objects::nonNull).toList();
     }
 
     private List<Row> createSellerBuyerTableRows() {
         return Stream.of(
-                List.of(createSellerBuyerHeaderRow()),
-                List.of(createSellerBuyerDetailsRow())
+                singletonList(createSellerBuyerHeaderRow()),
+                singletonList(createSellerBuyerDetailsRow())
         ).flatMap(List::stream).toList();
     }
 
@@ -335,10 +338,14 @@ class OrderInvoice implements Closeable {
     }
 
     private Row createDiscountRow() {
-        var discount = order.getDiscount().getValue();
+        var discount = order.getDiscount();
+        if (isNull(discount)) {
+            return null;
+        }
+        var value = discount.getValue();
         var saving = order.getTotalPrice().subtract(order.getSubtotalPrice());
         return Row.builder()
-                .add(createSummaryCellName("Discount – %d%%".formatted(discount), GREEN))
+                .add(createSummaryCellName("Discount – %d%%".formatted(value), GREEN))
                 .add(createSummaryCellValue(saving + " PLN"))
                 .borderWidth(1)
                 .horizontalAlignment(RIGHT)

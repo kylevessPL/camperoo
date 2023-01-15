@@ -13,7 +13,7 @@ public class AccountStatusUnchangedException extends BusinessException {
     public static AccountStatusUnchangedException enabled(Long id) {
         return new AccountStatusUnchangedException(
                 id,
-                "Account of user with id %s is already enabled".formatted(id),
+                "Account of user with id %d is already enabled".formatted(id),
                 ErrorProperty.ACCOUNT_ALREADY_ENABLED
         );
     }
@@ -21,7 +21,7 @@ public class AccountStatusUnchangedException extends BusinessException {
     public static AccountStatusUnchangedException disabled(Long id) {
         return new AccountStatusUnchangedException(
                 id,
-                "Account of user with id %s is already disabled".formatted(id),
+                "Account of user with id %d is already disabled".formatted(id),
                 ErrorProperty.ACCOUNT_ALREADY_DISABLED
         );
     }

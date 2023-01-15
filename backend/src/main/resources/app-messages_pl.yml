@@ -21,7 +21,7 @@ error:
     not-available: 'Produkt o id = {0} nie jest dostępny w ilości sztuk = {1}'
   order:
     not-found: 'Nie znaleziono zamówienia o parametrze {0} = {1}'
-    payment-missing: 'Operacja nie jest dozwolona dla zamówienia o id = {0} z powodu brakującej płatności'
+    status-unchanged: 'Status zamówienia o id = {0} już jest {1}'
     status:
       not-found: 'Nie znaleziono statusu zamówienia o parametrze {0} = {1}'
   discount:

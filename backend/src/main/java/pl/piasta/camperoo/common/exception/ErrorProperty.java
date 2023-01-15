@@ -35,6 +35,7 @@ public enum ErrorProperty {
     // order
     ORDER_NOT_FOUND("order.not-found"),
     ORDER_STATUS_NOT_FOUND("order.status.not-found"),
+    ORDER_STATUS_UNCHANGED("order.status-unchanged"),
     ORDER_MISSING_PAYMENT("order.payment-missing"),
 
     // discount

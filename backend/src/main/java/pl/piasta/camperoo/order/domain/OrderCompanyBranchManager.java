@@ -36,11 +36,14 @@ class OrderCompanyBranchManager {
             Coordinates destination
     ) {
         var origin = Coordinates.of(companyBranch.getLatitude(), companyBranch.getLongitude());
-        var distance = !selfPickup ? calculateDistance(origin, destination) : 0;
+        var distance = calculateDistance(selfPickup, origin, destination);
         return Pair.of(companyBranch, distance);
     }
 
-    private Integer calculateDistance(Coordinates origin, Coordinates destination) {
+    private Integer calculateDistance(boolean selfPickup, Coordinates origin, Coordinates destination) {
+        if (selfPickup) {
+            return 0;
+        }
         var distance = geocodingClient.findDistanceBetweenCoordinates(
                 origin.getLatitude(), origin.getLongitude(),
                 destination.getLatitude(), destination.getLongitude()
