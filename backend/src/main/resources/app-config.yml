@@ -3,6 +3,10 @@ app:
   email:
     sender: noreply@camperoo.pl
   security:
+    cors:
+      allow-methods: POST,PUT,GET,HEAD,OPTIONS,DELETE,PATCH
+      allow-headers: Content-Type,Origin,X-Requested-With,Accept
+      max-age: 3600
     jwt:
       secret: ${JWT_SECRET}
       validMinutes: 15

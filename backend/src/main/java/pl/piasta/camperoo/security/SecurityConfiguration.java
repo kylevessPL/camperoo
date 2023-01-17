@@ -3,9 +3,11 @@ package pl.piasta.camperoo.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,6 +22,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.LocaleResolver;
 import pl.piasta.camperoo.common.util.ErrorHandlingUtils;
@@ -27,6 +32,7 @@ import pl.piasta.camperoo.common.util.ResponseCookieUtils;
 import pl.piasta.camperoo.user.domain.UserUserRepository;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Slf4j
 @Configuration
@@ -42,11 +48,13 @@ class SecurityConfiguration extends AbstractSecurityWebApplicationInitializer {
     ) throws Exception {
         return http.cors().and()
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/error").permitAll()
-                        .requestMatchers(
+                        .requestMatchers(HttpMethod.POST,
                                 "/auth/password-recovery",
-                                "/auth/password-recovery/init"
+                                "/auth/password-recovery/init",
+                                "/users",
+                                "/users/confirmation"
                         ).permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilter(new JsonAuthenticationFilter(authManager, objectMapper, authProvider))
@@ -79,6 +87,24 @@ class SecurityConfiguration extends AbstractSecurityWebApplicationInitializer {
                 )
                 .csrf().disable()
                 .build();
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource(
+            @Value("${app.security.cors.allow-origin}") String allowedOrigin,
+            @Value("${app.security.cors.allow-methods}") String[] allowedMethods,
+            @Value("${app.security.cors.allow-headers}") String[] allowedHeaders,
+            @Value("${app.security.cors.max-age}") long maxAge
+    ) {
+        var source = new UrlBasedCorsConfigurationSource();
+        var corsConfiguration = new CorsConfiguration();
+        corsConfiguration.addAllowedOrigin(allowedOrigin);
+        corsConfiguration.setAllowedHeaders(List.of(allowedHeaders));
+        corsConfiguration.setAllowedMethods(List.of(allowedMethods));
+        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.setMaxAge(maxAge);
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        return source;
     }
 
     @Bean
