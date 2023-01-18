@@ -17,39 +17,44 @@ export class UsersComponent implements OnInit {
         {
             name: 'Id',
             key: 'id',
+            columnDef: 'id',
             sortable: true
         },
         {
             name: 'Email',
             key: 'email',
+            columnDef: 'email',
             sortable: true
         },
         {
             name: 'First name',
             key: 'person.firstName',
+            columnDef: 'person.firstName',
             sortable: true
         },
         {
             name: 'Last name',
             key: 'person.lastName',
+            columnDef: 'person.lastName',
             sortable: true
         },
         {
             name: 'Role',
-            key: 'roles',
+            key: 'roles.*.name',
+            columnDef: 'roles.name',
             sortable: true
         },
         {
             name: 'Active',
             key: 'active',
+            columnDef: 'active',
             sortable: true
         }
     ];
     data: Observable<User[]>;
     error: HttpErrorResponse;
 
-    constructor(private userService: UserService,
-                private globalService: GlobalService) {
+    constructor(private userService: UserService, private globalService: GlobalService) {
     }
 
     ngOnInit() {
@@ -57,6 +62,7 @@ export class UsersComponent implements OnInit {
             this.error = error;
         });
         this.error = null;
+        this.data = this.userService.getAllUsers();
     }
 
     fetchData = (pageMeta: PageMeta) => {

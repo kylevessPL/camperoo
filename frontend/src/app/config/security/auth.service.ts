@@ -67,7 +67,11 @@ export class AuthService {
                     this.userStorage.setRoles(result.roles);
                     this.refreshToken(result.expirationTime).then(() => {
                     });
-                }, () => this.clearUserStorage());
+                }, () => {
+                    this.clearUserStorage();
+                    this.router.navigateByUrl('/').then(() => {
+                    });
+                });
         });
     });
 

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {share} from 'rxjs/operators';
-import {PageMeta} from '../models/page-meta';
+import {PageMeta, pageMetaDefault} from '../models/page-meta';
 
 @Injectable({providedIn: 'root'})
 export class EncodeUriParamService {
@@ -12,7 +12,7 @@ export class EncodeUriParamService {
         .get<T>(url + '/' + encodeURIComponent(param))
         .pipe(share());
 
-    public getPage = <T>(url: string, pageMeta?: PageMeta) => this.httpClient
+    public getPage = <T>(url: string, pageMeta: PageMeta = pageMetaDefault) => this.httpClient
         .get<T>(url, {params: this.getPageMetaParams(pageMeta)})
         .pipe(share());
 
@@ -28,7 +28,7 @@ export class EncodeUriParamService {
         fromObject: {
             page: `${pageMeta.page}`,
             size: `${pageMeta.size}`,
-            sort: `${pageMeta.sort},${pageMeta.sortDirection}`,
+            sort: `${pageMeta.sort},${pageMeta.sortDirection},ignorecase`,
         }
     });
 }

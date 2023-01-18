@@ -36,7 +36,7 @@ export class DataTableComponent<T extends Page<T>> implements OnInit, OnChanges 
     }
 
     ngOnInit() {
-        this.columnKeys = this.columns.map(({key}) => key);
+        this.columnKeys = this.columns.map(({columnDef}) => columnDef);
     }
 
     ngOnChanges() {

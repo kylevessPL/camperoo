@@ -1,10 +1,9 @@
 import {Pipe, PipeTransform} from '@angular/core';
+import {get} from 'get-wild';
 
-@Pipe({
-    name: 'dataPropertyGetter'
-})
+@Pipe({name: 'dataPropertyGetter'})
 export class DataPropertyGetterPipe implements PipeTransform {
     transform(object: any, keyName: string): unknown {
-        return object[keyName];
+        return get(object, keyName);
     }
 }

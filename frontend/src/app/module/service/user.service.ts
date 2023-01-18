@@ -10,6 +10,6 @@ export class UserService {
     constructor(private httpClient: EncodeUriParamService) {
     }
 
-    public getAllUsers = (pageMeta: PageMeta) => this.httpClient
+    public getAllUsers = (pageMeta?: PageMeta) => this.httpClient
         .getPage<User[]>(`${environment.baseUrl}/${restUrl.usersBase}`, pageMeta);
 }
