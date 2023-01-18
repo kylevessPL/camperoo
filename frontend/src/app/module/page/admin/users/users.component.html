@@ -1,0 +1,15 @@
+<div class="page">
+    <mat-card>
+        <div class="border-top"></div>
+        <mat-card-title>Users</mat-card-title>
+        <div class="border-bottom"></div>
+        <app-data-table
+                [data]="data | async"
+                [columns]="columns"
+                [error]="error"
+                [pageSize]="10"
+                (pageEvent)="fetchData($event)"
+                sortColumnDefault="id">
+        </app-data-table>
+    </mat-card>
+</div>

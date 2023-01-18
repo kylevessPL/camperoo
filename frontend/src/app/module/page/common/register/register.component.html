@@ -1,0 +1,52 @@
+<div class="page">
+    <h2>Sign up</h2>
+    <mat-card class="center">
+        <mat-card-content>
+            <ng-container *ngIf="!success; else successMessage">
+                <form (ngSubmit)="register()" [formGroup]="form">
+                    <mat-form-field class="form-field small-field">
+                        <input matInput type="email" placeholder="Email" formControlName="email" required>
+                    </mat-form-field>
+                    <mat-form-field class="form-field small-field">
+                        <input matInput type="password" placeholder="Password" formControlName="password" required>
+                    </mat-form-field>
+                    <mat-form-field class="form-field small-field">
+                        <input matInput type="text" placeholder="First name" formControlName="firstName" required>
+                    </mat-form-field>
+                    <mat-form-field class="form-field small-field">
+                        <input matInput type="text" placeholder="Last name" formControlName="lastName" required>
+                    </mat-form-field>
+                    <mat-form-field class="form-field small-field">
+                        <input matInput type="text" placeholder="Address 1" formControlName="addressOne" required>
+                    </mat-form-field>
+                    <mat-form-field class="form-field small-field">
+                        <input matInput type="text" placeholder="Address 2" formControlName="addressTwo">
+                    </mat-form-field>
+                    <mat-form-field class="form-field small-field">
+                        <input matInput type="text" placeholder="Zip code" formControlName="zipCode" required>
+                    </mat-form-field>
+                    <mat-form-field class="form-field small-field">
+                        <input matInput type="text" placeholder="City" formControlName="city" required>
+                    </mat-form-field>
+                    <mat-form-field class="form-field small-field">
+                        <input matInput type="tel" placeholder="Phone number" formControlName="phoneNumber" required>
+                    </mat-form-field>
+                    <re-captcha formControlName="captchaToken" required></re-captcha>
+                    <div class="login-link">
+                        <a routerLink="/login">Sign in</a>
+                    </div>
+                    <button mat-raised-button color="primary" class="register-button" [disabled]="!form.valid">
+                        Register
+                    </button>
+                </form>
+            </ng-container>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<ng-template #successMessage>
+    You have signed up sucessfully. Please check your email to verify your account.
+    <div class="login-link">
+        <a routerLink="/login">Sign in</a>
+    </div>
+</ng-template>

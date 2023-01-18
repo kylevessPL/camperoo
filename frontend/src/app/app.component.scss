@@ -1,0 +1,93 @@
+@import "src/assets/scss/colors";
+
+.customNavList {
+  // background-color:rgba(65, 62, 62, 0.705);
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.toolbar {
+  background-color: $color-navy-blue;
+}
+
+.is-mobile {
+  background-color: $color-navy-blue;
+  position: fixed;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  z-index: 2;
+}
+
+.menu-button {
+  color: $color-primary-white;
+}
+
+h1.app-header {
+  margin-left: 8px;
+  color: $color-primary-white;
+}
+
+.example-sidenav-container {
+  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+      causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+  flex: 1;
+}
+
+.example-is-mobile .example-sidenav-container {
+  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+      `<body>` to be our scrolling element for mobile layouts. */
+  flex: 1 0 auto;
+}
+
+.container {
+  background-color: white;
+}
+
+.menu-group {
+  font-size: 19px;
+  background-color: $color-navy-blue;
+  color: $color-primary-white;
+}
+
+.menu-selection-button {
+  font-size: 15px;
+  background-color: $color-form-field-white;
+  border: 1px solid whitesmoke;
+}
+
+.login {
+  color: $color-primary-white;
+  margin-top: 15px;
+  margin-right: 8px;
+  display: inline;
+  float: right;
+}
+
+.logo {
+  height: 100%;
+  width: auto;
+  box-sizing: border-box;
+  padding: 10px 0;
+}
+
+.env {
+  color: $color-primary-white;
+  margin-left: 8px;
+  margin-top: 15px;
+  display: inline;
+  float: right;
+}
+
+.versions {
+  font-size: 10px;
+  background-color: $color-navy-blue;
+  color: $color-primary-white;
+  margin-left: 10px;
+}

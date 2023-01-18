@@ -1,0 +1,9 @@
+<div class="page">
+    <mat-card class="center">
+        <mat-card-content>
+            <mat-progress-spinner *ngIf="valid === true" color="primary" mode="indeterminate"
+                                  style="margin: 0 auto;"></mat-progress-spinner>
+            <ng-container *ngIf="valid === false">Verification token is invalid or expired.</ng-container>
+        </mat-card-content>
+    </mat-card>
+</div>
