@@ -6,6 +6,19 @@
                [matSortDirection]="sortDirectionDefault"
                class="mat-elevation-z8"
                matSort>
+        <ng-container *ngIf="rowAction" [matColumnDef]="rowActionColumnKey">
+            <mat-header-cell *matHeaderCellDef class="mat-header">
+                {{rowAction.name}}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let item">
+                <button *ngIf="item | dataPropertyGetter: rowAction.conditionalKey"
+                        [matTooltip]="rowAction.description"
+                        (click)="doRowAction(item)"
+                        mat-flat-button mat-icon-button>
+                    <mat-icon>{{rowAction.icon}}</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
         <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
             <mat-header-cell *matHeaderCellDef
                              [disabled]="!pageable || !column.sortable"
@@ -14,7 +27,7 @@
                 {{column.name}}
             </mat-header-cell>
             <mat-cell *matCellDef="let item">
-                {{item | dataPropertyGetter: column.key}}
+                {{item | dataPropertyGetter: column.key | dateFormatterPipe | booleanFormatterPipe}}
             </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="columnKeys"></mat-header-row>

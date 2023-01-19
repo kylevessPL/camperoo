@@ -1,4 +1,4 @@
-export class RegisterData {
+export interface RegisterData {
     captchaToken: string;
     email: string;
     password: string;

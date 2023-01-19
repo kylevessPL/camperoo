@@ -1,5 +1,11 @@
 export const restUrl = {
     /**
+     * Common
+     */
+    self: 'self',
+
+
+    /**
      * Authentication
      */
     authBase: 'auth',
@@ -10,5 +16,25 @@ export const restUrl = {
      * Users
      */
     usersBase: 'users',
-    confirmation: 'confirmation'
+    confirmation: 'confirmation',
+
+    /**
+     * Orders
+     */
+    ordersBase: 'orders',
+
+    /**
+     * Payments
+     */
+    paymentsBase: 'payments',
+
+    /**
+     * Branches
+     */
+    branchesBase: 'branches',
+
+    /**
+     * Files
+     */
+    filesBase: 'files'
 };

@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../../../../config/security/auth.service';
+import {AuthService} from '../../../../../config/security/auth.service';
 import {NavigationStart, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {LoginData} from '../../../models/login-data';
-import {validation} from '../../../models/validation';
+import {LoginData} from '../../../../models/login-data';
+import {validation} from '../../../../models/validation';
 import {filter, map} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {GlobalService} from '../../../service/global.service';
+import {GlobalService} from '../../../../service/global.service';
 
 @Component({
     selector: 'app-login',

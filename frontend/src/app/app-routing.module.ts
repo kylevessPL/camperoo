@@ -1,17 +1,24 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {RegisterComponent} from './module/page/common/register/register.component';
-import {AccountVerifyComponent} from './module/page/common/account-verify/account-verify.component';
-import {LoginComponent} from './module/page/common/login/login.component';
-import {UsersComponent} from './module/page/admin/users/users.component';
+import {RegisterComponent} from './module/page/common/auth/register/register.component';
+import {AccountVerifyComponent} from './module/page/common/auth/account-verify/account-verify.component';
+import {LoginComponent} from './module/page/common/auth/login/login.component';
+import {UsersComponent} from './module/page/admin/administration/users/users.component';
 import {AdminGuard} from './config/security/guard/admin.guard';
+import {PaymentsComponent} from './module/page/common/orders/payments/payments.component';
+import {AuthenticatedGuard} from './config/security/guard/authenticated.guard';
+import {BranchesComponent} from './module/page/admin/administration/branches/branches.component';
+import {OrdersComponent} from './module/page/common/orders/orders/orders.component';
 
 const routes: Routes = [
     {path: '', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'account-verify/:token', component: AccountVerifyComponent},
     {path: 'dashboard/users', component: UsersComponent, canActivate: [AdminGuard]},
-    {path: 'dashboard', redirectTo: '/dashboard/users'},
+    {path: 'dashboard/orders', component: OrdersComponent, canActivate: [AuthenticatedGuard]},
+    {path: 'dashboard/payments', component: PaymentsComponent, canActivate: [AuthenticatedGuard]},
+    {path: 'dashboard/branches', component: BranchesComponent, canActivate: [AdminGuard]},
+    {path: 'dashboard', redirectTo: '/dashboard/payments'},
     {path: '**', redirectTo: '/'}
 ];
 

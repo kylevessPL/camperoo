@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../../../../config/security/auth.service';
+import {AuthService} from '../../../../../config/security/auth.service';
 import {ActivatedRoute, NavigationStart, Router} from '@angular/router';
 import {filter, map} from 'rxjs/operators';
-import {validation} from '../../../models/validation';
+import {validation} from '../../../../models/validation';
 
 @Component({
     selector: 'app-account-verify',

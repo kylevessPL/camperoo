@@ -20,33 +20,30 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {DataTableComponent} from './module/component/data-table/data-table.component';
-import {LoginComponent} from './module/page/common/login/login.component';
-import {AuthService} from './config/security/auth.service';
-import {UserStorage} from './module/storage/user.storage';
-import {AdminGuard} from './config/security/guard/admin.guard';
-import {
-    NGX_MAT_DATE_FORMATS,
-    NgxMatDatetimePickerModule,
-    NgxMatNativeDateModule,
-    NgxMatTimepickerModule
-} from '@angular-material-components/datetime-picker';
+import {LoginComponent} from './module/page/common/auth/login/login.component';
+import {NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule} from '@angular-material-components/datetime-picker';
 import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSelectModule} from '@angular/material/select';
-import {dateFormats} from './module/models/date-formats';
 import {FooterComponent} from './module/component/footer/footer.component';
 import {HttpErrorInterceptor} from './config/security/interceptor/http-error.interceptor';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {MessageDialogComponent} from './module/component/message-dialog/message-dialog.component';
 import {ClipboardModule} from 'ngx-clipboard';
 import {RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings} from 'ng-recaptcha';
-import {RegisterComponent} from './module/page/common/register/register.component';
-import {AccountVerifyComponent} from './module/page/common/account-verify/account-verify.component';
+import {RegisterComponent} from './module/page/common/auth/register/register.component';
+import {AccountVerifyComponent} from './module/page/common/auth/account-verify/account-verify.component';
 import {HttpRequestInterceptor} from './config/security/interceptor/http-request.interceptor';
 import {GlobalService} from './module/service/global.service';
 import {TypeSafeMatCellDefDirective} from './module/directive/type-safe-mat-cell-def.directive';
 import {DataPropertyGetterPipe} from './module/pipe/data-property-getter.pipe';
-import {UsersComponent} from './module/page/admin/users/users.component';
+import {UsersComponent} from './module/page/admin/administration/users/users.component';
+import {PaymentsComponent} from './module/page/common/orders/payments/payments.component';
+import {DateFormatterPipe} from './module/pipe/date-formatter.pipe';
+import {HttpResponseInterceptor} from './config/security/interceptor/http-response.interceptor';
+import {BooleanFormatterPipe} from './module/pipe/boolean-formatter.pipe';
+import {BranchesComponent} from './module/page/admin/administration/branches/branches.component';
+import {OrdersComponent} from './module/page/common/orders/orders/orders.component';
 
 @NgModule({
     declarations: [
@@ -55,11 +52,16 @@ import {UsersComponent} from './module/page/admin/users/users.component';
         LoginComponent,
         RegisterComponent,
         AccountVerifyComponent,
+        PaymentsComponent,
         UsersComponent,
+        OrdersComponent,
         FooterComponent,
+        BranchesComponent,
         MessageDialogComponent,
         TypeSafeMatCellDefDirective,
-        DataPropertyGetterPipe
+        DataPropertyGetterPipe,
+        DateFormatterPipe,
+        BooleanFormatterPipe
     ],
     imports: [
         MatChipsModule,
@@ -89,12 +91,6 @@ import {UsersComponent} from './module/page/admin/users/users.component';
         RecaptchaFormsModule
     ],
     providers: [
-        UserStorage,
-        AuthService,
-        AdminGuard,
-        {
-            provide: NGX_MAT_DATE_FORMATS, useValue: dateFormats
-        },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: HttpErrorInterceptor,
@@ -104,6 +100,11 @@ import {UsersComponent} from './module/page/admin/users/users.component';
         {
             provide: HTTP_INTERCEPTORS,
             useClass: HttpRequestInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: HttpResponseInterceptor,
             multi: true
         },
         {

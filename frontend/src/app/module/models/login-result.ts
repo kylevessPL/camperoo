@@ -1,4 +1,4 @@
-export class LoginResult {
+export interface LoginResult {
     expirationTime: number;
     roles: string[];
 }

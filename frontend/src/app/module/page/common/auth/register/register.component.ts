@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../../../../config/security/auth.service';
+import {AuthService} from '../../../../../config/security/auth.service';
 import {NavigationStart, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {RegisterData} from '../../../models/register-data';
+import {RegisterData} from '../../../../models/register-data';
 import {filter, map} from 'rxjs/operators';
-import {validation} from '../../../models/validation';
+import {validation} from '../../../../models/validation';
 
 @Component({
     selector: 'app-register',

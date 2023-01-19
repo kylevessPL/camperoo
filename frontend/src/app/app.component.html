@@ -12,9 +12,18 @@
                      fixedTopGap="56" (click)="snav.close()">
             <mat-nav-list class="customNavList">
                 <div *ngIf="adminAllowed()">
-                    <a matSubheader class="menu-group">Security</a>
+                    <a matSubheader class="menu-group">Administration</a>
                     <a mat-list-item class="menu-selection-button" routerLinkActive="active"
                        [routerLink]="['/dashboard/users']">Users</a>
+                    <a mat-list-item class="menu-selection-button" routerLinkActive="active"
+                       [routerLink]="['/dashboard/branches']">Company branches</a>
+                </div>
+                <div *ngIf="authenticatedAllowed()">
+                    <a matSubheader class="menu-group">Orders</a>
+                    <a mat-list-item class="menu-selection-button" routerLinkActive="active"
+                       [routerLink]="['/dashboard/orders']">Orders</a>
+                    <a mat-list-item class="menu-selection-button" routerLinkActive="active"
+                       [routerLink]="['/dashboard/payments']">Payments</a>
                 </div>
                 <div>
                     <a matSubheader class="menu-group">Account</a>

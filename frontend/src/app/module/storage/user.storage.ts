@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class UserStorage {
     private readonly _roles = 'roles';
     private readonly _locale = 'locale';

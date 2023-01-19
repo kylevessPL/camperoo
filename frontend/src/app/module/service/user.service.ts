@@ -11,5 +11,5 @@ export class UserService {
     }
 
     public getAllUsers = (pageMeta?: PageMeta) => this.httpClient
-        .getPage<User[]>(`${environment.baseUrl}/${restUrl.usersBase}`, pageMeta);
+        .getPage<User>(`${environment.baseUrl}/${restUrl.usersBase}`, pageMeta);
 }

@@ -34,4 +34,6 @@ export class AppComponent implements OnInit, OnDestroy {
     public adminAllowed = () => this.authService.isAdmin();
 
     public customerAllowed = () => this.authService.isCustomer();
+
+    public authenticatedAllowed = () => this.adminAllowed() || this.customerAllowed();
 }

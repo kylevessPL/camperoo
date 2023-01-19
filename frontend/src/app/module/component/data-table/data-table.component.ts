@@ -7,6 +7,7 @@ import {GlobalService} from '../../service/global.service';
 import {TableColumn} from '../../models/table-column';
 import {Page} from '../../models/page';
 import {PageMeta} from '../../models/page-meta';
+import {TableRowAction} from '../../models/table-row-action';
 
 @Component({
     selector: 'app-data-table',
@@ -16,16 +17,19 @@ import {PageMeta} from '../../models/page-meta';
 export class DataTableComponent<T extends Page<T>> implements OnInit, OnChanges {
     @Input() columns: TableColumn[];
     @Input() pageable = true;
-    @Input() pageSize: number;
+    @Input() pageSize = 10;
     @Input() sortColumnDefault: string;
     @Input() sortDirectionDefault: SortDirection = 'asc';
+    @Input() rowAction: TableRowAction = null;
     @Input() data: T;
     @Input() error: HttpErrorResponse;
     @Output() pageEvent = new EventEmitter<PageMeta>();
+    @Output() rowActionEvent = new EventEmitter<T>();
 
     @ViewChild(MatPaginator, {static: false, read: true}) paginator: MatPaginator;
 
     hidden = true;
+    rowActionColumnKey = 'action';
     columnKeys: string[];
     totalElements = 0;
     pageNumber = 0;
@@ -37,6 +41,9 @@ export class DataTableComponent<T extends Page<T>> implements OnInit, OnChanges 
 
     ngOnInit() {
         this.columnKeys = this.columns.map(({columnDef}) => columnDef);
+        if (this.rowAction) {
+            this.columnKeys.push(this.rowActionColumnKey);
+        }
     }
 
     ngOnChanges() {
@@ -72,6 +79,10 @@ export class DataTableComponent<T extends Page<T>> implements OnInit, OnChanges 
         };
         this.sort = sort;
         this.pageEvent.emit(meta);
+    };
+
+    doRowAction = (item: T) => {
+        this.rowActionEvent.emit(item);
     };
 
     private changeData = () => {

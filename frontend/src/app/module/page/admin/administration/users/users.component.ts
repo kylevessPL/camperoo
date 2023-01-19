@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
-import {User} from '../../../models/user';
-import {TableColumn} from '../../../models/table-column';
-import {GlobalService} from '../../../service/global.service';
-import {UserService} from '../../../service/user.service';
-import {PageMeta} from '../../../models/page-meta';
+import {User} from '../../../../models/user';
+import {TableColumn} from '../../../../models/table-column';
+import {GlobalService} from '../../../../service/global.service';
+import {UserService} from '../../../../service/user.service';
+import {PageMeta} from '../../../../models/page-meta';
 
 @Component({
     selector: 'app-users',
@@ -51,7 +51,7 @@ export class UsersComponent implements OnInit {
             sortable: true
         }
     ];
-    data: Observable<User[]>;
+    data: Observable<User>;
     error: HttpErrorResponse;
 
     constructor(private userService: UserService, private globalService: GlobalService) {
