@@ -112,9 +112,6 @@ import {MatBadgeModule} from '@angular/material/badge';
             useValue: {siteKey: environment.recaptchaSiteKey} as RecaptchaSettings,
         }
     ],
-    entryComponents: [
-        MessageDialogComponent
-    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

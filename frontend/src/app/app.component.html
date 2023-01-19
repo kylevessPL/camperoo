@@ -20,6 +20,7 @@
             </button>
             <mat-select-country appearance="outline"
                                 label="Country"
+                                autocomplete="no"
                                 [countries]="countries"
                                 [loading]="countriesLoading"
                                 (onCountrySelected)="onCountrySelected($event)">

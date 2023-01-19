@@ -1,9 +1,9 @@
-import {MediaMatcher} from '@angular/cdk/layout';
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from './config/security/auth.service';
 import {GlobalService} from './module/service/global.service';
 import {Locale} from './module/models/locale';
 import {Country} from '@angular-material-extensions/select-country';
+import {MediaMatcher} from '@angular/cdk/layout';
 
 @Component({
     selector: 'app-root',
