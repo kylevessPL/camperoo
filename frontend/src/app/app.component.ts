@@ -3,6 +3,7 @@ import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from './config/security/auth.service';
 import {GlobalService} from './module/service/global.service';
 import {Locale} from './module/models/locale';
+import {Country} from '@angular-material-extensions/select-country';
 
 @Component({
     selector: 'app-root',
@@ -29,20 +30,20 @@ export class AppComponent implements OnInit, OnDestroy {
 
     async ngOnInit() {
         this.mobileQuery.addEventListener('change', this._mobileQueryListener);
-        await this.authService.refreshToken();
         this.globalService.getAllLocales().subscribe(locales => {
             this.countries = locales;
             this.countriesLoading = false;
         });
+        await this.authService.refreshToken();
     }
 
     ngOnDestroy() {
         this.mobileQuery.removeEventListener('change', this._mobileQueryListener);
     }
 
-    // onCountrySelected(locale: Country) {
-    //     console.log(locale as Locale);
-    // }
+    onCountrySelected(locale: Country) {
+        console.log(locale as unknown as Locale);
+    }
 
     public logout = () => this.authService.logout();
 

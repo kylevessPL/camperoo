@@ -1,6 +1,8 @@
 import {HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
 import {tap} from 'rxjs/operators';
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class HttpResponseInterceptor implements HttpInterceptor {
     private readonly _iso8601 = /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?(([+-]\d\d:\d\d)|Z)?$/;
 

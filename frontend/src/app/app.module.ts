@@ -3,18 +3,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material.module';
 import {NgModule} from '@angular/core';
 import {environment} from 'src/environments/environment';
-import {
-    MatBadgeModule,
-    MatButtonModule,
-    MatCardModule,
-    MatChipsModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    MatToolbarModule
-} from '@angular/material';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -22,13 +13,10 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {DataTableComponent} from './module/component/data-table/data-table.component';
 import {LoginComponent} from './module/page/common/auth/login/login.component';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatSelectModule} from '@angular/material/select';
 import {FooterComponent} from './module/component/footer/footer.component';
 import {HttpErrorInterceptor} from './config/security/interceptor/http-error.interceptor';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {MessageDialogComponent} from './module/component/message-dialog/message-dialog.component';
-import {ClipboardModule} from 'ngx-clipboard';
 import {RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings} from 'ng-recaptcha';
 import {RegisterComponent} from './module/page/common/auth/register/register.component';
 import {AccountVerifyComponent} from './module/page/common/auth/account-verify/account-verify.component';
@@ -44,6 +32,16 @@ import {BooleanFormatterPipe} from './module/pipe/boolean-formatter.pipe';
 import {BranchesComponent} from './module/page/admin/administration/branches/branches.component';
 import {OrdersComponent} from './module/page/common/orders/orders/orders.component';
 import {NumberShortFormatterPipe} from './module/pipe/number-short-formatter.pipe';
+import {MatSelectCountryModule} from '@angular-material-extensions/select-country';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatInputModule} from '@angular/material/input';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatSelectModule} from '@angular/material/select';
+import {MatBadgeModule} from '@angular/material/badge';
 
 @NgModule({
     declarations: [
@@ -83,10 +81,10 @@ import {NumberShortFormatterPipe} from './module/pipe/number-short-formatter.pip
         MatInputModule,
         MatDatepickerModule,
         MatSelectModule,
-        ClipboardModule,
         RecaptchaModule,
         RecaptchaFormsModule,
-        MatBadgeModule
+        MatBadgeModule,
+        MatSelectCountryModule.forRoot('en')
     ],
     providers: [
         {

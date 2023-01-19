@@ -1,4 +1,6 @@
 import 'zone.js/dist/zone';
-import 'hammerjs/hammer';
 
 (window as any).global = window;
+(window as any).process = {
+    env: { DEBUG: undefined },
+};

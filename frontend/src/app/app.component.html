@@ -18,12 +18,12 @@
                     [matBadge]="cartItemsNumber | numberShortFormatterPipe">
                 <mat-icon class="cart-icon">shopping_basket</mat-icon>
             </button>
-            <!--            <mat-select-country appearance="outline"-->
-            <!--                                label="Country"-->
-            <!--                                [countries]="countries"-->
-            <!--                                [loading]="countriesLoading"-->
-            <!--                                (onCountrySelected)="onCountrySelected($event)">-->
-            <!--            </mat-select-country>-->
+            <mat-select-country appearance="outline"
+                                label="Country"
+                                [countries]="countries"
+                                [loading]="countriesLoading"
+                                (onCountrySelected)="onCountrySelected($event)">
+            </mat-select-country>
         </div>
     </mat-toolbar>
 

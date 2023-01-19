@@ -26,13 +26,13 @@ export class GlobalStorage {
 
     isRolesSet = () => !!localStorage.getItem(this._roles);
 
-    setLocale = (locale: Locale) => localStorage.setItem(this._locale, ''/*locale.alpha2Code*/);
+    setLocale = (locale: Locale) => localStorage.setItem(this._locale, locale.alpha2Code);
 
     getLocale = () => {
         const locale = localStorage.getItem(this._locale);
         return {
             alpha2Code: locale
-        }/* as Locale*/;
+        } as Locale;
     };
 
     removeLocale = () => localStorage.removeItem(this._locale);
