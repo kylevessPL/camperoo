@@ -1,10 +1,30 @@
 <div class="example-container" [class.is-mobile]="mobileQuery.matches">
 
     <mat-toolbar class="toolbar">
-        <button mat-icon-button class="menu-button" *ngIf="isLogged()" (click)="snav.toggle()">
-            <mat-icon>menu</mat-icon>
-        </button>
-        <img class="logo" src="assets/img/logo.svg" alt="Logo">
+        <div class="menu">
+            <button mat-icon-button class="menu-button" *ngIf="isLogged()" (click)="snav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <img class="logo" src="assets/img/logo.svg" alt="Logo">
+        </div>
+
+        <div class="toolbar-info">
+            <button *ngIf="isLogged()"
+                    class="cart-btn"
+                    mat-flat-button
+                    mat-icon-button
+                    matTooltip="Show shopping cart"
+                    matBadgeColor="accent"
+                    [matBadge]="cartItemsNumber | numberShortFormatterPipe">
+                <mat-icon class="cart-icon">shopping_basket</mat-icon>
+            </button>
+            <!--            <mat-select-country appearance="outline"-->
+            <!--                                label="Country"-->
+            <!--                                [countries]="countries"-->
+            <!--                                [loading]="countriesLoading"-->
+            <!--                                (onCountrySelected)="onCountrySelected($event)">-->
+            <!--            </mat-select-country>-->
+        </div>
     </mat-toolbar>
 
     <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">

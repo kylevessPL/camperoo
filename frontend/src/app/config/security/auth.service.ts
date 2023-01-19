@@ -2,30 +2,28 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {environment} from 'src/environments/environment';
-import {UserStorage} from '../../module/storage/user.storage';
+import {GlobalStorage} from '../../module/storage/global.storage.service';
 import {restUrl} from '../../../environments/rest-url';
 import {RegisterData} from '../../module/models/register-data';
 import {LoginData} from '../../module/models/login-data';
 import {LoginResult} from '../../module/models/login-result';
 import {Subscription, timer} from 'rxjs';
 import Utils from '../../module/util/utils';
+import {GlobalService} from '../../module/service/global.service';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
-    constructor(private userStorage: UserStorage, private httpClient: HttpClient, private router: Router) {
-    }
-
     private _refreshTokenTask: Subscription;
+
+    constructor(private globalStorage: GlobalStorage,
+                private globalService: GlobalService,
+                private httpClient: HttpClient,
+                private router: Router) {
+    }
 
     public login = (data: LoginData) => this.httpClient
         .post<LoginResult>(`${environment.baseUrl}/${restUrl.authBase}`, data)
-        .subscribe(result => {
-            this.refreshToken(result.expirationTime).then(() => {
-            });
-            this.userStorage.setRoles(result.roles);
-            this.router.navigate([`/dashboard`]).then(() => {
-            });
-        });
+        .subscribe(result => this.loginInternal(result));
 
     public register = (data: RegisterData) => this.httpClient
         .post(`${environment.baseUrl}/${restUrl.usersBase}`, data)
@@ -64,14 +62,10 @@ export class AuthService {
         this._refreshTokenTask = timer(fireTime).subscribe(() => {
             this.httpClient.post<LoginResult>(`${environment.baseUrl}/${restUrl.authBase}/${restUrl.refreshToken}`, null)
                 .subscribe(result => {
-                    this.userStorage.setRoles(result.roles);
+                    this.globalStorage.setRoles(result.roles);
                     this.refreshToken(result.expirationTime).then(() => {
                     });
-                }, () => {
-                    this.clearUserStorage();
-                    this.router.navigateByUrl('/').then(() => {
-                    });
-                });
+                }, () => this.logoutInternal());
         });
     });
 
@@ -81,25 +75,38 @@ export class AuthService {
         }
         this.httpClient
             .post(`${environment.baseUrl}/${restUrl.authBase}/${restUrl.logout}`, null)
-            .subscribe(() => {
-                this.clearUserStorage();
-                this.router.navigateByUrl('/').then(() => {
-                });
-            });
+            .subscribe(() => this.logoutInternal());
     }
 
-    private clearUserStorage() {
-        this.userStorage.removeLocale();
-        this.userStorage.removeRoles();
-    }
+    public hasRole = (role: string) => this.globalStorage.isRolesSet() ? this.globalStorage.getRoles().includes(role) : false;
 
-    public hasRole = (role: string) => this.userStorage.isRolesSet() ? this.userStorage.getRoles().includes(role) : false;
-
-    public hasAnyRole = () => this.userStorage.isRolesSet();
+    public hasAnyRole = () => this.globalStorage.isRolesSet();
 
     public isAdmin = () => this.hasRole('ADMIN');
 
     public isCustomer = () => this.hasRole('CUSTOMER');
 
-    public getLanguage = () => this.userStorage.getLocale();
+    public getLanguage = () => this.globalStorage.getLocale();
+
+    private loginInternal(result: LoginResult) {
+        this.refreshToken(result.expirationTime).then(() => {
+        });
+        this.globalStorage.setUserId(result.userId);
+        this.globalStorage.setRoles(result.roles);
+        this.setInitialCartItemsNumber();
+        this.router.navigate([`/dashboard`]).then(() => {
+        });
+    }
+
+    private logoutInternal() {
+        this.globalStorage.removeUserId();
+        this.globalStorage.removeRoles();
+        this.router.navigateByUrl('/').then(() => {
+        });
+    }
+
+    private setInitialCartItemsNumber() {
+        const itemsNumber = this.globalStorage.getUserCart().products.size;
+        this.globalService.cartItemsNumber.next(itemsNumber);
+    }
 }

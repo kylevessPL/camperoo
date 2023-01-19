@@ -31,8 +31,20 @@ public class Locale extends AbstractEntity {
     @Column(nullable = false, length = 60)
     private String name;
 
+    @Column(nullable = false, length = 3)
+    private String languageCode;
+
+    @Column(name = "alpha2_code", nullable = false, length = 2)
+    private String alpha2Code;
+
+    @Column(name = "alpha3_code", nullable = false, length = 3)
+    private String alpha3Code;
+
+    @Column(nullable = false, length = 3)
+    private String numericCode;
+
     @Column(nullable = false, length = 5)
-    private String code;
+    private String callingCode;
 
     @Column(nullable = false, insertable = false, updatable = false)
     private Boolean fallback;

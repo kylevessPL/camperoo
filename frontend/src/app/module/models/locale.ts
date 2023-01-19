@@ -1,5 +1,6 @@
-export interface Locale {
+export interface Locale /*extends Country*/
+{
     id: number;
-    name: string;
-    code: string;
+    languageCode: string;
+    fallback: boolean;
 }

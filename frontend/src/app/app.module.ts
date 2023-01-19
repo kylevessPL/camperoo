@@ -4,6 +4,7 @@ import {MaterialModule} from './material.module';
 import {NgModule} from '@angular/core';
 import {environment} from 'src/environments/environment';
 import {
+    MatBadgeModule,
     MatButtonModule,
     MatCardModule,
     MatChipsModule,
@@ -21,8 +22,6 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {DataTableComponent} from './module/component/data-table/data-table.component';
 import {LoginComponent} from './module/page/common/auth/login/login.component';
-import {NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule} from '@angular-material-components/datetime-picker';
-import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSelectModule} from '@angular/material/select';
 import {FooterComponent} from './module/component/footer/footer.component';
@@ -44,6 +43,7 @@ import {HttpResponseInterceptor} from './config/security/interceptor/http-respon
 import {BooleanFormatterPipe} from './module/pipe/boolean-formatter.pipe';
 import {BranchesComponent} from './module/page/admin/administration/branches/branches.component';
 import {OrdersComponent} from './module/page/common/orders/orders/orders.component';
+import {NumberShortFormatterPipe} from './module/pipe/number-short-formatter.pipe';
 
 @NgModule({
     declarations: [
@@ -61,7 +61,8 @@ import {OrdersComponent} from './module/page/common/orders/orders/orders.compone
         TypeSafeMatCellDefDirective,
         DataPropertyGetterPipe,
         DateFormatterPipe,
-        BooleanFormatterPipe
+        BooleanFormatterPipe,
+        NumberShortFormatterPipe
     ],
     imports: [
         MatChipsModule,
@@ -81,14 +82,11 @@ import {OrdersComponent} from './module/page/common/orders/orders/orders.compone
         MatFormFieldModule,
         MatInputModule,
         MatDatepickerModule,
-        NgxMatDatetimePickerModule,
-        NgxMatTimepickerModule,
-        NgxMatNativeDateModule,
         MatSelectModule,
-        NgxMatMomentModule,
         ClipboardModule,
         RecaptchaModule,
-        RecaptchaFormsModule
+        RecaptchaFormsModule,
+        MatBadgeModule
     ],
     providers: [
         {

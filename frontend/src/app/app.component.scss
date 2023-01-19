@@ -12,12 +12,32 @@
 
 .toolbar {
   background-color: $color-navy-blue;
+  display: flex;
+  justify-content: space-between;
 }
 
 .is-mobile {
   background-color: $color-navy-blue;
   position: fixed;
   z-index: 2;
+}
+
+.cart-icon {
+  color: $color-accent-green;
+}
+
+.menu {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.cart-btn {
+  transform: scale(0.9);
+}
+
+.toolbar-info {
+  display: flex;
 }
 
 .menu-button {
@@ -64,7 +84,6 @@ h1.app-header {
 
 .logo {
   height: 100%;
-  width: auto;
   box-sizing: border-box;
   padding: 10px 0;
 }

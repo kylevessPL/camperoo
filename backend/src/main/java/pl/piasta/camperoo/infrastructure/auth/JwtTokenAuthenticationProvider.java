@@ -35,6 +35,7 @@ class JwtTokenAuthenticationProvider implements TokenAuthenticationProvider {
         var issuanceTime = dates.getLeft();
         var expirationTime = dates.getRight();
         var result = new LoginResultDto(
+                tokenPrincipal.id(),
                 issuanceTime.getEpochSecond(),
                 expirationTime.getEpochSecond(),
                 tokenPrincipal.roles()

@@ -38,7 +38,7 @@ public class LocalizationUtils {
     }
 
     private boolean isLocaleOrDefault(Locale object, java.util.Locale locale) {
-        var compared = java.util.Locale.forLanguageTag(object.getCode());
+        var compared = java.util.Locale.forLanguageTag(object.getLanguageCode());
         var fallback = object.getFallback();
         return isLocaleOrDefault(compared, locale, fallback);
     }

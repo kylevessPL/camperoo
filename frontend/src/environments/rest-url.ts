@@ -36,5 +36,11 @@ export const restUrl = {
     /**
      * Files
      */
-    filesBase: 'files'
+    filesBase: 'files',
+
+    /**
+     * Global
+     */
+    globalBase: 'global',
+    locales: 'locales'
 };

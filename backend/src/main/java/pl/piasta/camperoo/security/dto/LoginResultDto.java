@@ -14,6 +14,9 @@ import java.util.Set;
 @NoArgsConstructor
 public class LoginResultDto {
     @NotNull
+    private Long userId;
+
+    @NotNull
     @UnixTimestampCheck
     private Long issuanceTime;
 

@@ -1,6 +1,8 @@
 import {MediaMatcher} from '@angular/cdk/layout';
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from './config/security/auth.service';
+import {GlobalService} from './module/service/global.service';
+import {Locale} from './module/models/locale';
 
 @Component({
     selector: 'app-root',
@@ -9,23 +11,38 @@ import {AuthService} from './config/security/auth.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
     title = 'Camperoo';
+    cartItemsNumber = 0;
     mobileQuery: MediaQueryList;
+    countries: Locale[] = [];
+    countriesLoading = true;
 
     private readonly _mobileQueryListener: () => void;
 
-    constructor(private changeDetectorRef: ChangeDetectorRef, private media: MediaMatcher, private authService: AuthService) {
+    constructor(private changeDetectorRef: ChangeDetectorRef,
+                private media: MediaMatcher,
+                private globalService: GlobalService,
+                private authService: AuthService) {
         this.mobileQuery = media.matchMedia('(max-width: 600px)');
         this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-        this.mobileQuery.addEventListener('change', this._mobileQueryListener);
+        this.globalService.cartItemsNumber.subscribe(nb => this.cartItemsNumber = nb);
     }
 
     async ngOnInit() {
+        this.mobileQuery.addEventListener('change', this._mobileQueryListener);
         await this.authService.refreshToken();
+        this.globalService.getAllLocales().subscribe(locales => {
+            this.countries = locales;
+            this.countriesLoading = false;
+        });
     }
 
     ngOnDestroy() {
         this.mobileQuery.removeEventListener('change', this._mobileQueryListener);
     }
+
+    // onCountrySelected(locale: Country) {
+    //     console.log(locale as Locale);
+    // }
 
     public logout = () => this.authService.logout();
 

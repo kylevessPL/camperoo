@@ -54,6 +54,7 @@ class SecurityConfiguration extends AbstractSecurityWebApplicationInitializer {
                                 "/users",
                                 "/users/confirmation"
                         ).permitAll()
+                        .requestMatchers(HttpMethod.GET, "/global/locales").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().authenticated()
                 )
