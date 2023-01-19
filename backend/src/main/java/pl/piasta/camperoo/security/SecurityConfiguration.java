@@ -94,6 +94,7 @@ class SecurityConfiguration extends AbstractSecurityWebApplicationInitializer {
             @Value("${app.security.cors.allow-origin}") String allowedOrigin,
             @Value("${app.security.cors.allow-methods}") String[] allowedMethods,
             @Value("${app.security.cors.allow-headers}") String[] allowedHeaders,
+            @Value("${app.security.cors.expose-headers}") String[] exposedHeaders,
             @Value("${app.security.cors.max-age}") long maxAge
     ) {
         var source = new UrlBasedCorsConfigurationSource();
@@ -101,6 +102,7 @@ class SecurityConfiguration extends AbstractSecurityWebApplicationInitializer {
         corsConfiguration.addAllowedOrigin(allowedOrigin);
         corsConfiguration.setAllowedHeaders(List.of(allowedHeaders));
         corsConfiguration.setAllowedMethods(List.of(allowedMethods));
+        corsConfiguration.setExposedHeaders(List.of(exposedHeaders));
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setMaxAge(maxAge);
         source.registerCorsConfiguration("/**", corsConfiguration);

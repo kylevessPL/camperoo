@@ -6,6 +6,7 @@ app:
     cors:
       allow-methods: POST,PUT,GET,HEAD,OPTIONS,DELETE,PATCH
       allow-headers: Content-Type,Origin,X-Requested-With,Accept
+      expose-headers: Location,Content-Disposition,Content-Type
       max-age: 3600
     jwt:
       secret: ${JWT_SECRET}
