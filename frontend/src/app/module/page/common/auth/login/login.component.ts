@@ -25,7 +25,8 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         if (this.authService.hasAnyRole()) {
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/dashboard']).then(() => {
+            });
         }
         this.globalService.httpErrorStatus.subscribe(error => {
             error.status === 401 && this.snackBar.open('Incorrect email or password.', 'Close', {

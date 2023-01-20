@@ -12,7 +12,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     intercept = (request: HttpRequest<any>, next: HttpHandler) => next.handle(request).pipe(
         catchError((error: HttpErrorResponse) => {
             error.url && !error.url.endsWith('/refresh-token') && this.globalService.httpErrorStatus.next(error);
-            return throwError(error);
+            return throwError(() => error);
         })
     );
 }

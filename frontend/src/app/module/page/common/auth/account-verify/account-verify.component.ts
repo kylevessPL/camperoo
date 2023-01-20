@@ -18,7 +18,8 @@ export class AccountVerifyComponent implements OnInit {
 
     ngOnInit() {
         if (this.authService.hasAnyRole()) {
-            this.router.navigate([`/dashboard`]);
+            this.router.navigate([`/dashboard`]).then(() => {
+            });
         }
         this.router.events.pipe(
             filter(e => e instanceof NavigationStart),

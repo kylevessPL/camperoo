@@ -1,8 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { SortDirection } from '@angular/material/sort';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {Sort, SortDirection} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import {Sort} from '@angular/material/sort';
 import {HttpErrorResponse} from '@angular/common/http';
 import {GlobalService} from '../../service/global.service';
 import {TableColumn} from '../../models/table-column';
@@ -27,7 +26,7 @@ export class DataTableComponent<T extends Page<T>> implements OnInit, OnChanges 
     @Output() pageEvent = new EventEmitter<PageMeta>();
     @Output() rowActionEvent = new EventEmitter<T>();
 
-    @ViewChild(MatPaginator, { read: true }) paginator: MatPaginator;
+    @ViewChild(MatPaginator, {read: true}) paginator: MatPaginator;
 
     hidden = true;
     rowActionColumnKey = 'action';

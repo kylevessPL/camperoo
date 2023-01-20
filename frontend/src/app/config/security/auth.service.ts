@@ -39,20 +39,19 @@ export class AuthService {
 
     public confirm = (token: string) => this.httpClient
         .post(`${environment.baseUrl}/${restUrl.usersBase}/${restUrl.confirmation}`, {code: token})
-        .subscribe(() => {
-            this.router.navigate([`/login`], {
+        .subscribe({
+            next: () => this.router.navigate([`/login`], {
                 state: {
                     verified: true
                 }
             }).then(() => {
-            });
-        }, () => {
-            this.router.navigate([this.router.url], {
+            }),
+            error: () => this.router.navigate([this.router.url], {
                 state: {
                     valid: false
                 }
             }).then(() => {
-            });
+            })
         });
 
     public refreshToken = (expirationEpochSeconds = 0) => new Promise(() => {
@@ -61,11 +60,14 @@ export class AuthService {
             : 0;
         this._refreshTokenTask = timer(fireTime).subscribe(() => {
             this.httpClient.post<LoginResult>(`${environment.baseUrl}/${restUrl.authBase}/${restUrl.refreshToken}`, null)
-                .subscribe(result => {
-                    this.globalStorage.setRoles(result.roles);
-                    this.refreshToken(result.expirationTime).then(() => {
-                    });
-                }, () => this.logoutInternal());
+                .subscribe({
+                    next: result => {
+                        this.globalStorage.setRoles(result.roles);
+                        this.refreshToken(result.expirationTime).then(() => {
+                        });
+                    },
+                    error: () => this.logoutInternal()
+                });
         });
     });
 

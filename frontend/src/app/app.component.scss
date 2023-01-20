@@ -16,12 +16,6 @@
   justify-content: space-between;
 }
 
-.is-mobile {
-  background-color: $color-navy-blue;
-  position: fixed;
-  z-index: 2;
-}
-
 .cart-icon {
   color: $color-accent-green;
 }
@@ -43,11 +37,6 @@
 .menu-button {
   color: $color-primary-white;
   margin-right: 16px;
-}
-
-h1.app-header {
-  margin-left: 8px;
-  color: $color-primary-white;
 }
 
 .example-sidenav-container {
