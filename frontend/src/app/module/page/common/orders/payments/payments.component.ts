@@ -46,6 +46,7 @@ export class PaymentsComponent implements OnInit {
         }
     ];
     data: Observable<Payment>;
+    pageMeta: PageMeta;
     error: HttpErrorResponse;
 
     constructor(private paymentService: PaymentService,
@@ -57,10 +58,12 @@ export class PaymentsComponent implements OnInit {
             this.error = error;
         });
         this.error = null;
+        this.globalService.locale.subscribe(() => this.fetchData(this.pageMeta));
         this.data = this.paymentService.getAllPayments();
     }
 
     fetchData = (pageMeta: PageMeta) => {
+        this.pageMeta = pageMeta;
         this.data = this.paymentService.getAllPayments(pageMeta);
     };
 }

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {environment} from 'src/environments/environment';
 import {GlobalStorage} from '../../module/storage/global.storage.service';
 import {restUrl} from '../../../environments/rest-url';
@@ -18,7 +18,8 @@ export class AuthService {
     constructor(private globalStorage: GlobalStorage,
                 private globalService: GlobalService,
                 private httpClient: HttpClient,
-                private router: Router) {
+                private router: Router,
+                private route: ActivatedRoute) {
     }
 
     public login = (data: LoginData) => this.httpClient
@@ -66,7 +67,7 @@ export class AuthService {
                         this.refreshToken(result.expirationTime).then(() => {
                         });
                     },
-                    error: () => this.logoutInternal()
+                    error: () => this.logoutInternal(this.router.routerState.snapshot.url)
                 });
         });
     });
@@ -94,15 +95,26 @@ export class AuthService {
         this.globalStorage.setUserId(result.userId);
         this.globalStorage.setRoles(result.roles);
         this.setInitialCartItemsNumber();
-        this.router.navigate([`/dashboard`]).then(() => {
+        this.redirectAfterLogin();
+    }
+
+    private logoutInternal(redirectUrl?: string) {
+        this.globalStorage.removeUserId();
+        this.globalStorage.removeRoles();
+        this.router.navigate([`/`], {state: {'redirectUrl': redirectUrl}}).then(() => {
         });
     }
 
-    private logoutInternal() {
-        this.globalStorage.removeUserId();
-        this.globalStorage.removeRoles();
-        this.router.navigateByUrl('/').then(() => {
-        });
+    private redirectAfterLogin() {
+        const redirectUrl: string = window.history.state['redirectUrl'];
+        if (redirectUrl && redirectUrl.includes('/dashboard')) {
+            this.router
+                .navigateByUrl(redirectUrl)
+                .catch(() => this.router.navigate(['/dashboard']));
+        } else {
+            this.router.navigate(['/dashboard']).then(() => {
+            });
+        }
     }
 
     private setInitialCartItemsNumber() {

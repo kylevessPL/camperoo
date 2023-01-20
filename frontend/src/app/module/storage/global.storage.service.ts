@@ -28,8 +28,8 @@ export class GlobalStorage {
 
     setLocale = (locale: Locale) => localStorage.setItem(this._locale, locale.alpha2Code);
 
-    getLocale = (fallback: string) => {
-        const locale = localStorage.getItem(this._locale) ?? fallback;
+    getLocale = () => {
+        const locale = localStorage.getItem(this._locale);
         return {
             alpha2Code: locale
         } as Locale;

@@ -1,11 +1,13 @@
 @import "src/assets/scss/colors";
 
 .mat-table {
-  overflow-x: scroll;
+  overflow-x: auto;
+  width: 100%;
 }
 
 .mat-cell,
 .mat-header-cell {
+  min-width: max-content;
   word-wrap: initial;
   padding: 0 10px;
   line-break: unset;

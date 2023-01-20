@@ -12,8 +12,8 @@ import {Locale} from '../models/locale';
 })
 export class GlobalService {
     public httpErrorStatus = new BehaviorSubject<any>(0);
+    public locale = new BehaviorSubject<string>(undefined);
     public cartItemsNumber = new Subject<number>();
-    public locale = new Subject<string>();
 
     constructor(private snackBar: MatSnackBar, private httpClient: HttpClient) {
     }

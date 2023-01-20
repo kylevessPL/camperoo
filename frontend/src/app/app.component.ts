@@ -45,7 +45,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.mobileQuery.removeEventListener('change', this._mobileQueryListener);
     }
 
-    onCountrySelected(country: Country) {
+    setLanguage(country: Country | Locale) {
         const locale = country as Locale;
         this.globalService.locale.next(locale.languageCode);
         this.globalStorage.setLocale(locale);
@@ -63,10 +63,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
     private setDefaultLocale(locales: Locale[]) {
         const fallback = locales.find(e => e.fallback);
-        const userLocale = this.globalStorage.getLocale(fallback.alpha2Code);
-        const localeExists = locales.some(e => e.alpha2Code === userLocale.alpha2Code);
-        if (localeExists) {
-            this.localeDefault = userLocale;
-        }
+        const locale = locales.find(e => e.alpha2Code === this.globalStorage.getLocale().alpha2Code);
+        this.localeDefault = locale ?? fallback;
+        this.setLanguage(this.localeDefault);
     }
 }

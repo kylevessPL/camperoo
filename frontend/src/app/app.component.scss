@@ -20,7 +20,7 @@
   color: $color-accent-green;
 }
 
-.menu {
+.toolbar-content {
   height: 100%;
   display: flex;
   align-items: center;
@@ -28,6 +28,28 @@
 
 .cart-btn {
   transform: scale(0.9);
+  margin-right: 24px;
+}
+
+::ng-deep mat-select-country {
+  .mat-form-field-flex {
+    top: -15px;
+    max-height: 55px;
+
+    .mat-form-field-infix, .mat-form-field-suffix {
+      top: -15px;
+    }
+  }
+}
+
+.wrap {
+  height: 30px;
+}
+
+::ng-deep mat-select-country .mat-form-field-appearance-outline .mat-form-field-outline {
+  background-color: white;
+  border-radius: 5px;
+  opacity: 50%;
 }
 
 .menu-button {

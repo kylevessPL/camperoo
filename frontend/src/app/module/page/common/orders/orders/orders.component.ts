@@ -60,6 +60,7 @@ export class OrdersComponent implements OnInit {
         conditionalKey: 'invoiceUuid',
     };
     data: Observable<Order>;
+    pageMeta: PageMeta;
     error: HttpErrorResponse;
 
     constructor(private orderService: OrderService, private branchService: BranchService, private globalService: GlobalService) {
@@ -70,10 +71,12 @@ export class OrdersComponent implements OnInit {
             this.error = error;
         });
         this.error = null;
+        this.globalService.locale.subscribe(() => this.fetchData(this.pageMeta));
         this.data = this.orderService.getAllOrders();
     }
 
     fetchData = (pageMeta: PageMeta) => {
+        this.pageMeta = pageMeta;
         this.data = this.orderService.getAllOrders(pageMeta);
     };
 

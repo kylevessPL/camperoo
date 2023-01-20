@@ -11,7 +11,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
     intercept = (request: HttpRequest<any>, next: HttpHandler) => next.handle(request).pipe(
         catchError((error: HttpErrorResponse) => {
-            error.url && !error.url.endsWith('/refresh-token') && this.globalService.httpErrorStatus.next(error);
+            if (error.url && (error.status !== 401 || error.url.endsWith('/auth'))) {
+                this.globalService.httpErrorStatus.next(error);
+            }
             return throwError(() => error);
         })
     );

@@ -1,14 +1,14 @@
 <div class="example-container" [class.is-mobile]="mobileQuery.matches">
 
     <mat-toolbar class="toolbar">
-        <div class="menu">
+        <div class="toolbar-content">
             <button mat-icon-button class="menu-button" *ngIf="isLogged()" (click)="snav.toggle()">
                 <mat-icon>menu</mat-icon>
             </button>
             <img class="logo" src="assets/img/logo.svg" alt="Logo">
         </div>
 
-        <div [hidden]="!isLogged()">
+        <div [hidden]="!isLogged()" class="toolbar-content">
             <button *ngIf="isLogged()" class="cart-btn"
                     mat-flat-button
                     mat-icon-button
@@ -17,16 +17,17 @@
                     [matBadge]="cartItemsNumber | numberShortFormatterPipe">
                 <mat-icon class="cart-icon">shopping_basket</mat-icon>
             </button>
-            <mat-select-country appearance="outline"
-                                name="language"
-                                label="Language"
-                                placeHolder="Select language"
-                                autocomplete="off"
-                                [value]="localeDefault"
-                                [countries]="locales"
-                                [loading]="localesLoading"
-                                (onCountrySelected)="onCountrySelected($event)">
-            </mat-select-country>
+            <div class="wrap">
+                <mat-select-country appearance="outline"
+                                    name="language"
+                                    placeHolder="Select language"
+                                    autocomplete="off"
+                                    [value]="localeDefault"
+                                    [countries]="locales"
+                                    [loading]="localesLoading"
+                                    (onCountrySelected)="setLanguage($event)">
+                </mat-select-country>
+            </div>
         </div>
     </mat-toolbar>
 
