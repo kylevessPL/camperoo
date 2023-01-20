@@ -35,6 +35,16 @@
   background-color: $color-form-field-white;
 }
 
+.mat-no-data-row {
+  width: 100%;
+  display: table;
+
+  .mat-cell {
+    display: table-cell;
+    text-align: center;
+  }
+}
+
 .spinner {
   margin: 0 auto;
 }

@@ -32,6 +32,9 @@
         </ng-container>
         <mat-header-row *matHeaderRowDef="columnKeys"></mat-header-row>
         <mat-row *matRowDef="let row; columns: columnKeys;"></mat-row>
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data found</td>
+        </tr>
     </mat-table>
     <mat-paginator *ngIf="pageable"
                    #paginator [pageIndex]="pageNumber" [length]="totalElements" [pageSizeOptions]="[10, 100]"

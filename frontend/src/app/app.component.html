@@ -8,9 +8,8 @@
             <img class="logo" src="assets/img/logo.svg" alt="Logo">
         </div>
 
-        <div class="toolbar-info">
-            <button *ngIf="isLogged()"
-                    class="cart-btn"
+        <div [hidden]="!isLogged()">
+            <button *ngIf="isLogged()" class="cart-btn"
                     mat-flat-button
                     mat-icon-button
                     matTooltip="Show shopping cart"
@@ -19,10 +18,13 @@
                 <mat-icon class="cart-icon">shopping_basket</mat-icon>
             </button>
             <mat-select-country appearance="outline"
-                                label="Country"
-                                autocomplete="no"
-                                [countries]="countries"
-                                [loading]="countriesLoading"
+                                name="language"
+                                label="Language"
+                                placeHolder="Select language"
+                                autocomplete="off"
+                                [value]="localeDefault"
+                                [countries]="locales"
+                                [loading]="localesLoading"
                                 (onCountrySelected)="onCountrySelected($event)">
             </mat-select-country>
         </div>

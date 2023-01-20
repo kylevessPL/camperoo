@@ -88,8 +88,6 @@ export class AuthService {
 
     public isCustomer = () => this.hasRole('CUSTOMER');
 
-    public getLanguage = () => this.globalStorage.getLocale();
-
     private loginInternal(result: LoginResult) {
         this.refreshToken(result.expirationTime).then(() => {
         });
