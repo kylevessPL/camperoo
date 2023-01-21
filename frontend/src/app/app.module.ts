@@ -42,6 +42,9 @@ import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSelectModule} from '@angular/material/select';
 import {MatBadgeModule} from '@angular/material/badge';
+import {Base64ImageGetterPipe} from './module/pipe/base64-image-getter.pipe';
+import {ProductsComponent} from './module/page/customer/products/products.component';
+import {ProductsListComponent} from './module/component/products-list/products-list.component';
 
 @NgModule({
     declarations: [
@@ -55,12 +58,15 @@ import {MatBadgeModule} from '@angular/material/badge';
         OrdersComponent,
         FooterComponent,
         BranchesComponent,
+        ProductsComponent,
+        ProductsListComponent,
         MessageDialogComponent,
         TypeSafeMatCellDefDirective,
         DataPropertyGetterPipe,
         DateFormatterPipe,
         BooleanFormatterPipe,
-        NumberShortFormatterPipe
+        NumberShortFormatterPipe,
+        Base64ImageGetterPipe
     ],
     imports: [
         MatChipsModule,

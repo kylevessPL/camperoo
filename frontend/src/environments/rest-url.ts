@@ -19,6 +19,11 @@ export const restUrl = {
     confirmation: 'confirmation',
 
     /**
+     * Products
+     */
+    productsBase: 'products',
+
+    /**
      * Orders
      */
     ordersBase: 'orders',

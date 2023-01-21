@@ -9,11 +9,14 @@ import {PaymentsComponent} from './module/page/common/orders/payments/payments.c
 import {AuthenticatedGuard} from './config/security/guard/authenticated.guard';
 import {BranchesComponent} from './module/page/admin/administration/branches/branches.component';
 import {OrdersComponent} from './module/page/common/orders/orders/orders.component';
+import {CustomerGuard} from './config/security/guard/customer.guard';
+import {ProductsComponent} from './module/page/customer/products/products.component';
 
 const routes: Routes = [
     {path: '', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'account-verify/:token', component: AccountVerifyComponent},
+    {path: 'dashboard/products', component: ProductsComponent, canActivate: [CustomerGuard]},
     {path: 'dashboard/users', component: UsersComponent, canActivate: [AdminGuard]},
     {path: 'dashboard/orders', component: OrdersComponent, canActivate: [AuthenticatedGuard]},
     {path: 'dashboard/payments', component: PaymentsComponent, canActivate: [AuthenticatedGuard]},

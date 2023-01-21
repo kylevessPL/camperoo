@@ -24,6 +24,7 @@
         "content-disposition": "^0.5.4",
         "http-constants-ts": "^1.0.7",
         "path": "^0.12.7",
+        "buffer": "^6.0.3",
         "svg-country-flags": "^1.2.10",
         "get-wild": "^3.0.2",
         "ng-recaptcha": "^10.0.0",

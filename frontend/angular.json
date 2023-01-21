@@ -22,7 +22,8 @@
                             "http-constants-ts",
                             "content-disposition",
                             "safe-buffer",
-                            "path"
+                            "path",
+                            "buffer"
                         ],
                         "assets": [
                             "src/favicon.ico",

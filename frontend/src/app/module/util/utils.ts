@@ -11,7 +11,7 @@ export default class Utils {
         } as T;
     };
 
-    static createBlob = (content: any, headers: HttpHeaders) => {
+    static downloadBlob = (content: any, headers: HttpHeaders) => {
         const contentDisposition = headers.get(Headers.CONTENT_DISPOSITION);
         const contentType = headers.get(Headers.CONTENT_TYPE);
         const a = document.createElement('a');

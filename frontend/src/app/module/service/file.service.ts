@@ -14,6 +14,6 @@ export class BranchService {
             responseType: 'ArrayBuffer' as 'json',
             observe: 'response'
         }).subscribe(response => {
-            Utils.createBlob(response.body, response.headers);
+            Utils.downloadBlob(response.body, response.headers);
         });
 }

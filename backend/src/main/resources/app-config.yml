@@ -23,7 +23,7 @@ app:
       deadlineDays: 7
   file:
     thumbnail:
-      heightPx: 250
+      widthPx: 250
   scheduling:
     expired-payments-cleanup-cron: 0 5 0 * * ?
     unpaid-orders-cleanup-cron: 0 10 0 * * ?

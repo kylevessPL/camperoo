@@ -1,6 +1,6 @@
 @import "src/assets/scss/colors";
 
-.example-container {
+.main-container {
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -8,6 +8,14 @@
   bottom: 0;
   left: 0;
   right: 0;
+}
+
+.mat-sidenav {
+  min-width: 200px;
+}
+
+::ng-deep .mat-drawer-inner-container {
+  overflow: hidden !important;
 }
 
 .toolbar {
@@ -31,6 +39,10 @@
   margin-right: 24px;
 }
 
+.locale-select {
+  height: 30px;
+}
+
 ::ng-deep mat-select-country {
   .mat-form-field-flex {
     top: -15px;
@@ -40,16 +52,12 @@
       top: -15px;
     }
   }
-}
 
-.wrap {
-  height: 30px;
-}
-
-::ng-deep mat-select-country .mat-form-field-appearance-outline .mat-form-field-outline {
-  background-color: white;
-  border-radius: 5px;
-  opacity: 50%;
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    background-color: white;
+    border-radius: 5px;
+    opacity: 50%;
+  }
 }
 
 .menu-button {
@@ -57,15 +65,15 @@
   margin-right: 16px;
 }
 
-.example-sidenav-container {
+.sidenav-container {
   flex: 1;
 }
 
-.example-is-mobile .example-sidenav-container {
+.is-mobile .sidenav-container {
   flex: 1 0 auto;
 }
 
-.container {
+.sidenav-content {
   background-color: white;
 }
 
@@ -93,19 +101,4 @@
   height: 100%;
   box-sizing: border-box;
   padding: 10px 0;
-}
-
-.env {
-  color: $color-primary-white;
-  margin-left: 8px;
-  margin-top: 15px;
-  display: inline;
-  float: right;
-}
-
-.versions {
-  font-size: 10px;
-  background-color: $color-navy-blue;
-  color: $color-primary-white;
-  margin-left: 10px;
 }
