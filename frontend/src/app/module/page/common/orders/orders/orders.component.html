@@ -1,0 +1,16 @@
+<div class="page">
+    <mat-card>
+        <div class="border-top"></div>
+        <mat-card-title>Orders</mat-card-title>
+        <div class="border-bottom"></div>
+        <app-data-table
+                [data]="data | async"
+                [columns]="columns"
+                [rowAction]="rowAction"
+                [error]="error"
+                (pageEvent)="fetchData($event)"
+                (rowActionEvent)="downloadInvoice($event)"
+                sortColumnDefault="id">
+        </app-data-table>
+    </mat-card>
+</div>

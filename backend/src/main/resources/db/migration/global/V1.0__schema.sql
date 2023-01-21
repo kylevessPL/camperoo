@@ -3,11 +3,15 @@
 --
 CREATE TABLE IF NOT EXISTS locales
 (
-    id       BIGINT PRIMARY KEY,
-    version  BIGINT             NOT NULL DEFAULT 0,
-    name     VARCHAR(60) UNIQUE NOT NULL,
-    code     VARCHAR(5) UNIQUE  NOT NULL,
-    fallback BOOLEAN UNIQUE CHECK (fallback <> FALSE)
+    id            BIGINT PRIMARY KEY,
+    version       BIGINT             NOT NULL DEFAULT 0,
+    name          VARCHAR(60) UNIQUE NOT NULL,
+    language_code VARCHAR(3) UNIQUE  NOT NULL,
+    alpha2_code   VARCHAR(2) UNIQUE  NOT NULL CHECK (LENGTH(alpha2_code) = 2),
+    alpha3_code   VARCHAR(3) UNIQUE  NOT NULL CHECK (LENGTH(alpha3_code) = 3),
+    numeric_code  VARCHAR(3) UNIQUE  NOT NULL,
+    calling_code  VARCHAR(5) UNIQUE  NOT NULL,
+    fallback      BOOLEAN UNIQUE CHECK (fallback <> FALSE)
 );
 
 CREATE UNIQUE INDEX ON locales (fallback) WHERE fallback;

@@ -1,9 +1,9 @@
 --
 -- locales
 --
-INSERT INTO locales (id, name, code, fallback)
-VALUES (1, 'Polski', 'pl', NULL),
-       (2, 'English', 'en', TRUE);
+INSERT INTO locales (id, name, language_code, alpha2_code, alpha3_code, numeric_code, calling_code, fallback)
+VALUES (1, 'Poland', 'pl', 'PL', 'POL', 616, +48, NULL),
+       (2, 'United Kingdom', 'en', 'GB', 'GBR', 826, +44, TRUE);
 
 --
 -- persons

@@ -1,0 +1,19 @@
+<div class="page">
+    <h2>Sign in</h2>
+    <mat-card class="center">
+        <mat-card-content>
+            <form (ngSubmit)="login()" [formGroup]="form">
+                <mat-form-field class="form-field small-field">
+                    <input matInput type="email" placeholder="Email" formControlName="email" required>
+                </mat-form-field>
+                <mat-form-field class="form-field small-field">
+                    <input matInput type="password" placeholder="Password" formControlName="password" required>
+                </mat-form-field>
+                <div class="register-link">
+                    <a routerLink="/register">Sign up</a>
+                </div>
+                <button mat-raised-button color="primary" class="login-button" [disabled]="!form.valid">Login</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

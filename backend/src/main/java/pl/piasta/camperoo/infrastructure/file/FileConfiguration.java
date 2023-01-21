@@ -20,7 +20,7 @@ class FileConfiguration {
     }
 
     @Bean
-    FileProcessor imageProcessor(@Value("${app.file.thumbnail.heightPx}") int thumbnailHeight) {
-        return new FileProcessingService(thumbnailHeight);
+    FileProcessor imageProcessor(@Value("${app.file.thumbnail.widthPx}") int thumbnailWidth) {
+        return new FileProcessingService(thumbnailWidth);
     }
 }

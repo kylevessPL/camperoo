@@ -7,7 +7,15 @@ public interface LocaleProjection {
 
     String getName();
 
-    String getCode();
+    String getLanguageCode();
+
+    String getAlpha2Code();
+
+    String getAlpha3Code();
+
+    String getNumericCode();
+
+    String getCallingCode();
 
     @Value("#{T(java.util.Objects).requireNonNullElse(target.fallback, false)}")
     boolean isFallback();
